@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChildRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Child
      * @ORM\Column(type="datetime_immutable")
      */
     private $birthAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Activity::class, mappedBy="childrens")
+     */
+    private $activities;
+
+    public function __construct()
+    {
+        $this->activities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,33 @@ class Child
     public function setBirthAt(\DateTimeImmutable $birthAt): self
     {
         $this->birthAt = $birthAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Activity>
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity): self
+    {
+        if (!$this->activities->contains($activity)) {
+            $this->activities[] = $activity;
+            $activity->addChildren($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity): self
+    {
+        if ($this->activities->removeElement($activity)) {
+            $activity->removeChildren($this);
+        }
 
         return $this;
     }
