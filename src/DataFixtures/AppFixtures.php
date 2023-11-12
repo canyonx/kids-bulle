@@ -7,11 +7,17 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    private $usersFixtures;
+
+    public function __construct(
+        UserFixtures $userFixtures
+    ) {
+        $this->usersFixtures = $userFixtures;
+    }
+
+
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
-        $manager->flush();
+        $this->usersFixtures->createUser();
     }
 }

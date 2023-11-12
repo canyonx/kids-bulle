@@ -1,0 +1,9 @@
+<ul>
+    <li>
+        Email : {{ app.user.email }}
+    </li>
+    <li>
+        Rôle : {{ app.user.roles[0] | split('_')[1] | title }}
+    </li>
+    <li></li>
+</ul>

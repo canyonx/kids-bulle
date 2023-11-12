@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ app.user.email | split("@")[0] | title }}{% endblock %}
+
+{% block body %}
+    <h1>Votre profile, {{ app.user.email | split("@")[0] | title }}</h1>
+
+    <div class="row">
+        <h2>Vos enfants</h2>
+        {% include "user/_child_table.html.twig" %}
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Votre profil</h2>
+            {% include "user/_user_detail.html.twig" %}
+        </div>
+        <div class="col">
+            <h3>Ajouter un enfant</h3>
+            {% include "user/_child_form.html.twig" %}
+        </div>
+    </div>
+{% endblock %}

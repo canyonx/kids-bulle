@@ -39,6 +39,12 @@ class Child
      */
     private $activities;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="childs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __construct()
     {
         $this->activities = new ArrayCollection();
@@ -110,5 +116,22 @@ class Child
         }
 
         return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getFullname(): string
+    {
+        return ucfirst($this->getFirstname()) . ' ' . ucfirst($this->getLastname());
     }
 }

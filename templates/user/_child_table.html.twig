@@ -1,0 +1,28 @@
+{% if app.user.childs %}
+    <table class="table">
+        <thead>
+            <tr class="row">
+                <th class="col">Prénom</th>
+                <th class="col">Nom</th>
+                <th class="col">Age</th>
+                <th class="col">Activités</th>
+                <th class="col">Editer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for child in app.user.childs %}
+                <tr class="row">
+                    <td class="col">{{ child.firstname }}</td>
+                    <td class="col">{{ child.lastname }}</td>
+                    <td class="col">{{ date('now').diff(child.birthAt).format('%y') }} ans</td>
+                    <td class="col"><a href="#">Voir le planning</a></td>
+                    <td class="col"><a href="{{ path('app_child_edit', {id: child.id}) }}">Editer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>
+        Pas encore d'enfant sur votre profil !
+    </p>
+{% endif %}

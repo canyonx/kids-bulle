@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer {{ child.fullname }}{% endblock %}
+
+{% block body %}
+<h1>Editer {{ child.fullname }}</h1>
+<a href="{{ path('app_user') }}">Retour</a>
+{% include "user/_child_form.html.twig" %}
+{% endblock %}
