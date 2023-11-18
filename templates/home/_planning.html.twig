@@ -11,15 +11,15 @@
             <tr class="row">
                 <td class="col">{{ date | date("Y-m-d", "Europe/Paris") }}</td>
                 <td class="col">
-                    {% for activity in activities %}
-                        <ul>
+                    <ul>
+                        {% for activity in activities %}
                             {% if (date | date("Y-m-d")) is same as (activity.dateAt | date("Y-m-d")) %}
                                 <li>
-                                    {{ activity.dateAt | date("H:i") }} - {{ activity.category }}
+                                    <a href="{{ path('app_activity_show', {id: activity.id}) }}">{{ activity.dateAt | date("H:i") }} - {{ activity.category }}</a>
                                 </li>
                             {% endif %}
-                        </ul>
-                    {% endfor %}
+                        {% endfor %}
+                    </ul>
                 </td>
                 <td class="col"></td>
             </tr>

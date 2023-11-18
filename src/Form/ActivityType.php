@@ -20,15 +20,16 @@ class ActivityType extends AbstractType
         $builder
             ->add('dateAt', DateTimeType::class, [
                 'label' => 'Date',
-                'input' => 'datetime_immutable'
-            ])
-            ->add('teacher', EntityType::class, [
-                'label' => 'Moniteur',
-                'class' => Teacher::class
+                'input' => 'datetime_immutable',
+                'widget' => 'single_text'
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
                 'class' => Category::class
+            ])
+            ->add('teacher', EntityType::class, [
+                'label' => 'Moniteur',
+                'class' => Teacher::class
             ])
             ->add('childrens', EntityType::class, [
                 'label' => 'Participants',

@@ -21,12 +21,26 @@
             </tr>
             <tr>
                 <th>BirthAt</th>
-                <td>{{ child.birthAt ? child.birthAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ child.birthAt ? child.birthAt|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ child.Category ? child.Category : '' }}</td>
+            </tr>
+            <tr>
+                <th>Activities</th>
+                <td>
+                    <ul>
+                        {% for activity in child.activities %}
+                            <li>{{ activity.dateAt|date('Y-m-d H:i') }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_children_index') }}">back to list</a>
+    <a href="{{ path('app_user') }}">back to profile</a>
 
     <a href="{{ path('app_children_edit', {'id': child.id}) }}">edit</a>
 

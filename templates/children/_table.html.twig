@@ -16,7 +16,7 @@
                 <td>{{ child.id }}</td>
                 <td>{{ child.firstname }}</td>
                 <td>{{ child.lastname }}</td>
-                <td>{{ child.birthAt ? child.birthAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ child.birthAt ? child.birthAt|date('Y-m-d') : '' }}</td>
                 <td>{{ child.category ? child.category : '' }}</td>
                 <td>
                     <a href="{{ path('app_children_show', {'id': child.id}) }}">show</a>

@@ -2,30 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Entity\Child;
+use App\Entity\Activity;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class ActivityAddChildrenType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'label' => 'Email'
-            ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe'
+            ->add('childrens', EntityType::class, [
+                'label' => 'Participants',
+                'class' => Child::class,
+                'multiple' => true
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Activity::class,
         ]);
     }
 }

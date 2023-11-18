@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Activity{% endblock %}
+
+{% block body %}
+    <h1>Activity</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ activity.id }}</td>
+            </tr>
+            <tr>
+                <th>DateAt</th>
+                <td>{{ activity.dateAt ? activity.dateAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ activity.category }}</td>
+            </tr>
+            <tr>
+                <th>Childs</th>
+                <td>
+                    <ul>
+                        {% for child in activity.childrens %}
+                            <li>{{ child }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Ajouter un enfant</th>
+                <td>
+                <form action="">
+                    <select class="form-select" aria-label="Default select example">
+                    {% for child in app.user.childs %}
+                        {% if child in activity.childrens %}
+                        {% else %}
+                            <option value="{{ child.id }}">{{ child }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_activity_edit', {'id': activity.id}) }}">edit</a>
+
+{% endblock %}
