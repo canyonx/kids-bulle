@@ -1,0 +1,39 @@
+{% if app.user.childs %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>BirthAt</th>
+                <th>Category</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for child in app.user.childs %}
+            <tr>
+                <td>{{ child.id }}</td>
+                <td>{{ child.firstname }}</td>
+                <td>{{ child.lastname }}</td>
+                <td>{{ child.birthAt ? child.birthAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ child.category ? child.category : '' }}</td>
+                <td>
+                    <a href="{{ path('app_children_show', {'id': child.id}) }}">show</a>
+                    <a href="{{ path('app_children_edit', {'id': child.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>
+        Pas encore d'enfant sur votre profil !
+    </p>
+{% endif %}
+
+<a href="{{ path('app_children_new') }}">Create new</a>

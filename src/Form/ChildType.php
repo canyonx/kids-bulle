@@ -3,13 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Child;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-class ChildrenType extends AbstractType
+class ChildType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -24,7 +26,11 @@ class ChildrenType extends AbstractType
                 'label' => 'Date de naissance',
                 'input'  => 'datetime_immutable',
                 'widget' => 'single_text',
-            ]);
+            ])
+            ->add('category', EntityType::class, [
+                'label' => 'Classe',
+                'class' => Category::class
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -97,4 +97,9 @@ class Teacher
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return ucwords($this->getFirstname() . ' ' . $this->getLastname());
+    }
 }

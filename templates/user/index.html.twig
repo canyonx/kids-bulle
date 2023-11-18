@@ -3,20 +3,21 @@
 {% block title %}{{ app.user.email | split("@")[0] | title }}{% endblock %}
 
 {% block body %}
-    <h1>Votre profile, {{ app.user.email | split("@")[0] | title }}</h1>
-
+    <h1>Mon profil, {{ app.user.email | split("@")[0] | title }}</h1>
+    <hr>
     <div class="row">
-        <h2>Vos enfants</h2>
-        {% include "user/_child_table.html.twig" %}
+        <h2>Mes enfants</h2>
+        {% if app.user.childs %}
+            {% include "children/_table.html.twig" %}
+        {% else %}
+            <p>
+                Pas encore d'enfant sur votre profil !
+            </p>
+        {% endif %}
     </div>
+    <hr>
     <div class="row">
-        <div class="col">
-            <h2>Votre profil</h2>
-            {% include "user/_user_detail.html.twig" %}
-        </div>
-        <div class="col">
-            <h3>Ajouter un enfant</h3>
-            {% include "user/_child_form.html.twig" %}
-        </div>
+            <h2>Mes infos</h2>
+            {% include "user/_detail.html.twig" %}
     </div>
 {% endblock %}

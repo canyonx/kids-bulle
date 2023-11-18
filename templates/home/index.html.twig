@@ -6,22 +6,9 @@
     <h1>Kid's Bulle</h1>
     <p>Système de planning pour inscrire les enfants aux activités des clubs.</p>
 
-    <table class="table">
-        <thead>
-            <tr class="row">
-                <th class="col">Date</th>
-                <th class="col">Matin</th>
-                <th class="col">Après-midi</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for i in 1..7 %}
-                <tr class="row">
-                    <td class="col">{{ 'now' | date("d j", "Europe/Paris") }}</td>
-                    <td class="col"></td>
-                    <td class="col"></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    {% if is_granted("ROLE_USER") %}
+        {% include "home/_planning.html.twig" %}
+        {% else %}
+        <a class="btn btn-primary" href="{{ path('app_login') }}">Se connecter</a>
+    {% endif %}
 {% endblock %}

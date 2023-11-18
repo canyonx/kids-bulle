@@ -45,6 +45,11 @@ class Child
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="childs")
+     */
+    private $category;
+
     public function __construct()
     {
         $this->activities = new ArrayCollection();
@@ -133,5 +138,22 @@ class Child
     public function getFullname(): string
     {
         return ucfirst($this->getFirstname()) . ' ' . ucfirst($this->getLastname());
+    }
+
+    public function __toString()
+    {
+        return ucfirst($this->getFirstname()) . ' ' . ucfirst($this->getLastname());
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
     }
 }
