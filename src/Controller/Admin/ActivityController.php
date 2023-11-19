@@ -2,14 +2,15 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Child;
 use App\Entity\Activity;
 use App\Form\ActivityType;
-use App\Repository\ActivityRepository;
 use App\Service\PlanningService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ActivityRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/activity")
@@ -21,9 +22,12 @@ class ActivityController extends AbstractController
      */
     public function index(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
+        $activities = $activityRepository->findByUser($this->getUser());
+
+        $planning = $planningService->getPlanning($activities);
+
         return $this->render('admin/activity/index.html.twig', [
-            'dates' => $planningService->getArrayDates(),
-            'activities' => $activityRepository->findBy([], ['dateAt' => 'ASC']),
+            'planning' => $planning
         ]);
     }
 
@@ -88,5 +92,20 @@ class ActivityController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/{id}/remove/{child}", name="app_admin_activity_remove_child", methods={"GET"})
+     */
+    public function removeChild(
+        Activity $activity,
+        Child $child,
+        ActivityRepository $activityRepository
+    ): Response {
+
+        $activity->removeChildren($child);
+        $activityRepository->add($activity, true);
+
+        return $this->redirectToRoute('app_admin_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
     }
 }

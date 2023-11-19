@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Planning de {{ child.firstname }}</h1>
 
-    {% include "children/_planning.html.twig" %}
+    {% include "shared/_planning.html.twig" %}
 
     <a href="{{ path('app_user') }}">back to profile</a>
 {% endblock %}

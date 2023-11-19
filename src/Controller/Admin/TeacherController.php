@@ -47,16 +47,6 @@ class TeacherController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_admin_teacher_show", methods={"GET"})
-     */
-    public function show(Teacher $teacher): Response
-    {
-        return $this->render('admin/teacher/show.html.twig', [
-            'teacher' => $teacher,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="app_admin_teacher_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Teacher $teacher, TeacherRepository $teacherRepository): Response
@@ -81,7 +71,7 @@ class TeacherController extends AbstractController
      */
     public function delete(Request $request, Teacher $teacher, TeacherRepository $teacherRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$teacher->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $teacher->getId(), $request->request->get('_token'))) {
             $teacherRepository->remove($teacher, true);
         }
 

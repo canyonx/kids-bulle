@@ -12,9 +12,8 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Adress</th>
+                <th>Childrens</th>
                 <th>Roles</th>
-                <th></th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -24,11 +23,14 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
                 <td>{{ user.fulladress }}</td>
-                <td>{{ user.roles[0] | split('_')[1] }}</td>
                 <td>
-                    <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>
+                    {% for child in user.childs %}
+                        <li>
+                            {{ child }}
+                        </li>
+                    {% endfor %}
                 </td>
+                <td>{{ user.roles[0] | split('_')[1] }}</td>
             </tr>
         {% else %}
             <tr>
@@ -38,5 +40,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_user_new') }}">Create new</a>
 {% endblock %}

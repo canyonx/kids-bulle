@@ -30,11 +30,6 @@ class ActivityType extends AbstractType
             ->add('teacher', EntityType::class, [
                 'label' => 'Moniteur',
                 'class' => Teacher::class
-            ])
-            ->add('childrens', EntityType::class, [
-                'label' => 'Participants',
-                'class' => Child::class,
-                'multiple' => true
             ]);
     }
 

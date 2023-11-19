@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\ActivityRepository;
 use App\Repository\UserRepository;
+use App\Service\PlanningService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,17 +21,15 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="app_user", methods={"GET"})
      */
-    public function show(ActivityRepository $activityRepository): Response
+    public function show(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
-        $dates = [];
-        for ($i = 0; $i < 7; $i++) {
-            $dates[] = new \DateTimeImmutable("today + $i days");
-        }
+        $activities = $activityRepository->findByUser($this->getUser());
+
+        $planning = $planningService->getPlanning($activities);
 
         return $this->render('user/index.html.twig', [
             'user' => $this->getUser(),
-            'dates' => $dates,
-            'activities' => $activityRepository->findByUser($this->getUser())
+            'planning' => $planning
         ]);
     }
 

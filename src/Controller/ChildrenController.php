@@ -6,6 +6,7 @@ use App\Entity\Child;
 use App\Form\ChildType;
 use App\Repository\ActivityRepository;
 use App\Repository\ChildRepository;
+use App\Service\PlanningService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +23,7 @@ class ChildrenController extends AbstractController
     public function new(Request $request, ChildRepository $childRepository): Response
     {
         $child = new Child();
-        $form = $this->createForm(ChildType::class, $child);
+        $form = $this->createForm(ChildType::class, $child, ['option' => 'new']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -54,20 +55,18 @@ class ChildrenController extends AbstractController
     /**
      * @Route("/{id}/planning", name="app_children_planning", methods={"GET"})
      */
-    public function planning(Child $child, ActivityRepository $activityRepository): Response
+    public function planning(Child $child, ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
         // Voter Control
         $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
 
-        $dates = [];
-        for ($i = 0; $i < 7; $i++) {
-            $dates[] = new \DateTimeImmutable("today + $i days");
-        }
+        $activities = $activityRepository->findByUser($this->getUser());
 
-        return $this->render('children/planning.html.twig', [
+        $planning = $planningService->getPlanning($activities);
+
+        return $this->render('children/index.html.twig', [
             'child' => $child,
-            'dates' => $dates,
-            'activities' => $activityRepository->findByChild($child)
+            'planning' => $planning
         ]);
     }
 

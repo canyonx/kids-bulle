@@ -30,7 +30,7 @@ class ActivityAddChildrenType extends AbstractType
 
         $builder
             ->add('addChildrens', EntityType::class, [
-                'label' => 'Participants',
+                'label' => 'Mes enfants',
                 'class' => Child::class,
                 'multiple' => true,
                 'choices' => $user->getChilds(),
