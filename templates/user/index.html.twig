@@ -1,14 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ app.user.email | split("@")[0] | title }}{% endblock %}
+{% block title %}{{ app.user.firstname }} {{ app.user.lastname }}{% endblock %}
 
 {% block body %}
-    <h1>{{ app.user.email | split("@")[0] | title }}</h1>
-    <p>
-        {{ app.user.email }}, <a href="{{ path('app_user_edit') }}">edit</a>
-    </p>
+    <section class="row">
+        <div class="col">
+            <h1>{{ app.user.firstname }} {{ app.user.lastname }}</h1>
+            <a href="{{ path('app_user_edit') }}">edit</a>
+        </div>
+        <div class="col">
+            <p>
+                {{ app.user.email }} <br>
+                {{ app.user.phone }} <br>
+                {{ app.user.fulladress }}
+            </p>
+        </div>
+    </section>
+    
     <hr>
-    <div class="row">
+
+    <section>
         <h2>Mes enfants</h2>
         {% if app.user.childs %}
             {% include "children/_table.html.twig" %}
@@ -17,10 +28,12 @@
                 Pas encore d'enfant sur votre profil !
             </p>
         {% endif %}
-    </div>
+    </section>
+
     <hr>
-    <div class="row">
-            <h2>Le planning</h2>
-            {% include "user/_planning.html.twig" %}
-    </div>
+
+    <section>
+        <h2>Le planning</h2>
+        {% include "user/_planning.html.twig" %}
+    </section>
 {% endblock %}

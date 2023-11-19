@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Child;
 use App\Form\ChildType;
+use App\Repository\ActivityRepository;
 use App\Repository\ChildRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +48,26 @@ class ChildrenController extends AbstractController
 
         return $this->render('children/show.html.twig', [
             'child' => $child,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/planning", name="app_children_planning", methods={"GET"})
+     */
+    public function planning(Child $child, ActivityRepository $activityRepository): Response
+    {
+        // Voter Control
+        $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
+
+        $dates = [];
+        for ($i = 0; $i < 7; $i++) {
+            $dates[] = new \DateTimeImmutable("today + $i days");
+        }
+
+        return $this->render('children/planning.html.twig', [
+            'child' => $child,
+            'dates' => $dates,
+            'activities' => $activityRepository->findByChild($child)
         ]);
     }
 

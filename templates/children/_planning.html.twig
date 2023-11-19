@@ -3,7 +3,6 @@
         <tr class="row">
             <th class="col">Date</th>
             <th class="col">Activity</th>
-            <th class="col">Childs</th>
         </tr>
     </thead>
     <tbody>
@@ -24,21 +23,6 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
-                </td>
-                <td class="col">
-                    {% for activity in activities %}
-                        {% if (date | date("Y-m-d")) is same as (activity.dateAt | date("Y-m-d")) %}
-                        
-                            {% for child in activity.childrens %}
-                                {% if is_granted("CHILD_ACCESS", child) %}
-                                    <li>
-                                        {{ child.firstname }}
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                                    
-                        {% endif %}
-                    {% endfor %}
                 </td>
             </tr>
         {% endfor %}

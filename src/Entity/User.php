@@ -43,6 +43,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $childs;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $fullAdress;
+
     public function __construct()
     {
         $this->childs = new ArrayCollection();
@@ -163,6 +183,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $child->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getFullAdress(): ?string
+    {
+        return $this->fullAdress;
+    }
+
+    public function setFullAdress(string $fullAdress): self
+    {
+        $this->fullAdress = $fullAdress;
 
         return $this;
     }

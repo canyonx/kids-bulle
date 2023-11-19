@@ -3,12 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use DateTimeImmutable;
-use App\Entity\Activity;
 use App\Entity\Child;
+use App\Entity\Activity;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Activity>
@@ -46,10 +44,10 @@ class ActivityRepository extends ServiceEntityRepository
     /**
      * @return Activity[] Returns an array of Activity objects
      */
-    public function findByDateBetween(DateTimeImmutable $dateStart = null, int $days = 7): array
+    public function findByDateBetween(\DateTimeImmutable $dateStart = null, int $days = 7): array
     {
         $qb = $this->createQueryBuilder('a');
-        ActivityUtil::ByDateBetween($qb);
+        ActivityUtil::ByDateBetween($qb, $dateStart, $days);
         return $qb->setMaxResults(40)
             ->getQuery()
             ->getResult();

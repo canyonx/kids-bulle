@@ -3,10 +3,9 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>BirthAt</th>
+                <th>Fullname</th>
                 <th>Category</th>
+                <th>Planning</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -14,10 +13,11 @@
         {% for child in app.user.childs %}
             <tr>
                 <td>{{ child.id }}</td>
-                <td>{{ child.firstname }}</td>
-                <td>{{ child.lastname }}</td>
-                <td>{{ child.birthAt ? child.birthAt|date('Y-m-d') : '' }}</td>
+                <td>{{ child.firstname }} {{ child.lastname }}</td>
                 <td>{{ child.category ? child.category : '' }}</td>
+                <td>
+                    <a href="{{ path('app_children_planning', {'id': child.id}) }}">Planning de {{ child.firstname }}</a>
+                </td>
                 <td>
                     <a href="{{ path('app_children_show', {'id': child.id}) }}">show</a>
                     <a href="{{ path('app_children_edit', {'id': child.id}) }}">edit</a>

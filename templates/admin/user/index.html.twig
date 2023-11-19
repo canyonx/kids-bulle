@@ -8,20 +8,23 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Fullname</th>
                 <th>Email</th>
+                <th>Phone</th>
+                <th>Adress</th>
                 <th>Roles</th>
-                <th>Password</th>
+                <th></th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
+                <td>{{ user.firstname }} {{ user.lastname }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.fulladress }}</td>
+                <td>{{ user.roles[0] | split('_')[1] }}</td>
                 <td>
                     <a href="{{ path('app_admin_user_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>

@@ -6,9 +6,13 @@
     <h1>Kid's Bulle</h1>
     <p>Système de planning pour inscrire les enfants aux activités des clubs.</p>
 
-    {% if is_granted("ROLE_USER") %}
-        {% include "home/_planning.html.twig" %}
-        {% else %}
-        <a class="btn btn-primary" href="{{ path('app_login') }}">Se connecter</a>
-    {% endif %}
+    <h2>Les Cours</h2>
+    <div class="row">
+        {% for category in categories %}
+            <div class="col alert alert-secondary m-3" style="background-color:{{ category.color }}">
+                <h3>{{ category.name }}</h3>
+                <p>{{ category.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

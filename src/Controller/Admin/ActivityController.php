@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Activity;
 use App\Form\ActivityType;
 use App\Repository\ActivityRepository;
+use App\Service\PlanningService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,11 @@ class ActivityController extends AbstractController
     /**
      * @Route("/", name="app_admin_activity_index", methods={"GET"})
      */
-    public function index(ActivityRepository $activityRepository): Response
+    public function index(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
         return $this->render('admin/activity/index.html.twig', [
-            'activities' => $activityRepository->findAll(),
+            'dates' => $planningService->getArrayDates(),
+            'activities' => $activityRepository->findBy([], ['dateAt' => 'ASC']),
         ]);
     }
 
