@@ -25,6 +25,16 @@
                     </ul>
                 </td>
             </tr>
+            <tr>
+                <th>Activities</th>
+                <td>
+                    <ul>
+                        {% for activity in category.activities %}
+                            <li>{{ activity.dateAt|date('Y-m-d H:i') }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
         </tbody>
     </table>
 

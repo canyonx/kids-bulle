@@ -4,6 +4,9 @@
 
 {% block body %}
     <h1>{{ app.user.email | split("@")[0] | title }}</h1>
+    <p>
+        {{ app.user.email }}, <a href="{{ path('app_user_edit') }}">edit</a>
+    </p>
     <hr>
     <div class="row">
         <h2>Mes enfants</h2>
@@ -17,7 +20,7 @@
     </div>
     <hr>
     <div class="row">
-            <h2>Mes infos</h2>
-            {% include "user/_table.html.twig" %}
+            <h2>Le planning</h2>
+            {% include "user/_planning.html.twig" %}
     </div>
 {% endblock %}

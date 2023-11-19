@@ -24,7 +24,12 @@
                 <td>
                     <ul>
                         {% for child in activity.childrens %}
-                            <li>{{ child }}</li>
+                            <li>
+                                {{ child }}
+                                {% if is_granted("CHILD_ACCESS", child) %}
+                                - <a href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">remove</a>
+                             </li>    
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </td>
@@ -32,17 +37,12 @@
             <tr>
                 <th>Ajouter un enfant</th>
                 <td>
-                <form action="">
-                    <select class="form-select" aria-label="Default select example">
-                    {% for child in app.user.childs %}
-                        {% if child in activity.childrens %}
-                        {% else %}
-                            <option value="{{ child.id }}">{{ child }}</option>
-                        {% endif %}
-                    {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-primary">Ajouter</button>
-                </form>
+
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                {{ form_end(form) }}
+
                 </td>
             </tr>
         </tbody>

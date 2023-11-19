@@ -2,10 +2,13 @@
 
 namespace App\Repository;
 
-use App\Entity\Activity;
+use App\Entity\User;
 use DateTimeImmutable;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Activity;
+use App\Entity\Child;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Activity>
@@ -43,16 +46,37 @@ class ActivityRepository extends ServiceEntityRepository
     /**
      * @return Activity[] Returns an array of Activity objects
      */
-    public function findByDateBetween(DateTimeImmutable $dateStart, int $days = 7): array
+    public function findByDateBetween(DateTimeImmutable $dateStart = null, int $days = 7): array
     {
-        $dateEnd = new \DateTimeImmutable($dateStart->format("Y-m-d") . "+ $days days");
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.dateAt >= :dateStart')
-            ->setParameter('dateStart', $dateStart)
-            ->andWhere('a.dateAt <= :dateEnd')
-            ->setParameter('dateEnd', $dateEnd)
-            ->orderBy('a.dateAt', 'ASC')
-            ->setMaxResults(40)
+        $qb = $this->createQueryBuilder('a');
+        ActivityUtil::ByDateBetween($qb);
+        return $qb->setMaxResults(40)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Activity[] Returns an array of Activity objects
+     */
+    public function findByUser(User $user): array
+    {
+        $qb = $this->createQueryBuilder('a');
+        ActivityUtil::ByDateBetween($qb);
+        ActivityUtil::ByChildsOfUser($qb, $user);
+        return $qb->setMaxResults(40)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Activity[] Returns an array of Activity objects
+     */
+    public function findByChild(Child $child): array
+    {
+        $qb = $this->createQueryBuilder('a');
+        ActivityUtil::ByDateBetween($qb);
+        ActivityUtil::ByChild($qb, $child);
+        return $qb->setMaxResults(40)
             ->getQuery()
             ->getResult();
     }

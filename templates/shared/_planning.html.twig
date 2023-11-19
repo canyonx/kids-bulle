@@ -15,7 +15,7 @@
                         {% for activity in activities %}
                             {% if (date | date("Y-m-d")) is same as (activity.dateAt | date("Y-m-d")) %}
                                 <li>
-                                    <a href="{{ path('app_activity_show', {id: activity.id}) }}">{{ activity.dateAt | date("H:i") }} - {{ activity.category }}</a>
+                                    <a href="{{ path('app_activity_show', {id: activity.id}) }}">{{ activity.dateAt | date("H:i") }} - {{ activity.category }} - {{ activity.childrens | length }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}

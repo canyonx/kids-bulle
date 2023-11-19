@@ -14,16 +14,10 @@ class HomeController extends AbstractController
      */
     public function index(ActivityRepository $activityRepository): Response
     {
-        $dates = [];
-        for ($i = 0; $i < 7; $i++) {
-            $dates[] = new \DateTimeImmutable("today + $i days");
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_user');
         }
 
-        $activities = $activityRepository->findByDateBetween(new \DateTimeImmutable("today"));
-
-        return $this->render('home/index.html.twig', [
-            'dates' => $dates,
-            'activities' => $activities
-        ]);
+        return $this->render('home/index.html.twig', []);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\ActivityRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +20,17 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="app_user", methods={"GET"})
      */
-    public function show(): Response
+    public function show(ActivityRepository $activityRepository): Response
     {
+        $dates = [];
+        for ($i = 0; $i < 7; $i++) {
+            $dates[] = new \DateTimeImmutable("today + $i days");
+        }
+
         return $this->render('user/index.html.twig', [
             'user' => $this->getUser(),
+            'dates' => $dates,
+            'activities' => $activityRepository->findByUser($this->getUser())
         ]);
     }
 
