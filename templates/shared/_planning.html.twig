@@ -2,43 +2,48 @@
     <thead>
         <tr>
             <th>Date</th>
+            <th>Time</th>
             <th>Activity</th>
-            <th>Childs</th>
+            <th>Teacher</th>
+            <th>Childrens</th>
+            {% if is_granted("ROLE_USER") %} 
+                <th>Childs</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
         {% for date, activities in planning %}
             {% for activity in activities %}
-                <tr>
+                <tr class="align-middle">
                     {% if loop.first %}
                         <td {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
                             {{ date|date('d.m') }}
                         </td>
                     {% endif %}
+                    <td>{{ activity.dateAt|date("H:i") }}</td>
                     <td>
-                        <a href="{{ path('app_activity_show', {id: activity.id}) }}">
-                            {{ activity.dateAt|date("H:i") }} - 
-                            {{ activity.category }} - 
-                            {{ activity.childrens|length }}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('app_admin_activity_show', {id: activity.id}) }}">
+                        {% else %}
+                            <a href="{{ path('app_activity_show', {id: activity.id}) }}">
+                        {% endif %}
+                            {{ activity.category }}                            
                         </a>
                                     
                     </td>
-                    <td>
-                        {% for child in activity.childrens %}
-                            {% if is_granted("CHILD_ACCESS", child) or is_granted("ROLE_ADMIN") %}
-                                <li>
-                                    {{ child.firstname }}
-
-
-                                    {# TODO : Selon granted remove child #}
-                                    {# Maybe not #}
-
-
-
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </td>
+                    <td>{{ activity.teacher }}</td>
+                    <td>{{ activity.childrens|length }}</td>
+                    {% if is_granted("ROLE_USER") %} 
+                        <td>
+                            {% for child in activity.childrens %}
+                                {% if is_granted("CHILD_ACCESS", child) or is_granted("ROLE_ADMIN") %}
+                                    <li>
+                                        {{ child.firstname }} {{ child.lastname }}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    {% endif %}
                 </tr>
             {% else %}
 				<tr>

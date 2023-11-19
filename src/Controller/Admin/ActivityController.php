@@ -22,7 +22,7 @@ class ActivityController extends AbstractController
      */
     public function index(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
-        $activities = $activityRepository->findByUser($this->getUser());
+        $activities = $activityRepository->findByDateBetween();
 
         $planning = $planningService->getPlanning($activities);
 

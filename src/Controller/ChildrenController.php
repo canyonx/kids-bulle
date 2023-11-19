@@ -60,7 +60,7 @@ class ChildrenController extends AbstractController
         // Voter Control
         $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
 
-        $activities = $activityRepository->findByUser($this->getUser());
+        $activities = $activityRepository->findByChild($child);
 
         $planning = $planningService->getPlanning($activities);
 

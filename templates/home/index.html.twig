@@ -3,16 +3,28 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
+<section>
     <h1>Kid's Bulle</h1>
     <p>Système de planning pour inscrire les enfants aux activités des clubs.</p>
+</section>
 
+<section>
     <h2>Les Cours</h2>
     <div class="row">
         {% for category in categories %}
-            <div class="col alert alert-secondary m-3" style="background-color:{{ category.color }}">
-                <h3>{{ category.name }}</h3>
-                <p>{{ category.description }}</p>
+            <div class="col-4">
+                <div class="alert" style="background-color:{{ category.color }}">
+                    <h3>{{ category.name }}</h3>
+                    <p>{{ category.description }}</p>
+                </div>
             </div>
         {% endfor %}
     </div>
+</section>
+
+<section>
+    <h2>Le Planning</h2>
+    {% include "shared/_planning.html.twig" %}
+</section>
+
 {% endblock %}
