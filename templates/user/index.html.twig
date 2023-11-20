@@ -16,8 +16,8 @@
                         {{ user.fulladress }}
                     </p>
                 </div>
-                <ul class="list-group list-group-flush">
-                    {% if user.childs %}
+                {% if user.childs|length > 0 %}
+                    <ul class="list-group list-group-flush">
                         <table class="table table-borderless">
                             <tbody>
                                 {% for child in user.childs %}
@@ -32,14 +32,9 @@
                                 {% endfor %}
                             </tbody>
                         </table>
-                        
-                    {% else %}
-                        <p>
-                            Pas encore d'enfant sur votre profil !
-                        </p>
-                    {% endif %}
+                    </ul>
+                {% endif %}
                     
-                </ul>
                 <div class="card-footer">
                     <a class="card-link" href="{{ path('app_user_edit') }}">edit</a>
                     <a class="card-link" href="{{ path('app_children_new') }}">add child</a>

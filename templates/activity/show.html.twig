@@ -22,15 +22,16 @@
                     </li>    
             {% endfor %}
         </ul>
-        <div class="card-body">
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-            {{ form_end(form) }}
-        </div>
+        {% if app.user.childs|length > 0 %}
+            <div class="card-body">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
         <div class="card-footer">
             <a class="card-link" href="{{ path('app_user') }}">back to profile</a>
-            <a class="card-link" href="{{ path('app_activity_edit', {'id': activity.id}) }}">edit</a>
         </div>
 
     </section>
