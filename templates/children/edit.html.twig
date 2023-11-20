@@ -3,11 +3,16 @@
 {% block title %}Edit Child{% endblock %}
 
 {% block body %}
-    <h1>Edit Child</h1>
-
-    {{ include('children/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_user') }}">back to profile</a>
-
-    {{ include('children/_delete_form.html.twig') }}
+    <div class="card col-6 mx-auto">
+        <div class="card-header">
+            <h1 class="card-title">Edit Child</h1>
+            <a class="btn btn-light" href="{{ path('app_user') }}">back to profile</a>
+        </div>
+        <div class="card-body">
+            {{ include('children/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+        <div class="card-footer text-end">
+            {{ include('children/_delete_form.html.twig') }}
+        </div>
+    </div>    
 {% endblock %}

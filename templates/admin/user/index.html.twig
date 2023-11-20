@@ -37,7 +37,7 @@
                             </td>
                             <td>{{ user.roles[0] | split('_')[1] }}</td>
                             <td>
-                                <a href="{{ path('app_admin_user_edit', {id: user.id}) }}">edit</a>
+                                <a class="btn btn-link" href="{{ path('app_admin_user_edit', {id: user.id}) }}">edit</a>
                             </td>
                         </tr>
                     {% else %}

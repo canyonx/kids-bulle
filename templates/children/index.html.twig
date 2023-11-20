@@ -3,9 +3,12 @@
 {% block title %}Planning de {{ child.firstname }}{% endblock %}
 
 {% block body %}
-    <h1>Planning de {{ child.firstname }}</h1>
-
-    {% include "shared/_planning.html.twig" %}
-
-    <a href="{{ path('app_user') }}">back to profile</a>
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Planning de {{ child.firstname }}</h1>
+        </div>
+        <div class="card-body">
+            {% include "shared/_planning.html.twig" %}
+        </div>
+    </div>
 {% endblock %}

@@ -15,10 +15,10 @@
         <ul class="list-group list-group-flush">
             {% for child in activity.childrens %}
                 <li class="list-group-item">
-                    {{ child }}
                     {% if is_granted("CHILD_ACCESS", child) %}
-                        - <a href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">remove</a>
+                        <a class="btn btn-link" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}"><i class="bi bi-x-square-fill"></i></a>
                     {% endif %}
+                    {{ child }}
                     </li>    
             {% endfor %}
         </ul>

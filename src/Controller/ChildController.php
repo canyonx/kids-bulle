@@ -97,11 +97,6 @@ class ChildController extends AbstractController
                     $child->addActivity($activity);
                 }
             }
-            // $activities = $form['activities']->getData();
-            // dd($activities);
-            // foreach ($activities as $activity) {
-            //     $child->addActivity($activity);
-            // }
             $childRepository->add($child, true);
 
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);

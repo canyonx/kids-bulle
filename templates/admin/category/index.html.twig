@@ -9,34 +9,25 @@
             <a class="btn btn-light" href="{{ path('app_admin_category_new') }}">Create new</a>
         </div>
         <div class="card-body">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for category in categories %}
-                    <tr>
-                        <td>
-                            <button class="btn" style="background-color: {{ category.color }}">{{ category.name }}</button>
-                        </td>
-                        <td>
-                            <a href="{{ path('app_admin_category_show', {'id': category.id}) }}">show</a>
-                            <a href="{{ path('app_admin_category_edit', {'id': category.id}) }}">edit</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4">no records found</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div class="row">
+            {% for category in categories %}
+                <div class="col-4">
+                    <div class="card" style="background-color: {{ category.color }}">
+                     <div class="card-header">
+                        <h1 class="card-title">{{ category.name }}</h1>
+                     </div>
+                     <div class="card-body">
+                        {{ category.description }}
+                     </div>
+                     <div class="card-footer">
+                        <a class="card-link" href="{{ path('app_admin_category_edit', {'id': category.id}) }}">edit</a>
+                     </div>
+                    </div>
+                </div>
+            {% else %}
+                <p> colspan="4">no records found</p>
+            {% endfor %}
+        </div>
         </div>
     </div>
-    
-
-    
 {% endblock %}

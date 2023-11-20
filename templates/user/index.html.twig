@@ -22,12 +22,11 @@
                             <tbody>
                                 {% for child in user.childs %}
                                     <tr>
-                                        <td>{{ child.firstname }} {{ child.lastname }}</td>
                                         <td>
-                                            <a href="{{ path('app_children_planning', {'id': child.id}) }}">Planning de {{ child.firstname }}</a>
+                                            <a class="btn btn-primary" href="{{ path('app_children_planning', {'id': child.id}) }}">Planning de {{ child.firstname }}</a>
                                         </td>
                                         <td>
-                                            <a href="{{ path('app_children_edit', {'id': child.id}) }}">edit</a>
+                                            <a class="btn btn-link" href="{{ path('app_children_edit', {'id': child.id}) }}">edit</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
