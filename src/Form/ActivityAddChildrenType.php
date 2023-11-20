@@ -33,6 +33,7 @@ class ActivityAddChildrenType extends AbstractType
                 'label' => 'Mes enfants',
                 'class' => Child::class,
                 'multiple' => true,
+                'expanded' => true,
                 'choices' => $user->getChilds(),
                 'mapped' => false
             ]);

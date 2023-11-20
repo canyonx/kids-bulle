@@ -38,11 +38,15 @@ class UserController extends AbstractController
      */
     public function activities(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
-        $activities = $activityRepository->findByTeacher($this->getUser());
+        if (in_array('ROLE_TEACHER', $this->getUser()->getRoles(), true)) {
+            $activities = $activityRepository->findByTeacher($this->getUser());
+        } else {
+            $activities = $activityRepository->findByUser($this->getUser());
+        }
 
         $planning = $planningService->getPlanning($activities);
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/activities.html.twig', [
             'user' => $this->getUser(),
             'planning' => $planning
         ]);

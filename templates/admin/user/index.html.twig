@@ -3,47 +3,50 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Fullname</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Adress</th>
-                <th>Childrens</th>
-                <th>Roles</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.firstname }} {{ user.lastname }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.phone }}</td>
-                <td>{{ user.fulladress }}</td>
-                <td>
-                    {% for child in user.childs %}
-                        <li>
-                            {{ child }}
-                        </li>
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">User index</h1>
+            <a class="btn btn-light" href="{{ path('app_admin_user_new') }}">Create new</a>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fullname</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Adress</th>
+                        <th>Childrens</th>
+                        <th>Roles</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.firstname }} {{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phone }}</td>
+                            <td>{{ user.fulladress }}</td>
+                            <td>
+                                {% for child in user.childs %}
+                                    <li>
+                                        {{ child }}
+                                    </li>
+                                {% endfor %}
+                            </td>
+                            <td>{{ user.roles[0] | split('_')[1] }}</td>
+                            <td>
+                                <a href="{{ path('app_admin_user_edit', {id: user.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">no records found</td>
+                        </tr>
                     {% endfor %}
-                </td>
-                <td>{{ user.roles[0] | split('_')[1] }}</td>
-                <td>
-                    <a href="{{ path('app_admin_user_edit', {id: user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-     <a href="{{ path('app_admin_user_new') }}">Create new</a>
-
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

@@ -3,13 +3,10 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-<section>
-    <h1>Kid's Bulle</h1>
-    <p>Système de planning pour inscrire les enfants aux activités des clubs.</p>
-</section>
+<section class="mb-4">
+    <h1 class="text-light">Kid's Bulle</h1>
+    <p class="text-light">Système de planning pour inscrire les enfants aux activités des clubs.</p>
 
-<section>
-    <h2>Les Cours</h2>
     <div class="row">
         {% for category in categories %}
             <div class="col-4">
@@ -22,9 +19,15 @@
     </div>
 </section>
 
-<section>
-    <h2>Le Planning</h2>
-    {% include "shared/_planning.html.twig" %}
+<section class="mb-4">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Planning</h1>
+        </div>
+        <div class="card-body">
+            {% include "shared/_planning.html.twig" %}
+        </div>
+    </div>
 </section>
 
 {% endblock %}

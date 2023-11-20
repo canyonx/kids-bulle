@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand" aria-label="Second navbar example" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand mb-4" aria-label="Second navbar example" style="background-color: #e3f2fd;">
     <div class="container-fluid">
 
         <a class="navbar-brand" href="{{ path('app_home') }}">Kid's Bulle</a>
@@ -10,12 +10,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_user') }}">Mon profil</a>
                     </li>
-                    {% if is_granted('ROLE_TEACHER') %}
-                        <li class="nav-item">
-                        {# TODO : link teacher planning #}
-                            <a class="nav-link" href="{{ path('app_user_activities')}}">Cours</a>
-                        </li>
-                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_user_activities')}}">Planning</a>
+                    </li>
                 </ul>
             {% endif %}
 

@@ -30,11 +30,6 @@ class Category
     private $activities;
 
     /**
-     * @ORM\OneToMany(targetEntity=Child::class, mappedBy="category")
-     */
-    private $childs;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -47,7 +42,6 @@ class Category
     public function __construct()
     {
         $this->activities = new ArrayCollection();
-        $this->childs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,36 +94,6 @@ class Category
     public function __toString()
     {
         return ucfirst($this->getName());
-    }
-
-    /**
-     * @return Collection<int, Child>
-     */
-    public function getChilds(): Collection
-    {
-        return $this->childs;
-    }
-
-    public function addChild(Child $child): self
-    {
-        if (!$this->childs->contains($child)) {
-            $this->childs[] = $child;
-            $child->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChild(Child $child): self
-    {
-        if ($this->childs->removeElement($child)) {
-            // set the owning side to null (unless already changed)
-            if ($child->getCategory() === $this) {
-                $child->setCategory(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getDescription(): ?string

@@ -1,39 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ app.user.firstname }} {{ app.user.lastname }}{% endblock %}
+{% block title %}{{ user.firstname }} {{ user.lastname }}{% endblock %}
 
 {% block body %}
-    <section class="row">
-        <div class="col">
-            <h1>{{ app.user.firstname }} {{ app.user.lastname }}</h1>
-            <a href="{{ path('app_user_edit') }}">edit</a>
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <section class="card">
+                <div class="card-header">
+                    <h1>{{ user.firstname }} {{ user.lastname }}</h1>
+                </div>
+                <div class="card-body">
+                    <p>
+                        {{ user.email }} <br>
+                        {{ user.phone }} <br>
+                        {{ user.fulladress }}
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% if user.childs %}
+                        <table class="table table-borderless">
+                            <tbody>
+                                {% for child in user.childs %}
+                                    <tr>
+                                        <td>{{ child.firstname }} {{ child.lastname }}</td>
+                                        <td>
+                                            <a href="{{ path('app_children_planning', {'id': child.id}) }}">Planning de {{ child.firstname }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('app_children_edit', {'id': child.id}) }}">edit</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                    {% else %}
+                        <p>
+                            Pas encore d'enfant sur votre profil !
+                        </p>
+                    {% endif %}
+                    
+                </ul>
+                <div class="card-footer">
+                    <a class="card-link" href="{{ path('app_user_edit') }}">edit</a>
+                    <a class="card-link" href="{{ path('app_children_new') }}">add child</a>
+                </div>
+            </section>
         </div>
-        <div class="col">
-            <p>
-                {{ app.user.email }} <br>
-                {{ app.user.phone }} <br>
-                {{ app.user.fulladress }}
-            </p>
-        </div>
-    </section>
-    
-    <hr>
-
-    <section>
-        <h2>Mes enfants</h2>
-        {% if app.user.childs %}
-            {% include "children/_table.html.twig" %}
-        {% else %}
-            <p>
-                Pas encore d'enfant sur votre profil !
-            </p>
-        {% endif %}
-    </section>
-
-    <hr>
-
-    <section>
-        <h2>Le planning</h2>
-        {% include "shared/_planning.html.twig" %}
-    </section>
+    </div>
 {% endblock %}

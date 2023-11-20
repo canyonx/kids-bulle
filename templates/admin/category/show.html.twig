@@ -20,21 +20,11 @@
                 </td>
             </tr>
             <tr>
-                <th>Childs</th>
-                <td>
-                    <ul>
-                        {% for child in category.childs %}
-                            <li>{{ child }}</li>
-                        {% endfor %}
-                    </ul>
-                </td>
-            </tr>
-            <tr>
                 <th>Activities</th>
                 <td>
-                    <ul>
+                    <ul class="list-group">
                         {% for activity in category.activities %}
-                            <li>{{ activity.dateAt|date('Y-m-d H:i') }}</li>
+                            <li class="list-group-item">{{ activity.dateAt|date('Y-m-d H:i') }}</li>
                         {% endfor %}
                     </ul>
                 </td>

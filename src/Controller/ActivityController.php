@@ -77,7 +77,8 @@ class ActivityController extends AbstractController
     public function removeChild(
         Activity $activity,
         Child $child,
-        ActivityRepository $activityRepository
+        ActivityRepository $activityRepository,
+        Request $request
     ): Response {
         // Voter Control
         $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
@@ -85,6 +86,6 @@ class ActivityController extends AbstractController
         $activity->removeChildren($child);
         $activityRepository->add($activity, true);
 
-        return $this->redirectToRoute('app_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
     }
 }

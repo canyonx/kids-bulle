@@ -26,21 +26,21 @@ class ChildUpdateListener
         Child $child,
         PostUpdateEventArgs $event
     ): void {
-        // Remove existing activities
-        $activities = $this->activityRepository->findByChild($child);
-        foreach ($activities as $activity) {
-            $child->removeActivity($activity);
-        }
-        $this->em->flush();
+        // // Remove existing activities
+        // $activities = $this->activityRepository->findByChild($child);
+        // foreach ($activities as $activity) {
+        //     $child->removeActivity($activity);
+        // }
+        // $this->em->flush();
 
-        // Add new activities
-        if ($child->getCategory()) {
-            $activities = $this->activityRepository->findBy(['category' => $child->getCategory()]);
-            foreach ($activities as $activity) {
-                $child->addActivity($activity);
-            }
-        }
+        // // Add new activities
+        // if ($child->getCategory()) {
+        //     $activities = $this->activityRepository->findBy(['category' => $child->getCategory()]);
+        //     foreach ($activities as $activity) {
+        //         $child->addActivity($activity);
+        //     }
+        // }
 
-        $this->em->flush();
+        // $this->em->flush();
     }
 }

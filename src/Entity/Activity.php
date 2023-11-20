@@ -109,4 +109,9 @@ class Activity
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return ucwords($this->getDateAt()->format('d.m') . ' ' . $this->getCategory()->getName());
+    }
 }
