@@ -34,6 +34,21 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/activities", name="app_user_activities", methods={"GET"})
+     */
+    public function activities(ActivityRepository $activityRepository, PlanningService $planningService): Response
+    {
+        $activities = $activityRepository->findByTeacher($this->getUser());
+
+        $planning = $planningService->getPlanning($activities);
+
+        return $this->render('user/index.html.twig', [
+            'user' => $this->getUser(),
+            'planning' => $planning
+        ]);
+    }
+
+    /**
      * @Route("/edit", name="app_user_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $hasher): Response

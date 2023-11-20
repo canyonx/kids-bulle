@@ -41,6 +41,11 @@ class ActivityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Add childs of a category to a new activity
+            $childs = $activity->getCategory()->getChilds();
+            foreach ($childs as $child) {
+                $activity->addChildren($child);
+            }
             $activityRepository->add($activity, true);
 
             return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);

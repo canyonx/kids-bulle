@@ -32,7 +32,11 @@ class UserFixtures
         $admin = new User;
         $admin->setEmail('admin@oflix.fr')
             ->setPassword($this->userPasswordHasherInterface->hashPassword($admin, 'admin'))
-            ->setRoles(['ROLE_ADMIN']);
+            ->setRoles(['ROLE_ADMIN'])
+            ->setFirstname('exemple')
+            ->setLastname('admin')
+            ->setPhone('09876543')
+            ->setFullAdress('123 rue du soleil 04567 Astre');
 
         $this->createChildren($admin);
 
@@ -41,7 +45,11 @@ class UserFixtures
         // create User
         $user = new User;
         $user->setEmail('user@oflix.fr')
-            ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'user'));
+            ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'user'))
+            ->setFirstname('exemple')
+            ->setLastname('user')
+            ->setPhone('09876543')
+            ->setFullAdress('123 rue du soleil 04567 Astre');;
 
         $this->createChildren($user);
 

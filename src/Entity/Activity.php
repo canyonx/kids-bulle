@@ -25,11 +25,6 @@ class Activity
     private $dateAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Teacher::class, inversedBy="activities")
-     */
-    private $teacher;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="activities")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -39,6 +34,11 @@ class Activity
      * @ORM\ManyToMany(targetEntity=Child::class, inversedBy="activities")
      */
     private $childrens;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="activities")
+     */
+    private $teacher;
 
     public function __construct()
     {
@@ -58,18 +58,6 @@ class Activity
     public function setDateAt(\DateTimeImmutable $dateAt): self
     {
         $this->dateAt = $dateAt;
-
-        return $this;
-    }
-
-    public function getTeacher(): ?Teacher
-    {
-        return $this->teacher;
-    }
-
-    public function setTeacher(?Teacher $teacher): self
-    {
-        $this->teacher = $teacher;
 
         return $this;
     }
@@ -106,6 +94,18 @@ class Activity
     public function removeChildren(Child $children): self
     {
         $this->childrens->removeElement($children);
+
+        return $this;
+    }
+
+    public function getTeacher(): ?User
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?User $teacher): self
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }

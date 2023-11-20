@@ -22,7 +22,53 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('admin/user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $userRepository->findBy([], ['roles' => 'DESC']),
+        ]);
+    }
+
+    /**
+     * @Route("/new", name="app_admin_user_new")
+     */
+    public function new(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        UserRepository $userRepository
+    ): Response {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
+            // $user->setRoles(['ROLE_USER']);
+            $userRepository->add($user, true);
+            return $this->redirectToRoute('app_admin_user_index');
+        }
+
+        return $this->renderForm('admin/user/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="app_admin_user_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    {
+        $form = $this->createForm(UserType::class, $user, ['option' => 'edit_role']);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setRoles([$form['role']->getData()]);
+            $userRepository->add($user, true);
+
+            return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('admin/user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
         ]);
     }
 }

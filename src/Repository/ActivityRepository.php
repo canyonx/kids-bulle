@@ -79,6 +79,19 @@ class ActivityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return Activity[] Returns an array of Activity objects
+     */
+    public function findByTeacher(User $user): array
+    {
+        $qb = $this->createQueryBuilder('a');
+        ActivityUtil::ByDateBetween($qb);
+        ActivityUtil::ByTeacher($qb, $user);
+        return $qb->setMaxResults(40)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Activity[] Returns an array of Activity objects
     //     */

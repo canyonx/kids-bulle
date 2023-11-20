@@ -67,4 +67,19 @@ class ActivityUtil
         )
             ->setParameter('child', $child);
     }
+
+    /**
+     * Search Activity for a Teacher
+     *
+     * @param QueryBuilder $qb
+     * @return QueryBuilder
+     */
+    public static function ByTeacher(QueryBuilder $qb, User $user): QueryBuilder
+    {
+        return  $qb->andWhere('a.teacher = :user')
+            ->setParameter('user', $user)
+            ->join('a.teacher', 'u')
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', '%ROLE_TEACHER%');;
+    }
 }

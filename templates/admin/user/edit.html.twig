@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit user role for {{ user.firstname }} {{ user.lastname }}{% endblock %}
+
+{% block body %}
+    <h1>Edit user role for {{ user.firstname }} {{ user.lastname }}</h1>
+
+    {{ include('admin/user/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_admin_user_index') }}">back to list</a>
+
+{% endblock %}
