@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Child{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block body %}
     <div class="card col-6 mx-auto">
         <div class="card-header">
-            <h1 class="card-title">Edit Child</h1>
+            <h1 class="card-title">{{ title }}</h1>
             <a class="btn btn-light" href="{{ path('app_user') }}">back to profile</a>
         </div>
         <div class="card-body">

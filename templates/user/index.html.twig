@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-6 mx-auto">
+        <div class="col-md-6 mx-auto">
             <section class="card">
                 <div class="card-header">
                     <h1>{{ user.firstname }} {{ user.lastname }}</h1>
@@ -24,6 +24,9 @@
                                     <tr>
                                         <td>
                                             <a class="btn btn-primary" href="{{ path('app_children_planning', {'id': child.id}) }}">Planning de {{ child.firstname }}</a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-secondary" href="{{ path('app_children_add_activities', {'id': child.id}) }}">Inscrire</a>
                                         </td>
                                         <td>
                                             <a class="btn btn-link" href="{{ path('app_children_edit', {'id': child.id}) }}">edit</a>

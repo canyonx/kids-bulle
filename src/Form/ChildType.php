@@ -39,24 +39,27 @@ class ChildType extends AbstractType
         /** @var User */
         $user = $this->security->getUser();
 
-        $categories = $this->categoryRepository->findAll();
 
-        $builder
-            ->add('firstname', TextType::class, [
-                'label' => 'Prénom',
-                'attr' => [
-                    'placeholder' => 'John'
-                ]
-            ])
-            ->add('lastname', TextType::class, [
-                'label' => 'Nom',
-                'data' => $user->getLastname()
-            ])
-            ->add('birthAt', DateType::class, [
-                'label' => 'Date de naissance',
-                'input'  => 'datetime_immutable',
-                'widget' => 'single_text',
-            ]);
+
+        if ($options['option'] === 'default') {
+            $builder
+                ->add('firstname', TextType::class, [
+                    'label' => 'Prénom',
+                    'attr' => [
+                        'placeholder' => 'John'
+                    ]
+                ])
+                ->add('lastname', TextType::class, [
+                    'label' => 'Nom',
+                    'data' => $user->getLastname()
+                ])
+                ->add('birthAt', DateType::class, [
+                    'label' => 'Date de naissance',
+                    'input'  => 'datetime_immutable',
+                    'widget' => 'single_text',
+                ]);
+        }
+
 
         // if ($options['option'] !== 'new') {
         //     $builder->add('category', EntityType::class, [
@@ -65,22 +68,27 @@ class ChildType extends AbstractType
         //         'required' => false
         //     ]);
         // }
+        if ($options['option'] === 'add_activities') {
+            $categories = $this->categoryRepository->findAll();
+            foreach ($categories as $cat) {
 
-        foreach ($categories as $cat) {
-            $name = strtolower($this->slugger->slug($cat->getName()));
-            $builder->add($name, EntityType::class, [
-                'label' => 'Choix des cours ' . $cat->getName(),
-                'class' => Activity::class,
-                'query_builder' => function (EntityRepository $er) use ($cat): QueryBuilder {
-                    return $er->createQueryBuilder('a')
-                        ->orderBy('a.dateAt', 'ASC')
-                        ->andWhere('a.category = :cat')
-                        ->setParameter('cat', $cat);
-                },
-                'multiple' => true,
-                'expanded' => true,
-                'mapped' => false
-            ]);
+                $name = strtolower($this->slugger->slug($cat->getName()));
+
+                $builder->add($name, EntityType::class, [
+                    'label' => 'Choix des cours ' . $cat->getName(),
+                    'class' => Activity::class,
+                    'query_builder' => function (EntityRepository $er) use ($cat): QueryBuilder {
+                        return $er->createQueryBuilder('a')
+                            ->orderBy('a.dateAt', 'ASC')
+                            ->andWhere('a.category = :cat')
+                            ->setParameter('cat', $cat);
+                        // ->orderBy('a.category', 'ASC');
+                    },
+                    'multiple' => true,
+                    'expanded' => true,
+                    'mapped' => false
+                ]);
+            }
         }
     }
 

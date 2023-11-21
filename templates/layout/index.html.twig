@@ -3,16 +3,13 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <div class="card col-6 mx-auto">
+    <div class="card">
         <div class="card-header">
             <h1 class="card-title">{% block title %}{% endblock %}</h1>
             {% block linkBack %}<a class="btn btn-light" href="{{ path('app_user') }}">back to profile</a>{% endblock %}
         </div>
         <div class="card-body">
-            {% block cardBody %}{% endblock %}
-        </div>
-        <div class="card-footer text-end">
-            {% block cardFooter %}{% endblock %}
+            {% include "shared/_planning.html.twig" %}
         </div>
     </div>
 {% endblock %}

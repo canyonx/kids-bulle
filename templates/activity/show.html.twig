@@ -5,7 +5,7 @@
 {% block body %}
     <section class="card col-6 mx-auto">
         <div class="card-header">
-            <h1>Activity</h1>
+            <h1class="card-header">Activity</h1>
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
@@ -19,7 +19,7 @@
                         <a class="btn btn-link" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}"><i class="bi bi-x-square-fill"></i></a>
                     {% endif %}
                     {{ child }}
-                    </li>    
+                </li>    
             {% endfor %}
         </ul>
         {% if app.user.childs|length > 0 %}
@@ -33,7 +33,5 @@
         <div class="card-footer">
             <a class="card-link" href="{{ path('app_user') }}">back to profile</a>
         </div>
-
     </section>
-
 {% endblock %}

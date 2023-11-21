@@ -2,7 +2,6 @@
     <thead>
         <tr>
             <th>Date</th>
-            <th>Time</th>
             <th>Activity</th>
             {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
                 <th>Child</th>
@@ -16,17 +15,25 @@
         {% for date, activities in planning %}
             {% for activity in activities %}
                 <tr class="align-middle">
+                    {# Date #}
                     {% if loop.first %}
                         <td {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
-                            {{ date|date('d.m') }}
+                            {{ date|date('j M') }}
                         </td>
                     {% endif %}
-                    <td>{{ activity.dateAt|date("H:i") }}</td>
+                    {# Activity #}
                     <td>
-                        <a class="btn btn-block" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}">
-                            {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
-                        </a>
+                        {% if is_granted("ROLE_USER") %}
+                            <a class="btn btn-block" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}">
+                                {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
+                            </a>
+                        {% else %}
+                            <button class="btn btn-block" style="background-color: {{ activity.category.color }}">
+                                {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
+                            </button>
+                        {% endif %}
                     </td>
+                    {# Child #}
                     {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
                         <td class="text-start">
                         <ul class="list-group">
@@ -40,9 +47,10 @@
                             {% endfor %}
                         </td>
                     {% endif %}
+                    {# Admin #}
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>
-                            <a href="{{ path('app_admin_activity_show', {id: activity.id}) }}">
+                            <a class="btn btn-secondary" href="{{ path('app_admin_activity_show', {id: activity.id}) }}">
                                 manage                            
                             </a>
                         </td>
@@ -51,7 +59,7 @@
             {% else %}
                 <tr>
                     <td>
-                        {{ date|date('d.m') }}
+                        {{ date|date('j M') }}
                     </td>
                     <td colspan="100%"></td>
                 </tr>
