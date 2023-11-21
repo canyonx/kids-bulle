@@ -3,9 +3,9 @@
         <tr>
             <th>Date</th>
             <th>Activity</th>
-            {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
+            {# {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
                 <th>Child</th>
-            {% endif %}
+            {% endif %} #}
             {% if is_granted('ROLE_ADMIN') %}
                 <th>actions</th>
             {% endif %}
@@ -34,19 +34,22 @@
                         {% endif %}
                     </td>
                     {# Child #}
-                    {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
-                        <td class="text-start">
-                        <ul class="list-group">
+                    {# {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
+                        <td class="text-start d-flex justify-content-center">
                             {% for child in activity.childrens %}
                                 {% if is_granted("CHILD_ACCESS", child) %}
-                                    <li class="list-group-item">
-                                        <a href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}"><i class="bi bi-x-square-fill"></i></a>
-                                        {{ child.firstname }} {{ child.lastname }}
-                                    </li>
+                                    <div class="btn-group m-1">
+                                        <button class="btn btn-outline-secondary" disabled>
+                                            {{ child.firstname }} {{ child.lastname }}
+                                        </button>
+                                        <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
+                                            <i class="bi bi-x-circle-fill"></i>
+                                        </a>
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         </td>
-                    {% endif %}
+                    {% endif %} #}
                     {# Admin #}
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>

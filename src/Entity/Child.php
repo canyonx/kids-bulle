@@ -45,6 +45,21 @@ class Child
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $levelSki;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $levelSlalom;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $levelSnowboard;
+
     public function __construct()
     {
         $this->activities = new ArrayCollection();
@@ -138,5 +153,41 @@ class Child
     public function __toString()
     {
         return ucfirst($this->getFirstname()) . ' ' . ucfirst($this->getLastname());
+    }
+
+    public function getLevelSki(): ?string
+    {
+        return $this->levelSki;
+    }
+
+    public function setLevelSki(?string $levelSki): self
+    {
+        $this->levelSki = $levelSki;
+
+        return $this;
+    }
+
+    public function getLevelSlalom(): ?string
+    {
+        return $this->levelSlalom;
+    }
+
+    public function setLevelSlalom(?string $levelSlalom): self
+    {
+        $this->levelSlalom = $levelSlalom;
+
+        return $this;
+    }
+
+    public function getLevelSnowboard(): ?string
+    {
+        return $this->levelSnowboard;
+    }
+
+    public function setLevelSnowboard(?string $levelSnowboard): self
+    {
+        $this->levelSnowboard = $levelSnowboard;
+
+        return $this;
     }
 }

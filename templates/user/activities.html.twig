@@ -5,7 +5,19 @@
 {% block body %}
     <div class="card">
         <div class="card-body">
-            {% include "shared/_planningFamily.html.twig" %}
+            {# count activities in planning #}
+            {% set act = 0 %}
+            {% for date, activities in planning %}
+                {% if activities %}
+                    {% set act = act + 1 %}  
+                {% endif %}
+            {% endfor %}
+
+            {% if act == 0 %}
+                <p>No activities in your planning !</p>
+            {% else %}
+                {% include "shared/_planningFamily.html.twig" %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

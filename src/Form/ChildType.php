@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -57,9 +58,44 @@ class ChildType extends AbstractType
                     'label' => 'Date de naissance',
                     'input'  => 'datetime_immutable',
                     'widget' => 'single_text',
+                ])
+                ->add('levelSki', ChoiceType::class, [
+                    'label' => 'Ski level',
+                    'choices' => [
+                        'débutant' => 'débutant',
+                        'flocon' => 'flocon',
+                        '1e étoile' => '1e étoile',
+                        '2e étoile' => '2e étoile',
+                        '3e étoile' => '3e étoile',
+                        'étoile de bronze' => 'étoile de bronze',
+                        'étoile d\'argent' => 'étoile d\'argent',
+                        'étoile d\'or' => 'étoile d\'or'
+                    ],
+                    'required' => false
+                ])
+                ->add('levelSlalom', ChoiceType::class, [
+                    'label' => 'Slalom level',
+                    'choices' => [
+                        'flèchette' => 'flèchette',
+                        'flèche de bronze' => 'flèche de bronze',
+                        'flèche d\'argent' => 'flèche d\'argent',
+                        'flèche d\'or' => 'flèche d\'or',
+                    ],
+                    'required' => false
+                ])
+                ->add('levelSnowboard', ChoiceType::class, [
+                    'label' => 'Snowboard level',
+                    'choices' => [
+                        'Goomie rider' => 'Goomie rider',
+                        'Izzy rider' => 'Izzy rider',
+                        'Rookie rider' => 'Rookie rider',
+                        '1e snowboard' => '1e snowboard',
+                        '2e snowboard' => '2e snowboard',
+                        '3e snowboard' => '3e snowboard',
+                    ],
+                    'required' => false
                 ]);
         }
-
 
         // if ($options['option'] !== 'new') {
         //     $builder->add('category', EntityType::class, [
@@ -68,28 +104,28 @@ class ChildType extends AbstractType
         //         'required' => false
         //     ]);
         // }
-        if ($options['option'] === 'add_activities') {
-            $categories = $this->categoryRepository->findAll();
-            foreach ($categories as $cat) {
+        // if ($options['option'] === 'add_activities') {
+        //     $categories = $this->categoryRepository->findAll();
+        //     foreach ($categories as $cat) {
 
-                $name = strtolower($this->slugger->slug($cat->getName()));
+        //         $name = strtolower($this->slugger->slug($cat->getName()));
 
-                $builder->add($name, EntityType::class, [
-                    'label' => 'Choix des cours ' . $cat->getName(),
-                    'class' => Activity::class,
-                    'query_builder' => function (EntityRepository $er) use ($cat): QueryBuilder {
-                        return $er->createQueryBuilder('a')
-                            ->orderBy('a.dateAt', 'ASC')
-                            ->andWhere('a.category = :cat')
-                            ->setParameter('cat', $cat);
-                        // ->orderBy('a.category', 'ASC');
-                    },
-                    'multiple' => true,
-                    'expanded' => true,
-                    'mapped' => false
-                ]);
-            }
-        }
+        //         $builder->add($name, EntityType::class, [
+        //             'label' => 'Choix des cours ' . $cat->getName(),
+        //             'class' => Activity::class,
+        //             'query_builder' => function (EntityRepository $er) use ($cat): QueryBuilder {
+        //                 return $er->createQueryBuilder('a')
+        //                     ->orderBy('a.dateAt', 'ASC')
+        //                     ->andWhere('a.category = :cat')
+        //                     ->setParameter('cat', $cat);
+        //                 // ->orderBy('a.category', 'ASC');
+        //             },
+        //             'multiple' => true,
+        //             'expanded' => true,
+        //             'mapped' => false
+        //         ]);
+        //     }
+        // }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

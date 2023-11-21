@@ -38,16 +38,20 @@ class UserController extends AbstractController
      */
     public function activities(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
-        if (in_array('ROLE_TEACHER', $this->getUser()->getRoles(), true)) {
-            $activities = $activityRepository->findByTeacher($this->getUser());
-        } else {
-            $activities = $activityRepository->findByUser($this->getUser());
-        }
+        /** @var User */
+        $user = $this->getUser();
+
+        $aTeacher = $activityRepository->findByTeacher($this->getUser());
+        $aChilds = $activityRepository->findByUser($this->getUser());
+
+        // Merge two arrrays and delete same antries
+        $activities = array_unique(array_merge($aTeacher, $aChilds));
 
         $planning = $planningService->getPlanning($activities);
 
         return $this->render('user/activities.html.twig', [
-            'user' => $this->getUser(),
+            'user' => $user,
+            'childs' => $user->getChilds(),
             'planning' => $planning
         ]);
     }

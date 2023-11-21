@@ -6,14 +6,12 @@ use App\Entity\Activity;
 use App\Entity\Child;
 use App\Form\ChildType;
 use App\Repository\ActivityRepository;
-use App\Repository\CategoryRepository;
 use App\Repository\ChildRepository;
 use App\Service\PlanningService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @Route("/profil/children")
@@ -51,20 +49,12 @@ class ChildController extends AbstractController
         $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
 
         // Child activities
-        $activities = $activityRepository->findByChild($child);
+        $activities = $activityRepository->findByDateBetween();
         $planning = $planningService->getPlanning($activities);
-
-        // Global planning
-        $allActivities = $activityRepository->findByDateBetween();
-
-        $reste = array_diff($allActivities, $activities);
-
-        dump($activities);
 
         return $this->render('children/index.html.twig', [
             'child' => $child,
-            'planning' => $planning,
-            'reste' => $reste
+            'planning' => $planning
         ]);
     }
 
@@ -96,82 +86,27 @@ class ChildController extends AbstractController
     }
 
     /**
-     * TODO : remove this
-     * used for child checkbox acivities
-     *
-     * @Route("/{id}/add/activities", name="app_children_add_activities", methods={"GET", "POST"})
+     * @Route("/{id}/{action}/{activity}", name="app_children_action_activity", methods={"GET"})
      */
-    public function addActivities(
-        Request $request,
+    public function actionActivity(
         Child $child,
+        Activity $activity,
+        string $action,
         ChildRepository $childRepository,
-        CategoryRepository $categoryRepository,
-        SluggerInterface $slugger
+        Request $request
     ): Response {
         // Voter Control
         $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
 
-        $form = $this->createForm(ChildType::class, $child, ['option' => 'add_activities']);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $categories = $categoryRepository->findAll();
-            foreach ($categories as $cat) {
-                $name = strtolower($slugger->slug($cat->getName()));
-                $activities = $form[$name]->getData();
-                foreach ($activities as $activity) {
-                    $child->addActivity($activity);
-                }
-            }
-            $childRepository->add($child, true);
-
-            return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
+        if ($action === 'remove') {
+            $child->removeActivity($activity);
+        } elseif ($action === 'add') {
+            $child->addActivity($activity);
         }
 
-        return $this->renderForm('children/edit.html.twig', [
-            'child' => $child,
-            'form' => $form,
-            'title' => $child->getFirstname() . ' add activities'
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/add/{activity}", name="app_children_add_activity", methods={"GET"})
-     */
-    public function addActivity(
-        Child $child,
-        Activity $activity,
-        ChildRepository $childRepository
-    ): Response {
-        // Voter Control
-        $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
-
-        $child->addActivity($activity);
         $childRepository->add($child, true);
 
-        return $this->redirectToRoute('app_children_planning', [
-            'id' => $child->getId(),
-            'child' => $child
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/remove/{activity}", name="app_children_remove_activity", methods={"GET"})
-     */
-    public function removeActivity(
-        Child $child,
-        Activity $activity,
-        ChildRepository $childRepository
-    ): Response {
-        // Voter Control
-        $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
-
-        $child->addActivity($activity);
-        $childRepository->add($child, true);
-
-        return $this->redirectToRoute('app_children_planning', [
-            'child' => $child
-        ]);
+        return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
     }
 
     /**

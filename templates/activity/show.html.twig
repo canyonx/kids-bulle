@@ -5,33 +5,41 @@
 {% block body %}
     <section class="card col-6 mx-auto">
         <div class="card-header">
-            <h1class="card-header">Activity</h1>
+            <h1 class="card-title">Activity</h1>
+            <a class="btn btn-light" href="{{ path('app_user_activities') }}">back to planning</a>
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ activity.category }}</h6>
             <p>With {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</p>
         </div>
-        <ul class="list-group list-group-flush">
+        <hr>
+        <div class="card-body">
+            <p>Registered : </p>
             {% for child in activity.childrens %}
-                <li class="list-group-item">
+                <div class="btn-group m-1">
+                    <button class="btn btn-outline-dark" disabled>
+                        {{ child }}
+                    </button>    
                     {% if is_granted("CHILD_ACCESS", child) %}
-                        <a class="btn btn-link" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}"><i class="bi bi-x-square-fill"></i></a>
+                        <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </a>
                     {% endif %}
-                    {{ child }}
-                </li>    
+                </div>
+                <br>
             {% endfor %}
-        </ul>
-        {% if app.user.childs|length > 0 %}
+        </div>
+        {# {% if app.user.childs|length > 0 %}
             <div class="card-body">
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
                 <button type="submit" class="btn btn-primary">Ajouter</button>
                 {{ form_end(form) }}
             </div>
-        {% endif %}
-        <div class="card-footer">
+        {% endif %} #}
+        {# <div class="card-footer">
             <a class="card-link" href="{{ path('app_user') }}">back to profile</a>
-        </div>
+        </div> #}
     </section>
 {% endblock %}

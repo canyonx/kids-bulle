@@ -13,14 +13,20 @@
             <h6 class="card-subtitle mb-2 text-muted">{{ activity.category }}</h6>
             <p>With {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</p>
         </div>
-        <ul class="list-group list-group-flush">
+        <div class="card-body">
+            <p>Registered : </p>
             {% for child in activity.childrens %}
-                <li class="list-group-item">
-                    <a class="btn btn-link" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}"><i class="bi bi-x-square-fill"></i></a>
-                    {{ child }}
-                </li>    
+                <div class="btn-group m-1">
+                    <button class="btn btn-outline-dark" disabled>
+                        {{ child }}
+                    </button> 
+                    <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
+                        <i class="bi bi-x-circle-fill"></i>
+                    </a>
+                </div>
+                <br>
             {% endfor %}
-        </ul>
+        </div>
         <div class="card-body">
             <a class="btn btn-primary" href="{{ path('app_admin_activity_edit', {'id': activity.id}) }}">edit</a>
         </div>

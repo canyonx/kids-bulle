@@ -2,10 +2,16 @@
     <thead>
         <tr>
             <th>Date</th>
-            {# <th>Activity</th> #}
+            {% if is_granted("ROLE_TEACHER") %}
+                <th>Teacher (Me)</th>
+            {% endif %}
             {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
                 {% for child in app.user.childs %}
-                    <th>{{ child.firstname }}</th>
+                    <th>
+                        <a href="{{ path('app_children_planning', {id: child.id}) }}" class="btn btn-outline-secondary">
+                            Planning of {{ child.firstname }}
+                        </a>
+                    </th>
                 {% endfor %}
             {% endif %}
         </tr>
@@ -13,6 +19,8 @@
     <tbody>
         {% for date, activities in planning %}
             {% for activity in activities %}
+                    
+                
                 <tr class="align-middle">
 
                     {# Date #}
@@ -22,19 +30,35 @@
                         </td>
                     {% endif %}
 
+                    {% if is_granted("ROLE_TEACHER") %}
+                        {# Teacher #}
+                        {% if user == activity.teacher %}
+                            <td>
+                                <a class="btn btn-block" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}">
+                                    {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
+                                </a>
+                            </td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    {% endif %}
+
                     {# Activity #}
-                    {% for child in app.user.childs %}
+                    {% for child in childs %}
                         {% if child in activity.childrens %}
                             <td>
-                                {% if is_granted("ROLE_USER") %}
-                                    <a class="btn btn-block" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}">
-                                        {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
+                                <div class="btn-group">
+                                    <a class="btn btn-block" 
+                                    style="background-color: {{ activity.category.color }}" 
+                                    href="{{ path('app_activity_show', {id: activity.id}) }}">
+                                        {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} 
+                                        <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
                                     </a>
-                                {% else %}
-                                    <button class="btn btn-block" style="background-color: {{ activity.category.color }}">
-                                        {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
-                                    </button>
-                                {% endif %}
+                                    <a href="{{ path('app_children_action_activity', {id: child.id, action: 'remove', activity:activity.id}) }}" 
+                                    class="btn btn-secondary" alt="remove">
+                                        <i class="bi bi-x-circle-fill"></i>
+                                    </a>
+                                </div>
                             </td>
                         {% else %}
                             <td></td>

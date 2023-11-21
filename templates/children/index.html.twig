@@ -6,6 +6,7 @@
     <div class="card">
         <div class="card-header">
             <h1 class="card-title">Planning de {{ child.firstname }}</h1>
+            <a class="btn btn-light" href="{{ path('app_user_activities') }}">back to planning</a>
         </div>
         <div class="card-body">
             {% include "shared/_planningChild.html.twig" %}
