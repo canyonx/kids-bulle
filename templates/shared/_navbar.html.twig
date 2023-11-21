@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand mb-4" aria-label="Second navbar example" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand mb-4 bg-light" aria-label="Second navbar example">
     <div class="container-fluid">
 
         <a class="navbar-brand" href="{{ path('app_home') }}">Kid's Bulle</a>
@@ -8,10 +8,10 @@
             {% if is_granted('ROLE_USER') %}
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_user') }}">Mon profil</a>
+                        <a class="nav-link" href="{{ path('app_user') }}">{{"Profile"|trans}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_user_activities')}}">Planning</a>
+                        <a class="nav-link" href="{{ path('app_user_activities')}}">{{"Planning"|trans}}</a>
                     </li>
                 </ul>
             {% endif %}
@@ -19,13 +19,13 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_admin_activity_index') }}">Sorties</a>
+                        <a class="nav-link" href="{{ path('app_admin_activity_index') }}">{{"Activities"|trans}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_admin_category_index') }}">Catégories</a>
+                        <a class="nav-link" href="{{ path('app_admin_category_index') }}">{{"Categories"|trans}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_admin_user_index') }}">Utilisateurs</a>
+                        <a class="nav-link" href="{{ path('app_admin_user_index') }}">{{"Users"|trans}}</a>
                     </li>
                 </ul>
             {% endif %}
@@ -33,14 +33,14 @@
             <ul class="navbar-nav ms-auto">
                 {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        <a class="nav-link" aria-current="page" href="{{ path('app_logout') }}">{{"Log_out"|trans}}</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">S'inscrire</a>
+                        <a class="nav-link" aria-current="page" href="#">{{"Sign_in"|trans}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ path('app_login') }}">Se connecter</a>
+                        <a class="nav-link" aria-current="page" href="{{ path('app_login') }}">{{"Log_in"|trans}}</a>
                     </li>
                 {% endif %}
             </ul>

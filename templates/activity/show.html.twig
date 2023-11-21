@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Activity{% endblock %}
+{% block title %}{{"Activity"|trans}}{% endblock %}
 
 {% block body %}
     <section class="card col-6 mx-auto">
         <div class="card-header">
-            <h1 class="card-title">Activity</h1>
-            <a class="btn btn-light" href="{{ path('app_user_activities') }}">back to planning</a>
+            <h1 class="card-title">{{"Activity"|trans}}</h1>
+            <a class="btn btn-light" href="{{ path('app_user_activities') }}">{{"back_to_planning"|trans}}</a>
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ activity.category }}</h6>
-            <p>With {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</p>
+            <p>{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</p>
         </div>
         <hr>
         <div class="card-body">
-            <p>Registered : </p>
+            <p>{{"Registered"|trans}} : </p>
             {% for child in activity.childrens %}
                 <div class="btn-group m-1">
                     <button class="btn btn-outline-dark" disabled>

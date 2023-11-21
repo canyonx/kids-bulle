@@ -14,7 +14,7 @@
             {% endfor %}
 
             {% if act == 0 %}
-                <p>No activities in your planning !</p>
+                <p>{{"No_activities_in_your_planning"|trans}} !</p>
             {% else %}
                 {% include "shared/_planningFamily.html.twig" %}
             {% endif %}
