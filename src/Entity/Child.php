@@ -190,4 +190,13 @@ class Child
 
         return $this;
     }
+
+    public function getAge()
+    {
+        $now = new \DateTime('now');
+        $age = $this->getBirthAt();
+        $difference = $now->diff($age);
+
+        return $difference->format('%y ans');
+    }
 }

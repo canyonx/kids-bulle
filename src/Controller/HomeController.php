@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ActivityRepository;
 use App\Repository\CategoryRepository;
+use App\Service\MailerService;
 use App\Service\PlanningService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,5 +28,16 @@ class HomeController extends AbstractController
             'categories' => $categoryRepository->findBy([], ['number' => 'ASC']),
             'planning' => $planning
         ]);
+    }
+
+    /**
+     * @Route("/email", name="app_email")
+     */
+    public function email(
+        MailerService $mailerService
+    ): Response {
+        $mailerService->send('dauchez.matteo@oclock.school', 'test', 'message_notification', []);
+
+        return $this->redirectToRoute('app_home');
     }
 }

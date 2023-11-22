@@ -27,6 +27,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_admin_user_index') }}">{{"Users"|trans}}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_admin_child_index') }}">{{"Childs"|trans}}</a>
+                    </li>
                 </ul>
             {% endif %}
 
@@ -37,7 +40,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">{{"Sign_in"|trans}}</a>
+                        <a class="nav-link" aria-current="page" href="{{ path('app_register') }}">{{"Sign_in"|trans}}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{{ path('app_login') }}">{{"Log_in"|trans}}</a>

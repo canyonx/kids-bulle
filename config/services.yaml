@@ -6,6 +6,7 @@
 parameters:
     timezone: 'Europe/Paris'
     app.planning_days: "%env(string:default::APP_PLANNING_DAYS)%"
+    app.admin_mail: "%env(string:APP_ADMIN_MAIL)%"
 
 services:
     # default configuration for services in *this* file

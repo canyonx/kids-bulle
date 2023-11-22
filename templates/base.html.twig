@@ -14,6 +14,15 @@
 
         {# Body #}
         <div class="container p-4" style="min-height:88vh">
+
+            {% for label, messages in app.flashes %}
+                <div class="alert alert-{{ label }} mb-4">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
             {% block body %}{% endblock %}
         </div>
 
