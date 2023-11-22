@@ -24,7 +24,7 @@ class HomeController extends AbstractController
         $planning = $planningService->getPlanning($activities);
 
         return $this->render('home/index.html.twig', [
-            'categories' => $categoryRepository->findAll(),
+            'categories' => $categoryRepository->findBy([], ['number' => 'ASC']),
             'planning' => $planning
         ]);
     }

@@ -19,8 +19,11 @@
                      <div class="card-body">
                         {{ category.description }}
                      </div>
-                     <div class="card-footer">
+                     <div class="card-footer d-flex justify-content-between">
                         <a class="card-link" href="{{ path('app_admin_category_edit', {'id': category.id}) }}">{{"edit"|trans}}</a>
+                        <div>
+                            <span class="badge badge-secondary bg-secondary">{{ category.number }}</span>
+                        </div>
                      </div>
                     </div>
                 </div>
