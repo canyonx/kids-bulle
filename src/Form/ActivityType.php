@@ -30,10 +30,6 @@ class ActivityType extends AbstractType
                 'label' => 'Catégorie',
                 'class' => Category::class
             ])
-            // ->add('teacher', EntityType::class, [
-            //     'label' => 'Moniteur',
-            //     'class' => Teacher::class
-            // ])
             ->add('teacher', EntityType::class, [
                 'label' => 'Moniteur',
                 'class' => User::class,

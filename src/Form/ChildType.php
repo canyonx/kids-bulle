@@ -104,28 +104,6 @@ class ChildType extends AbstractType
         //         'required' => false
         //     ]);
         // }
-        // if ($options['option'] === 'add_activities') {
-        //     $categories = $this->categoryRepository->findAll();
-        //     foreach ($categories as $cat) {
-
-        //         $name = strtolower($this->slugger->slug($cat->getName()));
-
-        //         $builder->add($name, EntityType::class, [
-        //             'label' => 'Choix des cours ' . $cat->getName(),
-        //             'class' => Activity::class,
-        //             'query_builder' => function (EntityRepository $er) use ($cat): QueryBuilder {
-        //                 return $er->createQueryBuilder('a')
-        //                     ->orderBy('a.dateAt', 'ASC')
-        //                     ->andWhere('a.category = :cat')
-        //                     ->setParameter('cat', $cat);
-        //                 // ->orderBy('a.category', 'ASC');
-        //             },
-        //             'multiple' => true,
-        //             'expanded' => true,
-        //             'mapped' => false
-        //         ]);
-        //     }
-        // }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
