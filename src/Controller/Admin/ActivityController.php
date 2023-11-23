@@ -51,10 +51,12 @@ class ActivityController extends AbstractController
             return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('admin/activity/new.html.twig', [
             'activity' => $activity,
             'form' => $form,
-        ]);
+        ], $response);
     }
 
     /**
@@ -81,10 +83,12 @@ class ActivityController extends AbstractController
             return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('admin/activity/edit.html.twig', [
             'activity' => $activity,
             'form' => $form,
-        ]);
+        ], $response);
     }
 
     /**

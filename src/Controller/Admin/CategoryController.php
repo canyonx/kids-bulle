@@ -40,10 +40,12 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('app_admin_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('admin/category/new.html.twig', [
             'category' => $category,
             'form' => $form,
-        ]);
+        ], $response);
     }
 
     /**
@@ -60,10 +62,12 @@ class CategoryController extends AbstractController
             return $this->redirectToRoute('app_admin_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form,
-        ]);
+        ], $response);
     }
 
     /**

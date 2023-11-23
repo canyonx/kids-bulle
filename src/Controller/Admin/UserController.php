@@ -46,9 +46,11 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_admin_user_index');
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('admin/user/new.html.twig', [
             'form' => $form,
-        ]);
+        ], $response);
     }
 
     /**
@@ -66,10 +68,12 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_admin_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('admin/user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
-        ]);
+        ], $response);
     }
 
     /**

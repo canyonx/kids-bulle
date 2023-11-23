@@ -34,10 +34,12 @@ class ChildController extends AbstractController
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('children/new.html.twig', [
             'child' => $child,
             'form' => $form,
-        ]);
+        ], $response);
     }
 
     /**
@@ -78,11 +80,13 @@ class ChildController extends AbstractController
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('children/edit.html.twig', [
             'child' => $child,
             'form' => $form,
             'title' => 'Edit' . $child->getFirstname()
-        ]);
+        ], $response);
     }
 
     /**

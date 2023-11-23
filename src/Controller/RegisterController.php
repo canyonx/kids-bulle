@@ -44,9 +44,11 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_home', []);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('register/register.html.twig', [
             'registrationForm' => $form
-        ]);
+        ], $response);
     }
 
     /**
@@ -101,9 +103,11 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_login', []);
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('register/lost_password.html.twig', [
             'form' => $form
-        ]);
+        ], $response);
     }
 
     /**
@@ -130,8 +134,10 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_user');
         }
 
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
         return $this->renderForm('register/edit_password.html.twig', [
             'form' => $form
-        ]);
+        ], $response);
     }
 }
