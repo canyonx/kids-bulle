@@ -25,7 +25,7 @@
 
                     {# Date #}
                     {% if loop.first %}
-                        <td {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
+                        <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
                             {{ date|date('j M') }}
                         </td>
                     {% endif %}
@@ -47,15 +47,15 @@
                     {% for child in childs %}
                         {% if child in activity.childrens %}
                             <td>
-                                <div class="btn-group">
-                                    <a class="btn btn-block" 
+                                <div class="btn-group col-10 row">
+                                    <a class="col-10 btn" 
                                     style="background-color: {{ activity.category.color }}" 
                                     href="{{ path('app_activity_show', {id: activity.id}) }}">
                                         {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} 
                                         <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
                                     </a>
                                     <a href="{{ path('app_children_action_activity', {id: child.id, action: 'remove', activity:activity.id}) }}" 
-                                    class="btn btn-secondary" alt="remove">
+                                    class="col-2 btn btn-secondary" alt="remove">
                                         <i class="bi bi-x-circle-fill"></i>
                                     </a>
                                 </div>
@@ -67,7 +67,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>
+                    <td class="col-2">
                         {{ date|date('j M') }}
                     </td>
                     <td colspan="100%"></td>

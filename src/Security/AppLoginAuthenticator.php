@@ -51,9 +51,9 @@ class AppLoginAuthenticator extends AbstractLoginFormAuthenticator
             throw new UserNotFoundException();
         }
         // Checkif account is verified
-        if (!$foundUser->isVerified()) {
-            $this->flashBag->add('danger', 'Votre compte n\'est pas vérifié !');
-        }
+        // if (!$foundUser->isVerified()) {
+        //     throw new CustomUserMessageAccountStatusException('Votre compte n\'est pas vérifié !');
+        // }
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 

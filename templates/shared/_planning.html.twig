@@ -17,18 +17,18 @@
                 <tr class="align-middle">
                     {# Date #}
                     {% if loop.first %}
-                        <td {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
+                        <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
                             {{ date|date('j M') }}
                         </td>
                     {% endif %}
                     {# Activity #}
                     <td>
                         {% if is_granted("ROLE_USER") %}
-                            <a class="btn btn-block" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}">
+                            <a class="col-10 btn btn-block" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}">
                                 {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
                             </a>
                         {% else %}
-                            <button class="btn btn-block" style="background-color: {{ activity.category.color }}">
+                            <button class="col-10 btn btn-block" style="background-color: {{ activity.category.color }}">
                                 {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
                             </button>
                         {% endif %}
