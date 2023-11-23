@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Child;
 use App\Entity\Activity;
 use App\Form\ActivityType;
-use App\Repository\ChildRepository;
-use App\Form\ActivityAddChildrenType;
 use App\Repository\ActivityRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,32 +20,11 @@ class ActivityController extends AbstractController
      * @Route("/{id}", name="app_activity_show", methods={"GET", "POST"})
      */
     public function show(
-        Activity $activity,
-        Request $request,
-        ActivityRepository $activityRepository
+        Activity $activity
     ): Response {
-        // Form to add child in activity
-        $form = $this->createForm(ActivityAddChildrenType::class, $activity);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $childs = $form->get('addChildrens')->getData();
-            // Add childrens to activity
-            foreach ($childs as $child) {
-                $activity->addChildren($child);
-            }
-            $activityRepository->add($activity, true);
-
-            return $this->redirectToRoute('app_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
-
         return $this->renderForm('activity/show.html.twig', [
-            'activity' => $activity,
-            'form' => $form
-        ], $response);
+            'activity' => $activity
+        ]);
     }
 
     /**

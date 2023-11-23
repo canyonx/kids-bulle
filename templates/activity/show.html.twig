@@ -23,7 +23,7 @@
                     </button>    
                     {% if is_granted("CHILD_ACCESS", child) %}
                         <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
-                            <i class="bi bi-x-circle-fill"></i>
+                            <i class="fa-solid fa-circle-xmark fa-xl"></i>
                         </a>
                     {% endif %}
                 </div>
