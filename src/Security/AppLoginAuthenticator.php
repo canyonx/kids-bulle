@@ -27,16 +27,13 @@ class AppLoginAuthenticator extends AbstractLoginFormAuthenticator
 
     private UrlGeneratorInterface $urlGenerator;
     private $userRepository;
-    private $flashBag;
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
-        UserRepository $userRepository,
-        FlashBagInterface $flashBag
+        UserRepository $userRepository
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->userRepository = $userRepository;
-        $this->flashBag = $flashBag;
     }
 
     public function authenticate(Request $request): Passport
