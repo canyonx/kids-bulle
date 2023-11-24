@@ -9,9 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ChildController extends AbstractController
 {
-    /**
-     * @Route("/admin/child", name="app_admin_child_index")
-     */
+    #[Route(path: '/admin/child', name: 'app_admin_child_index')]
     public function index(ChildRepository $childRepository): Response
     {
         return $this->render('admin/child/index.html.twig', [

@@ -14,9 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_home")
-     */
+    #[Route(path: '/', name: 'app_home')]
     public function index(
         CategoryRepository $categoryRepository,
         ActivityRepository $activityRepository,
@@ -32,9 +30,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/email", name="app_email")
-     */
+    #[Route(path: '/email', name: 'app_email')]
     public function email(
         MailerService $mailerService,
         UserRepository $userRepository

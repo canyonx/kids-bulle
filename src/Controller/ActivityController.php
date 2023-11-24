@@ -11,14 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/activity")
- */
+#[Route(path: '/activity')]
 class ActivityController extends AbstractController
 {
-    /**
-     * @Route("/{id}", name="app_activity_show", methods={"GET", "POST"})
-     */
+    #[Route(path: '/{id}', name: 'app_activity_show', methods: ['GET', 'POST'])]
     public function show(
         Activity $activity
     ): Response {
@@ -27,9 +23,7 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="app_activity_edit", methods={"GET", "POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'app_activity_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         Activity $activity,
@@ -52,9 +46,7 @@ class ActivityController extends AbstractController
         ], $response);
     }
 
-    /**
-     * @Route("/{id}/remove/{child}", name="app_activity_remove_child", methods={"GET"})
-     */
+    #[Route(path: '/{id}/remove/{child}', name: 'app_activity_remove_child', methods: ['GET'])]
     public function removeChild(
         Activity $activity,
         Child $child,

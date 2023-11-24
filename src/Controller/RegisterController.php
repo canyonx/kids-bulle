@@ -21,9 +21,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegisterController extends AbstractController
 {
-    /**
-     * @Route("/register", name="app_register")
-     */
+    #[Route(path: '/register', name: 'app_register')]
     public function register(
         Request $request,
         EntityManagerInterface $em,
@@ -51,9 +49,7 @@ class RegisterController extends AbstractController
         ], $response);
     }
 
-    /**
-     * @Route("/register/lost-password", name="app_register_lost_password")
-     */
+    #[Route(path: '/register/lost-password', name: 'app_register_lost_password')]
     public function lostPassword(
         Request $request,
         UserRepository $userRepository,
@@ -110,10 +106,8 @@ class RegisterController extends AbstractController
         ], $response);
     }
 
-    /**
-     * @Route("/register/edit-password", name="app_register_edit_password")
-     * @IsGranted("ROLE_USER"))
-     */
+    #[Route(path: '/register/edit-password', name: 'app_register_edit_password')]
+    #[IsGranted('ROLE_USER')]
     public function editPassword(
         Request $request,
         EntityManagerInterface $em,

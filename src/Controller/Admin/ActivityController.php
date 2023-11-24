@@ -12,14 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/admin/activity")
- */
+#[Route(path: '/admin/activity')]
 class ActivityController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_admin_activity_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'app_admin_activity_index', methods: ['GET'])]
     public function index(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
         $activities = $activityRepository->findByDateBetween();
@@ -31,9 +27,7 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="app_admin_activity_new", methods={"GET", "POST"})
-     */
+    #[Route(path: '/new', name: 'app_admin_activity_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ActivityRepository $activityRepository): Response
     {
         $activity = new Activity();
@@ -59,9 +53,7 @@ class ActivityController extends AbstractController
         ], $response);
     }
 
-    /**
-     * @Route("/{id}", name="app_admin_activity_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'app_admin_activity_show', methods: ['GET'])]
     public function show(Activity $activity): Response
     {
         return $this->render('admin/activity/show.html.twig', [
@@ -69,9 +61,7 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="app_admin_activity_edit", methods={"GET", "POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'app_admin_activity_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
     {
         $form = $this->createForm(ActivityType::class, $activity);
@@ -91,9 +81,7 @@ class ActivityController extends AbstractController
         ], $response);
     }
 
-    /**
-     * @Route("/{id}", name="app_admin_activity_delete", methods={"POST"})
-     */
+    #[Route(path: '/{id}', name: 'app_admin_activity_delete', methods: ['POST'])]
     public function delete(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $activity->getId(), $request->request->get('_token'))) {
@@ -103,9 +91,7 @@ class ActivityController extends AbstractController
         return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    /**
-     * @Route("/{id}/remove/{child}", name="app_admin_activity_remove_child", methods={"GET"})
-     */
+    #[Route(path: '/{id}/remove/{child}', name: 'app_admin_activity_remove_child', methods: ['GET'])]
     public function removeChild(
         Activity $activity,
         Child $child,
