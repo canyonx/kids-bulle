@@ -46,7 +46,7 @@ class RegisterController extends AbstractController
 
         return $this->renderForm('register/register.html.twig', [
             'registrationForm' => $form
-        ], $response);
+        ]);
     }
 
     #[Route(path: '/register/lost-password', name: 'app_register_lost_password')]
@@ -103,7 +103,7 @@ class RegisterController extends AbstractController
 
         return $this->renderForm('register/lost_password.html.twig', [
             'form' => $form
-        ], $response);
+        ]);
     }
 
     #[Route(path: '/register/edit-password', name: 'app_register_edit_password')]
@@ -128,10 +128,8 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_user');
         }
 
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
-
         return $this->renderForm('register/edit_password.html.twig', [
             'form' => $form
-        ], $response);
+        ]);
     }
 }

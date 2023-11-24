@@ -38,12 +38,11 @@ class ActivityController extends AbstractController
             return $this->redirectToRoute('app_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
 
         return $this->renderForm('activity/edit.html.twig', [
             'activity' => $activity,
             'form' => $form,
-        ], $response);
+        ]);
     }
 
     #[Route(path: '/{id}/remove/{child}', name: 'app_activity_remove_child', methods: ['GET'])]

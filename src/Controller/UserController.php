@@ -65,12 +65,10 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
-
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
             'form' => $form,
-        ], $response);
+        ]);
     }
 
     #[Route(path: '/delete', name: 'app_user_delete', methods: ['POST'])]
