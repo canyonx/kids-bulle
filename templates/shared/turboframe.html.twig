@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+{% if child in activity.childrens %}
+    <turbo-frame id="activity_{{ activity.id }}">
+        <td class="col-5"></td>
+        
+        <td class="col-5">
+            <div class="btn-group col-10 row">
+                <a class="col-10 btn" 
+                style="background-color: {{ activity.category.color }}" 
+                href="{{ path('app_activity_show', {id: activity.id}) }}">
+                    {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} 
+                    <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
+                </a>
+                <a href="{{ path('app_child_action_activity', {child: child.id, action: 'remove', activity:activity.id}) }}" 
+                class="col-2 btn btn-secondary" alt="remove" data-turbo-confirm="Are you sure you want to delete the article?">
+                    <i class="fa-solid fa-circle-xmark fa-xl"></i>
+                </a>
+            </div>
+        </td>
+    {% else %}
+        <td class="col-5">
+            <div class="btn-group col-10 row">
+                <a class="col-10 btn" 
+                style="background-color: {{ activity.category.color }}" 
+                href="{{ path('app_activity_show', {id: activity.id}) }}">
+                    {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} 
+                    <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
+                </a>
+                <a href="{{ path('app_child_action_activity', {child: child.id, action: 'add', activity:activity.id}) }}" 
+                class="col-2 btn btn-secondary" alt="add">
+                    <i class="fa-solid fa-circle-plus fa-xl"></i>
+                </a>
+            </div>
+        </td>
+
+        <td class="col-5"></td>
+    </turbo-frame>
+{% endif %}
+
+{% endblock %}

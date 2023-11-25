@@ -30,7 +30,7 @@ class ChildController extends AbstractController
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('children/new.html.twig', [
+        return $this->render('children/new.html.twig', [
             'child' => $child,
             'form' => $form,
         ]);
@@ -70,7 +70,7 @@ class ChildController extends AbstractController
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('children/edit.html.twig', [
+        return $this->render('children/edit.html.twig', [
             'child' => $child,
             'form' => $form,
             'title' => 'Edit' . $child->getFirstname()

@@ -18,9 +18,7 @@ class ChildController extends AbstractController
         Child $child,
         string $action,
         Activity $activity,
-        ChildRepository $childRepository,
-        ActivityRepository $activityRepository,
-        PlanningService $planningService
+        ChildRepository $childRepository
     ): Response {
         // Voter Control
         $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);

@@ -4,35 +4,21 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\Child;
-use App\Entity\Activity;
-use App\Entity\Category;
 use App\Repository\CategoryRepository;
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ChildType extends AbstractType
 {
-    private $security;
-    private $categoryRepository;
-    private $slugger;
-
     public function __construct(
-        Security $security,
-        CategoryRepository $categoryRepository,
-        SluggerInterface $slugger
+        private Security $security
     ) {
-        $this->security = $security;
-        $this->categoryRepository = $categoryRepository;
-        $this->slugger = $slugger;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
