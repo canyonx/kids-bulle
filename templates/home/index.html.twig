@@ -29,7 +29,9 @@
             <h1 class="card-title">{{"Planning"|trans}}</h1>
         </div>
         <div class="card-body">
-            {% include "planning/_planning.html.twig" %}
+            <turbo-frame id="planning_home">
+                {% include "planning/_planning.html.twig" %}
+            </turbo-frame>
         </div>
     </div>
 </section>

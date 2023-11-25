@@ -1,11 +1,14 @@
 {% if is_granted("ROLE_USER") %}
-    <a class="col-10 btn" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}">
-        <div class="col-sm-12">{{ activity.dateAt|date("H\\hi") }}</div>
-        <div class="col-sm-12">{{ activity.category }}</div>    
+    <a class="col-10 btn" 
+    style="background-color: {{ activity.category.color }}" 
+    href="{{ path('app_activity_show', {id: activity.id}) }}"
+    data-turbo-frame="_top">
+        {{ activity.dateAt|date("H\\hi") }}
+        {{ activity.category }}  
         <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
     </a>
 {% else %}
-    <button class="col-10 btn" style="background-color: {{ activity.category.color }}">
+    <button class="col-10 btn" style="background-color: {{ activity.category.color }}" data-turbo-frame="_top">
         {{ activity.dateAt|date("H\\hi") }}   {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
     </button>
 {% endif %}

@@ -1,0 +1,8 @@
+<div class="btn-group m-1">
+    <button class="btn btn-outline-dark" disabled>
+        {{ child }}
+    </button> 
+    <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
+        <i class="fa-solid fa-circle-xmark fa-xl"></i>
+    </a>
+</div>

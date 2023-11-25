@@ -3,31 +3,25 @@
 {% block title %}{{"Activity"|trans}}{% endblock %}
 
 {% block body %}
-    <section class="card col-md-6 mx-auto border-5" style="border-color: {{ activity.category.color }}">
-        <div class="card-header">
-            <h1 class="card-title">{{ activity.category }}</h1>
-        
-            <h5 class="card-title">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</h6>
+    <section class="card col-md-6 mx-auto">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div>            
+                <h1 class="card-title" style="color: {{ activity.category.color }}">{{ activity.category }}</h1>
+                <h5 class="card-title" style="color: {{ activity.category.color }}">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</h6>
+            </div>
+            <i class="fa-solid fa-snowflake fa-2xl m-4" style="color: {{ activity.category.color }}"></i>
+            {# <div class="d-block rounded-circle" style="background-color: {{ activity.category.color }}; height: 6rem; width: 6rem;"></div> #}
         </div>
         <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted">{{"Registered"|trans}} : </h6>
             {% for child in activity.childrens %}
-                <div class="btn-group m-1">
-                    <button class="btn btn-outline-dark" disabled>
-                        {{ child }}
-                    </button>    
-                    {% if is_granted("CHILD_ACCESS", child) %}
-                        <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
-                            <i class="fa-solid fa-circle-xmark fa-xl"></i>
-                        </a>
-                    {% endif %}
-                </div>
+                {% include "activity/_button_child.html.twig" %}
                 <br>
             {% endfor %}
         </div>
         <div class="card-footer">
-            <a class="btn btn-light" href="{{ path('app_user_activities') }}">{{"back_to_planning"|trans}}</a>
+            <a class="btn btn-light" href="javascript:window.location.reload()">{{"back_to_planning"|trans}}</a>
         </div>
     </section>
 {% endblock %}
