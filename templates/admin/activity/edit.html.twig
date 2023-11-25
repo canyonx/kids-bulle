@@ -3,13 +3,13 @@
 {% block title %}{{"Edit_activity"|trans}}{% endblock %}
 
 {% block body %}
-    <div class="card col-6 mx-auto">
+    <div class="card col-md-6 mx-auto">
         <div class="card-header">
             <h1 class="card-title">{{"Edit_activity"|trans}}</h1>
-            {% block linkBack %}<a class="btn btn-light" href="{{ path('app_user') }}">{{"back_to_list"|trans}}</a>{% endblock %}
+            <a class="btn btn-light" href="{{ path('app_admin_activity_show', {id: activity.id}) }}">{{"back_to_activity"|trans}}</a>
         </div>
         <div class="card-body">
-            {% block cardBody %}{% endblock %}
+            {{ include('admin/activity/_form.html.twig') }}
         </div>
         <div class="card-footer text-end">
             {% block cardFooter %}{% endblock %}

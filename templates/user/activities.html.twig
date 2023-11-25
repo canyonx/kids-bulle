@@ -4,6 +4,9 @@
 
 {% block body %}
     <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">{{"My_family"|trans}}</h1>
+        </div>
         <div class="card-body">
             {# count activities in planning #}
             {% set act = 0 %}
@@ -16,7 +19,7 @@
             {% if act == 0 %}
                 <p>{{"No_activities_in_your_planning"|trans}} !</p>
             {% else %}
-                {% include "shared/_planningFamily.html.twig" %}
+                {% include "planning/_planningFamily.html.twig" %}
             {% endif %}
         </div>
     </div>

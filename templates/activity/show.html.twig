@@ -3,19 +3,15 @@
 {% block title %}{{"Activity"|trans}}{% endblock %}
 
 {% block body %}
-    <section class="card col-6 mx-auto">
+    <section class="card col-md-6 mx-auto border-5" style="border-color: {{ activity.category.color }}">
         <div class="card-header">
-            <h1 class="card-title">{{"Activity"|trans}}</h1>
-            <a class="btn btn-light" href="{{ path('app_user_activities') }}">{{"back_to_planning"|trans}}</a>
-        </div>
-        <div class="card-body">
+            <h1 class="card-title">{{ activity.category }}</h1>
+        
             <h5 class="card-title">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{ activity.category }}</h6>
-            <p>{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</p>
+            <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</h6>
         </div>
-        <hr>
         <div class="card-body">
-            <p>{{"Registered"|trans}} : </p>
+            <h6 class="card-subtitle mb-2 text-muted">{{"Registered"|trans}} : </h6>
             {% for child in activity.childrens %}
                 <div class="btn-group m-1">
                     <button class="btn btn-outline-dark" disabled>
@@ -30,16 +26,8 @@
                 <br>
             {% endfor %}
         </div>
-        {# {% if app.user.childs|length > 0 %}
-            <div class="card-body">
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                <button type="submit" class="btn btn-primary">Ajouter</button>
-                {{ form_end(form) }}
-            </div>
-        {% endif %} #}
-        {# <div class="card-footer">
-            <a class="card-link" href="{{ path('app_user') }}">back to profile</a>
-        </div> #}
+        <div class="card-footer">
+            <a class="btn btn-light" href="{{ path('app_user_activities') }}">{{"back_to_planning"|trans}}</a>
+        </div>
     </section>
 {% endblock %}

@@ -3,43 +3,39 @@
 {% block title %}{{ user.firstname }} {{ user.lastname }}{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-            <section class="card">
-                <div class="card-header">
-                    <h1>{{ user.firstname }} {{ user.lastname }}</h1>
-                </div>
-                <div class="card-body">
-                    <p>
-                        {{ user.email }} <br>
-                        {{ user.phone }} <br>
-                        {{ user.fulladress }}
-                    </p>
-                </div>
-                {% if user.childs|length > 0 %}
-                    <ul class="list-group list-group-flush">
-                        <table class="table table-borderless">
-                            <tbody>
-                                {% for child in user.childs %}
-                                    <tr>
-                                        <td>
-                                            <a class="btn btn-primary" href="{{ path('app_children_planning', {'id': child.id}) }}">{{"Planning_of"|trans}} {{ child.firstname }}</a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-link" href="{{ path('app_children_edit', {'id': child.id}) }}">{{"edit"|trans}}</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </ul>
-                {% endif %}
-                    
-                <div class="card-footer">
-                    <a class="card-link" href="{{ path('app_user_edit') }}">{{"edit"|trans}}</a>
-                    <a class="card-link" href="{{ path('app_children_new') }}">{{"add_child"|trans}}</a>
-                </div>
-            </section>
+    <section class="card col-md-6 mx-auto">
+        <div class="card-header">
+            <h1>{{ user.firstname }} {{ user.lastname }}</h1>
         </div>
-    </div>
+        <div class="card-body">
+            <p>
+                {{ user.email }} <br>
+                {{ user.phone }} <br>
+                {{ user.fulladress }}
+            </p>
+        </div>
+        {% if user.childs|length > 0 %}
+            <ul class="list-group list-group-flush">
+                <table class="table table-borderless">
+                    <tbody>
+                        {% for child in user.childs %}
+                            <tr>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ path('app_children_planning', {'id': child.id}) }}">{{"Planning_of"|trans}} {{ child.firstname }}</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-link" href="{{ path('app_children_edit', {'id': child.id}) }}">{{"edit"|trans}}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </ul>
+        {% endif %}
+            
+        <div class="card-footer">
+            <a class="card-link" href="{{ path('app_user_edit') }}">{{"edit"|trans}}</a>
+            <a class="card-link" href="{{ path('app_children_new') }}">{{"add_child"|trans}}</a>
+        </div>
+    </section>
 {% endblock %}
