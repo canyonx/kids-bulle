@@ -54,7 +54,7 @@
                                         {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} 
                                         <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
                                     </a>
-                                    <a href="{{ path('app_children_action_activity', {id: child.id, action: 'remove', activity:activity.id}) }}" 
+                                    <a href="{{ path('app_child_action_activity', {child: child.id, action: 'remove', activity:activity.id}) }}" 
                                     class="col-2 btn btn-secondary" alt="remove">
                                         <i class="fa-solid fa-circle-xmark fa-xl"></i>
                                     </a>

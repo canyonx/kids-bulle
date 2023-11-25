@@ -20,6 +20,7 @@
 
                     {# Activities global #}
                     {% if child in activity.childrens %}
+                    <turbo-frame id="activity_{{ activity.id }}">
                         <td class="col-5"></td>
                         
                         <td class="col-5">
@@ -30,8 +31,8 @@
                                     {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} 
                                     <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
                                 </a>
-                                <a href="{{ path('app_children_action_activity', {id: child.id, action: 'remove', activity:activity.id}) }}" 
-                                class="col-2 btn btn-secondary" alt="remove">
+                                <a href="{{ path('app_api_child_action_activity', {child: child.id, action: 'remove', activity:activity.id}) }}" 
+                                class="col-2 btn btn-secondary" alt="remove" data-turbo-confirm="Are you sure you want to delete the article?">
                                     <i class="fa-solid fa-circle-xmark fa-xl"></i>
                                 </a>
                             </div>
@@ -45,14 +46,15 @@
                                     {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} 
                                     <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
                                 </a>
-                                <a href="{{ path('app_children_action_activity', {id: child.id, action: 'add', activity:activity.id}) }}" 
-                                class="col-2 btn btn-secondary" alt="add" width="80%">
+                                <a href="{{ path('app_api_child_action_activity', {child: child.id, action: 'add', activity:activity.id}) }}" 
+                                class="col-2 btn btn-secondary" alt="add">
                                     <i class="fa-solid fa-circle-plus fa-xl"></i>
                                 </a>
                             </div>
                         </td>
 
                         <td class="col-5"></td>
+                    </turbo-frame>
                     {% endif %}
                     
                 </tr>

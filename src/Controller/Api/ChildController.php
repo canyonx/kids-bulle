@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ChildController extends AbstractController
 {
-    #[Route('/api/{child}/{action}/{activity}', name: 'app_api_child_action_activity', methods: ["POST"])]
+    #[Route('/api/{child}/{action}/{activity}', name: 'app_api_child_action_activity', methods: ["GET"])]
     public function index(
         Child $child,
         string $action,
@@ -33,9 +33,6 @@ class ChildController extends AbstractController
 
         $childRepository->add($child, true);
 
-        $activities = $activityRepository->findByChild($child);
-        $planning = $planningService->getPlanning($activities);
-
-        return $this->json($planning);
+        return $this->redirectToRoute('app_children_planning', ['id' => $child->getId()]);
     }
 }

@@ -77,7 +77,7 @@ class ChildController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/{action}/{activity}', name: 'app_children_action_activity', methods: ['GET'])]
+    #[Route(path: '/{child}/{action}/{activity}', name: 'app_child_action_activity', methods: ['GET'])]
     public function actionActivity(
         Child $child,
         Activity $activity,
