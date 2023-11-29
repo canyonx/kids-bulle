@@ -3,9 +3,6 @@
         <tr>
             <th>{{"Date"|trans}}</th>
             <th>{{"Activity"|trans}}</th>
-            {# {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
-                <th>Child</th>
-            {% endif %} #}
             {% if is_granted('ROLE_ADMIN') %}
                 <th>{{"actions"|trans}}</th>
             {% endif %}
@@ -21,27 +18,12 @@
                             {{ date|date('j M') }}
                         </td>
                     {% endif %}
+
                     {# Activity #}
                     <td>
                         {% include "planning/_button_activity.html.twig" %}
                     </td>
-                    {# Child #}
-                    {# {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
-                        <td class="text-start d-flex justify-content-center">
-                            {% for child in activity.childrens %}
-                                {% if is_granted("CHILD_ACCESS", child) %}
-                                    <div class="btn-group m-1">
-                                        <button class="btn btn-outline-secondary" disabled>
-                                            {{ child.firstname }} {{ child.lastname }}
-                                        </button>
-                                        <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
-                                            <i class="bi bi-x-circle-fill"></i>
-                                        </a>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                    {% endif %} #}
+
                     {# Admin #}
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>

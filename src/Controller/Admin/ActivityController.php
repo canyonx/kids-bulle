@@ -7,6 +7,7 @@ use App\Entity\Activity;
 use App\Form\ActivityType;
 use App\Service\PlanningService;
 use App\Repository\ActivityRepository;
+use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,17 +36,13 @@ class ActivityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // // Add childs of a category to a new activity
-            // $childs = $activity->getCategory()->getChilds();
-            // foreach ($childs as $child) {
-            //     $activity->addChildren($child);
-            // }
+
             $activityRepository->add($activity, true);
 
             return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/activity/new.html.twig', [
+        return $this->render('admin/activity/new.html.twig', [
             'activity' => $activity,
             'form' => $form,
         ]);
@@ -71,7 +68,7 @@ class ActivityController extends AbstractController
             return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('admin/activity/edit.html.twig', [
+        return $this->render('admin/activity/edit.html.twig', [
             'activity' => $activity,
             'form' => $form,
         ]);

@@ -27,7 +27,6 @@ class PlanningService extends AbstractController
         for ($i = 0; $i < $this->getParameter('app.planning_days'); $i++) {
             $dates[] = new \DateTimeImmutable($fromtime->format('Y-m-d') . "+ $i day");
         }
-
         // dd($dates);
         return $dates;
     }

@@ -14,14 +14,18 @@
             {# <div class="d-block rounded-circle" style="background-color: {{ activity.category.color }}; height: 6rem; width: 6rem;"></div> #}
         </div>
         <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-muted">{{"Registered"|trans}} : </h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{"Registered"|trans}}</h6>
             {% for child in activity.childrens %}
                 {% include "activity/_button_child.html.twig" %}
                 <br>
             {% endfor %}
         </div>
         <div class="card-footer">
-            <a class="btn btn-light" href="javascript:window.location.reload()">{{"back_to_planning"|trans}}</a>
+            <a class="btn btn-light" 
+            href="javascript:history.back()" 
+            data-turbo-frame="_top">
+                {{"back_to_planning"|trans}}
+            </a>
         </div>
     </section>
 {% endblock %}

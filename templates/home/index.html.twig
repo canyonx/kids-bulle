@@ -4,22 +4,29 @@
 
 {% block body %}
 <section class="mb-4">
-    <h1 class="text-light">Kid's Bulle</h1>
-    <p class="text-light">{{"Website_subtitle"|trans}}</p>
 
-    <div class="row">
-        {% for category in categories %}
-            <div class="col-md-4">
-                <div class="card mb-4" style="background-color:{{ category.color }}">
-                    <div class="card-header">
-                        <h3 class="card-title">{{ category.name }}</h3>
-                    </div>
-                    <div class="card-body">
-                        <p>{{ category.description }}</p>
+    <div class="container px-4 py-5">
+        <div class="row d-flex align-items-center py-5">
+            <div class="col">
+                <h1 class="text-light">Kid's Bulle</h1>
+                <p class="text-light">{{"Website_subtitle"|trans}}</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-md-4">
+                    <div class="card mb-4" style="background-color:{{ category.color }}">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ category.name }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ category.description }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </section>
 
