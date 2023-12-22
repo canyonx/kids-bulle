@@ -7,37 +7,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ActivityRepository::class)
- */
+#[ORM\Entity(repositoryClass: ActivityRepository::class)]
 class Activity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
+    #[ORM\Column(type: 'datetime_immutable')]
     private $dateAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="activities")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'activities')]
+    #[ORM\JoinColumn(nullable: false)]
     private $category;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Child::class, inversedBy="activities")
-     */
+    #[ORM\ManyToMany(targetEntity: Child::class, inversedBy: 'activities')]
     private $childrens;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="activities")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'activities')]
     private $teacher;
 
     public function __construct()

@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Category{% endblock %}
+{% block title %}{{"Edit_category"|trans}}{% endblock %}
 
 {% block body %}
-    <div class="card col-6 mx-auto">
+    <div class="card col-md-6 mx-auto">
         <div class="card-header">
-            <h1 class="card-title">Edit Category</h1>
-            <a class="btn btn-light" href="{{ path('app_admin_category_index') }}">back to list</a>
+            <h1 class="card-title">{{"Edit_category"|trans}}</h1>
         </div>
         <div class="card-body">
             {{ include('admin/category/_form.html.twig', {'button_label': 'Update'}) }}
         </div>
-        <div class="card-footer text-end">
+        <div class="card-footer d-flex justify-content-between">
+            <a class="btn btn-light" href="{{ path('app_admin_category_index') }}">{{"back_to_list"|trans}}</a>
             {{ include('admin/category/_delete_form.html.twig') }}
         </div>
     </div>

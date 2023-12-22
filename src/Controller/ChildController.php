@@ -13,14 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/profil/children")
- */
+#[Route(path: '/profil/children')]
 class ChildController extends AbstractController
 {
-    /**
-     * @Route("/new", name="app_children_new", methods={"GET", "POST"})
-     */
+    #[Route(path: '/new', name: 'app_children_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ChildRepository $childRepository): Response
     {
         $child = new Child();
@@ -34,15 +30,13 @@ class ChildController extends AbstractController
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('children/new.html.twig', [
+        return $this->render('children/new.html.twig', [
             'child' => $child,
             'form' => $form,
         ]);
     }
 
-    /**
-     * @Route("/{id}/planning", name="app_children_planning", methods={"GET"})
-     */
+    #[Route(path: '/{id}/planning', name: 'app_children_planning', methods: ['GET'])]
     public function planning(Child $child, ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
         // Voter Control
@@ -58,9 +52,7 @@ class ChildController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="app_children_edit", methods={"GET", "POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'app_children_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         Child $child,
@@ -78,16 +70,14 @@ class ChildController extends AbstractController
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('children/edit.html.twig', [
+        return $this->render('children/edit.html.twig', [
             'child' => $child,
             'form' => $form,
             'title' => 'Edit' . $child->getFirstname()
         ]);
     }
 
-    /**
-     * @Route("/{id}/{action}/{activity}", name="app_children_action_activity", methods={"GET"})
-     */
+    #[Route(path: '/{child}/{action}/{activity}', name: 'app_child_action_activity', methods: ['GET'])]
     public function actionActivity(
         Child $child,
         Activity $activity,
@@ -109,9 +99,7 @@ class ChildController extends AbstractController
         return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
     }
 
-    /**
-     * @Route("/{id}", name="app_children_delete", methods={"POST"})
-     */
+    #[Route(path: '/{id}', name: 'app_children_delete', methods: ['POST'])]
     public function delete(Request $request, Child $child, ChildRepository $childRepository): Response
     {
         // Voter Control

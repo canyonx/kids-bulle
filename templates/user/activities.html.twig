@@ -3,21 +3,26 @@
 {% block title %}{{ app.user.firstname }} {{ app.user.lastname }}{% endblock %}
 
 {% block body %}
-    <div class="card">
-        <div class="card-body">
-            {# count activities in planning #}
-            {% set act = 0 %}
-            {% for date, activities in planning %}
-                {% if activities %}
-                    {% set act = act + 1 %}  
-                {% endif %}
-            {% endfor %}
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">{{"My_family"|trans}}</h1>
+            </div>
+            <div class="card-body">
+                {# count activities in planning #}
+                {% set act = 0 %}
+                {% for date, activities in planning %}
+                    {% if activities %}
+                        {% set act = act + 1 %}  
+                    {% endif %}
+                {% endfor %}
 
-            {% if act == 0 %}
-                <p>No activities in your planning !</p>
-            {% else %}
-                {% include "shared/_planningFamily.html.twig" %}
-            {% endif %}
+                {% if act == 0 %}
+                    <p>{{"No_activities_in_your_planning"|trans}} !</p>
+                {% else %}
+                    <turbo-frame id="planning_family">
+                        {% include "planning/_planningFamily.html.twig" %}
+                    </turbo-frame>
+                {% endif %}
+            </div>
         </div>
-    </div>
 {% endblock %}

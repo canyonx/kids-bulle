@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{"Child_index"|trans}}{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">{{"Child_index"|trans}}</h1>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{{"Fullname"|trans}}</th>
+                        <th>{{"Age"|trans}}</th>
+                        <th>{{"Parent"|trans}}</th>
+                        <th>{{"Phone"|trans}}</th>
+                        <th>{{"Ski_level"|trans}}</th>
+                        <th>{{"Slalom_level"|trans}}</th>
+                        <th>{{"Snowboard_level"|trans}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for child in childs %}
+                        <tr>
+                            <td>{{ child.lastname }} {{ child.firstname }}</td>
+                            <td>{{ child.age }}</td>
+                            <td>{{ child.user }}</td>
+                            <td>{{ child.user.phone }}</td>
+                            <td>{{ child.levelSki }}</td>
+                            <td>{{ child.levelSlalom }}</td>
+                            <td>{{ child.levelSnowboard }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">{{"No_records_found"|trans}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

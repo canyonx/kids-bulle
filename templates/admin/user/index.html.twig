@@ -1,24 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}{{"User_index"|trans}}{% endblock %}
 
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h1 class="card-title">User index</h1>
-            <a class="btn btn-light" href="{{ path('app_admin_user_new') }}">Create new</a>
+            <h1 class="card-title">{{"User_index"|trans}}</h1>
+            <a class="btn btn-light" href="{{ path('app_admin_user_new') }}">{{"Create_new"|trans}}</a>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Fullname</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Adress</th>
-                        <th>Childrens</th>
-                        <th>Roles</th>
-                        <th>actions</th>
+                        <th>{{"Fullname"|trans}}</th>
+                        <th>{{"Email"|trans}}</th>
+                        <th>{{"Phone"|trans}}</th>
+                        <th>{{"Address"|trans}}</th>
+                        <th>{{"Childs"|trans}}</th>
+                        <th>{{"Roles"|trans}}</th>
+                        <th>{{"actions"|trans}}</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,12 +38,15 @@
                             </td>
                             <td>{{ user.roles[0] | split('_')[1] }}</td>
                             <td>
-                                <a class="btn btn-link" href="{{ path('app_admin_user_edit', {id: user.id}) }}">edit</a>
+                                <a class="btn btn-link" href="{{ path('app_admin_user_edit', {id: user.id}) }}">{{"edit"|trans}}</a>
+                            </td>
+                            <td>
+                                 {{ include('admin/user/_delete_form.html.twig') }}
                             </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="5">no records found</td>
+                            <td colspan="5">{{"No_records_found"|trans}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -1,0 +1,51 @@
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>{{"Date"|trans}}</th>
+            <th>{{"All_Activities"|trans}}</th>
+            <th>{{ child.firstname }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for date, activities in planning %}
+            {% for activity in activities %}
+            <turbo-frame id="activity_{{activity.id}}">
+                <tr class="align-middle">
+
+                    {# Date #}
+                    {% if loop.first %}
+                        <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
+                            {{ date|date('j M') }}
+                        </td>
+                    {% endif %}
+
+                    {# Activities global #} 
+                    {% if child in activity.childrens %}
+                        <turbo-frame id="activity_{{ activity.id }}">
+                            <td class="col-5"></td>
+                            
+                            <td class="col-5">
+                                {% include "planning/_button_remove_activity.html.twig" %}
+                            </td>
+                        {% else %}
+                            <td class="col-5">
+                                {% include "planning/_button_add_activity.html.twig" %}
+                            </td>
+                            
+                            <td class="col-5"></td>
+                        </turbo-frame>
+                    {% endif %}
+                    
+                </tr>
+            </turbo-frame>
+            {% else %}
+                <tr>
+                    <td class="col-2">
+                        {{ date|date('j M') }}
+                    </td>
+                    <td colspan="100%"></td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>

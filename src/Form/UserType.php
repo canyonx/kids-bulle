@@ -23,12 +23,6 @@ class UserType extends AbstractType
                         'placeholder' => 'exemple@whynot.ex'
                     ]
                 ])
-                ->add('password', PasswordType::class, [
-                    'label' => 'Mot de passe',
-                    'attr' => [
-                        'placeholder' => 'password'
-                    ]
-                ])
                 ->add('firstname', TextType::class, [
                     'label' => 'Prénom',
                     'attr' => [

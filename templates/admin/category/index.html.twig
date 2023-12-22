@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}{{"Category_index"|trans}}{% endblock %}
 
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h1 class="card-title">Category index</h1>
-            <a class="btn btn-light" href="{{ path('app_admin_category_new') }}">Create new</a>
+            <h1 class="card-title">{{"Category_index"|trans}}</h1>
+            <a class="btn btn-light" href="{{ path('app_admin_category_new') }}">{{"Create_new"|trans}}</a>
         </div>
         <div class="card-body">
             <div class="row">
@@ -19,13 +19,16 @@
                      <div class="card-body">
                         {{ category.description }}
                      </div>
-                     <div class="card-footer">
-                        <a class="card-link" href="{{ path('app_admin_category_edit', {'id': category.id}) }}">edit</a>
+                     <div class="card-footer d-flex justify-content-between">
+                        <a class="card-link" href="{{ path('app_admin_category_edit', {'id': category.id}) }}">{{"edit"|trans}}</a>
+                        <div>
+                            <span class="badge badge-secondary bg-secondary">{{ category.number }}</span>
+                        </div>
                      </div>
                     </div>
                 </div>
             {% else %}
-                <p> colspan="4">no records found</p>
+                <p>{{"No_records_found"|trans}}</p>
             {% endfor %}
         </div>
         </div>

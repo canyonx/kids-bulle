@@ -7,57 +7,37 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ChildRepository::class)
- */
+#[ORM\Entity(repositoryClass: ChildRepository::class)]
 class Child
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $firstname;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $lastname;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
+    #[ORM\Column(type: 'datetime_immutable')]
     private $birthAt;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Activity::class, mappedBy="childrens")
-     */
+    #[ORM\ManyToMany(targetEntity: Activity::class, mappedBy: 'childrens')]
     private $activities;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="childs")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'childs')]
+    #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $levelSki;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $levelSlalom;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $levelSnowboard;
 
     public function __construct()
@@ -189,5 +169,14 @@ class Child
         $this->levelSnowboard = $levelSnowboard;
 
         return $this;
+    }
+
+    public function getAge()
+    {
+        $now = new \DateTime('now');
+        $age = $this->getBirthAt();
+        $difference = $now->diff($age);
+
+        return $difference->format('%y ans');
     }
 }

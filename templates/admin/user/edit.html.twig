@@ -1,18 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit user role for {{ user.firstname }} {{ user.lastname }}{% endblock %}
+{% block title %}{{"edit_user_role_for"|trans}} {{ user.firstname }} {{ user.lastname }}{% endblock %}
 
 {% block body %}
-    <div class="card col-6 mx-auto">
+    <div class="card col-md-6 mx-auto">
         <div class="card-header">
             <h1 class="card-title">
-                Edit user role for <br>
+                {{"edit_user_role_for"|trans}} <br>
                 {{ user.firstname }} {{ user.lastname }}
             </h1>
-            <a class="btn btn-light" href="{{ path('app_admin_user_index') }}">back to list</a>
         </div>
         <div class="card-body">
             {{ include('admin/user/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a class="btn btn-light" href="{{ path('app_admin_user_index') }}">{{"back_to_list"|trans}}</a>
         </div>
     </div>
 {% endblock %}

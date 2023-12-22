@@ -13,14 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/profil")
- */
+#[Route(path: '/profil')]
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/", name="app_user", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'app_user', methods: ['GET'])]
     public function show(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
         $activities = $activityRepository->findByUser($this->getUser());
@@ -33,9 +29,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/activities", name="app_user_activities", methods={"GET"})
-     */
+    #[Route(path: '/activities', name: 'app_user_activities', methods: ['GET'])]
     public function activities(ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
         /** @var User */
@@ -56,9 +50,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/edit", name="app_user_edit", methods={"GET", "POST"})
-     */
+    #[Route(path: '/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $hasher): Response
     {
         /** @var User */
@@ -68,10 +60,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // For security hash password
-            $pwd = $hasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($pwd);
-
             $userRepository->add($user, true);
 
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
@@ -83,9 +71,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/delete", name="app_user_delete", methods={"POST"})
-     */
+    #[Route(path: '/delete', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, UserRepository $userRepository): Response
     {
         /** @var User */

@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}{{"Edit_User"|trans}}{% endblock %}
 
 {% block body %}
-    <div class="card col-6 mx-auto">
+    <div class="card col-md-6 mx-auto">
         <div class="card-header">
-            <h1 class="card-title">Edit User</h1>
-            <a class="btn btn-light" href="{{ path('app_user') }}">back to profile</a>
+            <h1 class="card-title">{{"Edit_User"|trans}}</h1>
+            <a class="btn btn-light" href="{{ path('app_user') }}">{{"back_to_profile"|trans}}</a>
+            <a class="btn btn-light" href="{{ path('app_register_edit_password') }}">Changer de mot de passe</a>
         </div>
         <div class="card-body">
             {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
@@ -15,4 +16,5 @@
             {{ include('user/_delete_form.html.twig') }}
         </div>
     </div>
+
 {% endblock %}

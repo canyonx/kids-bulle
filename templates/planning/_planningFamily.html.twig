@@ -1,15 +1,17 @@
 <table class="table text-center">
     <thead>
         <tr>
-            <th>Date</th>
+            <th>{{"Date"|trans}}</th>
             {% if is_granted("ROLE_TEACHER") %}
-                <th>Teacher (Me)</th>
+                <th>{{"Teacher_(Me)"|trans}}</th>
             {% endif %}
             {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
                 {% for child in app.user.childs %}
                     <th>
-                        <a href="{{ path('app_children_planning', {id: child.id}) }}" class="btn btn-outline-secondary">
-                            Planning of {{ child.firstname }}
+                        <a href="{{ path('app_children_planning', {id: child.id}) }}" 
+                        class="btn btn-primary" 
+                        data-turbo-frame="_top">
+                            {{ child.firstname }}
                         </a>
                     </th>
                 {% endfor %}
@@ -25,7 +27,7 @@
 
                     {# Date #}
                     {% if loop.first %}
-                        <td {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
+                        <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
                             {{ date|date('j M') }}
                         </td>
                     {% endif %}
@@ -34,9 +36,7 @@
                         {# Teacher #}
                         {% if user == activity.teacher %}
                             <td>
-                                <a class="btn btn-block" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}">
-                                    {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
-                                </a>
+                                {% include "planning/_button_activity.html.twig" %}
                             </td>
                         {% else %}
                             <td></td>
@@ -47,18 +47,7 @@
                     {% for child in childs %}
                         {% if child in activity.childrens %}
                             <td>
-                                <div class="btn-group">
-                                    <a class="btn btn-block" 
-                                    style="background-color: {{ activity.category.color }}" 
-                                    href="{{ path('app_activity_show', {id: activity.id}) }}">
-                                        {{ activity.dateAt|date("H\\hi") }} - {{ activity.category }} 
-                                        <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
-                                    </a>
-                                    <a href="{{ path('app_children_action_activity', {id: child.id, action: 'remove', activity:activity.id}) }}" 
-                                    class="btn btn-secondary" alt="remove">
-                                        <i class="bi bi-x-circle-fill"></i>
-                                    </a>
-                                </div>
+                                {% include "planning/_button_remove_activity.html.twig" %}
                             </td>
                         {% else %}
                             <td></td>
@@ -67,7 +56,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td>
+                    <td class="col-2">
                         {{ date|date('j M') }}
                     </td>
                     <td colspan="100%"></td>
