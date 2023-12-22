@@ -37,10 +37,10 @@ class PlanningService extends AbstractController
      * @param array $activities
      * @return array
      */
-    public function getPlanning(array $activities): array
+    public function getPlanning(\DateTimeImmutable $dateStart, array $activities): array
     {
         // Array of dates
-        $dates = $this->getArrayDates();
+        $dates = $this->getArrayDates($dateStart);
 
         $calendar = [];
         foreach ($dates as $date) {

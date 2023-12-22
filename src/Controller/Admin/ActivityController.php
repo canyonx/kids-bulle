@@ -7,7 +7,6 @@ use App\Entity\Activity;
 use App\Form\ActivityType;
 use App\Service\PlanningService;
 use App\Repository\ActivityRepository;
-use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,12 +16,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ActivityController extends AbstractController
 {
     #[Route(path: '/', name: 'app_admin_activity_index', methods: ['GET'])]
-    public function index(ActivityRepository $activityRepository, PlanningService $planningService): Response
+    public function index(Request $request, ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
-        $activities = $activityRepository->findByDateBetween();
+        $dateStart = new \DateTimeImmutable($request->get('date'));
 
-        $planning = $planningService->getPlanning($activities);
+        $activities = $activityRepository->findByDateBetween($dateStart);
 
+        $planning = $planningService->getPlanning($dateStart, $activities);
         return $this->render('admin/activity/index.html.twig', [
             'planning' => $planning
         ]);

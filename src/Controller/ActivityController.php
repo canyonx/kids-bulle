@@ -18,7 +18,7 @@ class ActivityController extends AbstractController
     public function show(
         Activity $activity
     ): Response {
-        return $this->renderForm('activity/show.html.twig', [
+        return $this->render('activity/show.html.twig', [
             'activity' => $activity
         ]);
     }
