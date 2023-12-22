@@ -23,8 +23,8 @@ class ActivityUtil
      */
     public static function ByDateBetween(
         QueryBuilder $qb,
-        ?\DateTimeImmutable $dateStart = null,
-        ?int $days = 7
+        \DateTimeImmutable $dateStart = null,
+        int $days = 21
     ): QueryBuilder {
         if ($dateStart === null) {
             $dateStart = new \DateTimeImmutable("today");

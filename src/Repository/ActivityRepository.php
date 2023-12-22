@@ -44,7 +44,7 @@ class ActivityRepository extends ServiceEntityRepository
     /**
      * @return Activity[] Returns an array of Activity objects
      */
-    public function findByDateBetween(\DateTimeImmutable $dateStart = null, int $days = 7): array
+    public function findByDateBetween(\DateTimeImmutable $dateStart = null, int $days = 21): array
     {
         $qb = $this->createQueryBuilder('a');
         ActivityUtil::ByDateBetween($qb, $dateStart, $days);
