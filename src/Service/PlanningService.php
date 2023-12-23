@@ -20,11 +20,21 @@ class PlanningService extends AbstractController
     public function getArrayDates(
         \DateTimeImmutable $fromtime = null
     ): array {
-        if ($fromtime === null) {
-            $fromtime = new \DateTimeImmutable('today');
+        if ($fromtime === null) $fromtime = new \DateTimeImmutable('today');
+
+        $month = $fromtime->format('Y-m');
+        $dayInTheMonth = (new \DateTimeImmutable('last day of ' . $month, new \DateTimeZone("Europe/Paris")))->format('d');
+
+        $today = new \DateTimeImmutable('today');
+
+        if ($today->format('Y-m') == $month) {
+            $dayQty = $dayInTheMonth - $today->format('d') + 1;
+            if ($dayQty < $this->getParameter('app.planning_days')) $dayQty = $this->getParameter('app.planning_days');
+        } else {
+            $dayQty = $dayInTheMonth;
         }
 
-        for ($i = 0; $i < $this->getParameter('app.planning_days'); $i++) {
+        for ($i = 0; $i < $dayQty; $i++) {
             $dates[] = new \DateTimeImmutable($fromtime->format('Y-m-d') . "+ $i day");
         }
         // dd($dates);

@@ -39,7 +39,7 @@ class ActivityController extends AbstractController
         }
 
 
-        return $this->renderForm('activity/edit.html.twig', [
+        return $this->render('activity/edit.html.twig', [
             'activity' => $activity,
             'form' => $form,
         ]);
