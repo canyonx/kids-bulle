@@ -22,7 +22,7 @@ class ActivityController extends AbstractController
 
         $activities = $activityRepository->findByDateBetween($dateStart);
 
-        $planning = $planningService->getPlanning($dateStart, $activities);
+        $planning = $planningService->getPlanning($activities, $dateStart);
         return $this->render('admin/activity/index.html.twig', [
             'planning' => $planning
         ]);

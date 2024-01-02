@@ -1,56 +1,57 @@
 Accueil: Accueil
-Website_subtitle: 'Système de planning pour inscrire les enfants aux activités du club de le_nom_du_club'
-Planning: __Planning
-Planning_of: __Planning_of
-edit: __edit
-add_child: __add_child
-Save: __Save
-Edit_User: __Edit_User
-back_to_profile: __back_to_profile
-Delete: __Delete
-Activity: __Activity
-back_to_planning: __back_to_planning
-With: __With
-Registered: __Registered
-Log_in: __Log_in
-Please_log_in: __Please_log_in
-Email: __Email
-Password: __Password
-New_Child: __New_Child
-User_index: __User_index
-Create_new: __Create_new
-Fullname: __Fullname
-Phone: __Phone
-Address: __Address
-Childs: __Childs
-Roles: __Roles
-actions: __actions
-No_records_found: __No_records_found
-New_user: __New_user
-back_to_list: __back_to_list
-edit_user_role_for: __edit_user_role_for
-Activity_index: __Activity_index
-New_activity: __New_activity
-Edit_activity: __Edit_activity
-Category_index: __Category_index
-New_category: __New_category
-Edit_category: __Edit_category
-Date: __Date
-Teacher_(Me): __Teacher_(Me)
-manage: __manage
-All_Activities: __All_Activities
-Profile: __Profile
-Activities: __Activities
-Categories: __Categories
-Users: __Users
-Log_out: __Log_out
-Sign_in: __Sign_in
-No_activities_in_your_planning: __No_activities_in_your_planning
-Child_index: __Child_index
-Age: __Age
-Parent: __Parent
-Ski_level: __Ski_level
-Slalom_level: __Slalom_level
-Snowboard_level: __Snowboard_level
-My_family: __My_family
-back_to_activity: __back_to_activity
+Website_subtitle: "Planning d'inscription aux matinées du skiclub Kid's Bulle"
+Planning: Planning
+Planning_of: 'Planning de'
+edit: Modifier
+add_child: 'Ajouter un enfant'
+Save: Enregistrer
+Edit_User: "Modifier l'utilisateur"
+back_to_profile: 'Retour au profil'
+Delete: Supprimer
+Activity: Sorties
+back_to_planning: 'Retour au planning'
+With: avec
+Registered: Inscrits
+Log_in: Connexion
+Please_log_in: Connectez-vous
+Email: Email
+Password: 'Mt de passe'
+New_Child: 'Nouvel efant'
+User_index: 'Listing utilisateurs'
+Create_new: Créer
+Fullname: Nom
+Phone: Téléphone
+Address: Adresse
+Childs: Enfant(s)
+Roles: Rôle
+actions: Action
+No_records_found: "C'est bien vide par ici..."
+New_user: 'Nouvel utilisateur'
+back_to_list: 'Retour à la liste'
+edit_user_role_for: 'Modifier le rôle de'
+Activity_index: 'Listing sorties'
+New_activity: 'Nouvelle sortie'
+Edit_activity: Modification
+Category_index: 'Listing catégories'
+New_category: 'Nouvelle catégorie'
+Edit_category: Modification
+Date: Date
+Teacher_(Me): Moniteur
+manage: Gérer
+All_Activities: 'Sorties disponibles'
+Profile: 'Mon compte'
+Activities: Sorties
+Categories: catégories
+Users: Utilisateurs
+Log_out: Déconnexion
+Sign_in: 'Créer un compte'
+My_family: 'Ma famille'
+No_activities_in_your_planning: "Pas encore d'activités dans votre planning"
+Child_index: "Liste des enfants"
+Age: Age
+Parent: Parent
+Ski_level: "Niveau de Ski"
+Slalom_level: "Niveau de Slalom"
+Snowboard_level: "Niveau de Snowboard"
+Search: "Chercher"
+back_to_activity: "Retour aux activités"
