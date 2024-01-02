@@ -25,14 +25,16 @@ class PlanningService extends AbstractController
         $month = $fromtime->format('Y-m');
         $dayInTheMonth = (new \DateTimeImmutable('last day of ' . $month, new \DateTimeZone("Europe/Paris")))->format('d');
 
-        $today = new \DateTimeImmutable('today');
+        // $today = new \DateTimeImmutable('today');
 
-        if ($today->format('Y-m') == $month) {
-            $dayQty = $dayInTheMonth - $today->format('d') + 1;
-            if ($dayQty < $this->getParameter('app.planning_days')) $dayQty = $this->getParameter('app.planning_days');
-        } else {
-            $dayQty = $dayInTheMonth;
-        }
+        // if ($today->format('Y-m') == $month) {
+        //     $dayQty = $dayInTheMonth - $today->format('d') + 1;
+        //     if ($dayQty < $this->getParameter('app.planning_days')) $dayQty = $this->getParameter('app.planning_days');
+        // } else {
+        //     $dayQty = $dayInTheMonth;
+        // }
+
+        $dayQty = $dayInTheMonth;
 
         for ($i = 0; $i < $dayQty; $i++) {
             $dates[] = new \DateTimeImmutable($fromtime->format('Y-m-d') . "+ $i day");

@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Child;
 use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**
  *
@@ -18,18 +20,21 @@ class ActivityUtil
      *
      * @param QueryBuilder $qb
      * @param \DateTimeImmutable|null $dateStart, if null start today
-     * @param integer $days
+     * @param \DateTimeImmutable|null $dateEnd, if null end today + 31 days
      * @return QueryBuilder
      */
     public static function ByDateBetween(
         QueryBuilder $qb,
         \DateTimeImmutable $dateStart = null,
-        int $days = 21
+        \DateTimeImmutable $dateEnd = null
     ): QueryBuilder {
         if ($dateStart === null) {
             $dateStart = new \DateTimeImmutable("today");
         }
-        $dateEnd = new \DateTimeImmutable($dateStart->format("Y-m-d") . "+ $days days");
+
+        if ($dateEnd === null) {
+            $dateEnd = new \DateTimeImmutable($dateStart->format('Y-m-d') . ' + 31 days');
+        }
 
         return $qb->andWhere('a.dateAt >= :dateStart')
             ->setParameter('dateStart', $dateStart)

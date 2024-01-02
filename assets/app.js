@@ -5,8 +5,8 @@ import './bootstrap.js';
  * We recommend including the built version of this JavaScript file
  * (and its CSS file) in your base layout (base.html.twig).
  */
- 
-import 'bootstrap/dist/js/bootstrap.js'
+
+import 'bootstrap/dist/js/bootstrap.bundle.js'
 
 // any CSS you import will output into a single css file (app.css in this case)
 
