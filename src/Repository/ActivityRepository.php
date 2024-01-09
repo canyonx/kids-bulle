@@ -48,6 +48,7 @@ class ActivityRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('a');
         ActivityUtil::ByDateBetween($qb, $dateStart, $dateEnd);
+        ActivityUtil::OrderByDateAndCategory($qb);
         return $qb->getQuery()
             ->getResult();
     }
@@ -60,6 +61,7 @@ class ActivityRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('a');
         ActivityUtil::ByDateBetween($qb);
         ActivityUtil::ByChildsOfUser($qb, $user);
+        ActivityUtil::OrderByDateAndCategory($qb);
         return $qb->setMaxResults(40)
             ->getQuery()
             ->getResult();
@@ -73,6 +75,7 @@ class ActivityRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('a');
         ActivityUtil::ByDateBetween($qb);
         ActivityUtil::ByChild($qb, $child);
+        ActivityUtil::OrderByDateAndCategory($qb);
         return $qb->setMaxResults(40)
             ->getQuery()
             ->getResult();
@@ -86,6 +89,7 @@ class ActivityRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('a');
         ActivityUtil::ByDateBetween($qb);
         ActivityUtil::ByTeacher($qb, $user);
+        ActivityUtil::OrderByDateAndCategory($qb);
         return $qb->setMaxResults(40)
             ->getQuery()
             ->getResult();

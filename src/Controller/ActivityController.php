@@ -23,27 +23,27 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'app_activity_edit', methods: ['GET', 'POST'])]
-    public function edit(
-        Request $request,
-        Activity $activity,
-        ActivityRepository $activityRepository
-    ): Response {
-        $form = $this->createForm(ActivityType::class, $activity);
-        $form->handleRequest($request);
+    // #[Route(path: '/{id}/edit', name: 'app_activity_edit', methods: ['GET', 'POST'])]
+    // public function edit(
+    //     Request $request,
+    //     Activity $activity,
+    //     ActivityRepository $activityRepository
+    // ): Response {
+    //     $form = $this->createForm(ActivityType::class, $activity);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $activityRepository->add($activity, true);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $activityRepository->add($activity, true);
 
-            return $this->redirectToRoute('app_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
+    //     }
 
 
-        return $this->render('activity/edit.html.twig', [
-            'activity' => $activity,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('activity/edit.html.twig', [
+    //         'activity' => $activity,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route(path: '/{id}/remove/{child}', name: 'app_activity_remove_child', methods: ['GET'])]
     public function removeChild(

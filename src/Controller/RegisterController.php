@@ -8,6 +8,7 @@ use App\Form\NewPasswordType;
 use App\Form\LostPasswordType;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
+use App\Service\MailerService;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -42,9 +43,7 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_home', []);
         }
 
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
-
-        return $this->renderForm('register/register.html.twig', [
+        return $this->render('register/register.html.twig', [
             'registrationForm' => $form
         ]);
     }
@@ -55,7 +54,7 @@ class RegisterController extends AbstractController
         UserRepository $userRepository,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $hasher,
-        MailerInterface $mailer
+        MailerService $mailerService
     ) {
         $form = $this->createForm(LostPasswordType::class);
 
@@ -77,42 +76,33 @@ class RegisterController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            // TODO : use mailer service
             // Envoi un mail avec le new mdp
-            $email = new TemplatedEmail;
-            // Expéditeur
-            $email->from(new Address("contact@mail.com", "Infos de la boutique"))
-                // Destinataire
-                ->to($user->getEmail())
-                // contenu
-                ->text("Votre nouveau mot de passe" . $password)
-                ->htmlTemplate("emails/lost_password.html.twig")
-                ->context([
+            $mailerService->send(
+                $user->getEmail(),
+                "Nouveau mot de passe",
+                "emails/lost_password.html.twig",
+                [
                     'password' => $password
-                ])
-                // sujet
-                ->subject("Nouveau mot de passe");
-            // Envoi du mail
-            $mailer->send($email);
+                ]
+            );
 
             $this->addFlash('success', 'Un nouveau mot de passe à été envoyé a votre adresse');
             return $this->redirectToRoute('app_login', []);
         }
 
-        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
-
-        return $this->renderForm('register/lost_password.html.twig', [
+        return $this->render('register/lost_password.html.twig', [
             'form' => $form
         ]);
     }
 
     #[Route(path: '/register/edit-password', name: 'app_register_edit_password')]
-    #[IsGranted('ROLE_USER')]
     public function editPassword(
         Request $request,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $hasher
     ) {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         /** @var User */
         $user = $this->getUser();
         $form = $this->createForm(NewPasswordType::class);
@@ -128,7 +118,7 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_user');
         }
 
-        return $this->renderForm('register/edit_password.html.twig', [
+        return $this->render('register/edit_password.html.twig', [
             'form' => $form
         ]);
     }

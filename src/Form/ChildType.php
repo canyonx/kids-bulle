@@ -73,8 +73,8 @@ class ChildType extends AbstractType
                     'label' => 'Snowboard level',
                     'choices' => [
                         'Goomie rider' => 'Goomie rider',
-                        'Izzy rider' => 'Izzy rider',
                         'Rookie rider' => 'Rookie rider',
+                        'Izzy rider' => 'Izzy rider',
                         '1e snowboard' => '1e snowboard',
                         '2e snowboard' => '2e snowboard',
                         '3e snowboard' => '3e snowboard',

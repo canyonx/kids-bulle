@@ -29,8 +29,10 @@ class ActivityType extends AbstractType
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
                 'class' => Category::class
-            ])
-            ->add('teacher', EntityType::class, [
+            ]);
+
+        if ($options['edit'] === true) {
+            $builder->add('teacher', EntityType::class, [
                 'label' => 'Moniteur',
                 'class' => User::class,
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
@@ -39,12 +41,14 @@ class ActivityType extends AbstractType
                         ->setParameter('role', '%ROLE_TEACHER%');
                 }
             ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Activity::class,
+            'edit' => false
         ]);
     }
 }
