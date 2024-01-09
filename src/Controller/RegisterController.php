@@ -75,7 +75,7 @@ class RegisterController extends AbstractController
             $mailerService->send(
                 $user->getEmail(),
                 "Nouveau mot de passe",
-                "emails/lost_password.html.twig",
+                "lost_password",
                 [
                     'password' => $password
                 ]
