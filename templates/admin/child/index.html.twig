@@ -11,6 +11,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>{{"License"|trans}}</th>
                         <th>{{"Fullname"|trans}}</th>
                         <th>{{"Age"|trans}}</th>
                         <th>{{"Parent"|trans}}</th>
@@ -23,6 +24,7 @@
                 <tbody>
                     {% for child in childs %}
                         <tr>
+                            <td>{{ child.license }}</td>
                             <td>{{ child.lastname }} {{ child.firstname }}</td>
                             <td>{{ child.age }}</td>
                             <td>{{ child.user }}</td>

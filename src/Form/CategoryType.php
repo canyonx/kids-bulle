@@ -22,7 +22,20 @@ class CategoryType extends AbstractType
         $builder
             ->add('number', ChoiceType::class, [
                 'label' => 'Position ',
-                'choices' => range(0, 5)
+                'choices' => [
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
+                    '6' => '6',
+                    '7' => '7',
+                    '8' => '8',
+                    '9' => '9',
+                    '10' => '10',
+                    '11' => '11',
+                    '12' => '12',
+                ]
             ])
             ->add('name', TextType::class, [
                 'label' => 'Catégorie'
@@ -40,7 +53,8 @@ class CategoryType extends AbstractType
                     return $er->createQueryBuilder('u')
                         ->andWhere('u.roles LIKE :role')
                         ->setParameter('role', '%ROLE_TEACHER%');
-                }
+                },
+                'required' => false
             ]);
     }
 

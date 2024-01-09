@@ -80,6 +80,12 @@ class ChildType extends AbstractType
                         '3e snowboard' => '3e snowboard',
                     ],
                     'required' => false
+                ])
+                ->add('license', TextType::class, [
+                    'label' => 'Licence',
+                    'attr' => [
+                        'placeholder' => 'Numéro de licence'
+                    ]
                 ]);
         }
 
