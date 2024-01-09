@@ -41,7 +41,8 @@ class ActivityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            // on récupére le teacher de la category
+            $activity->setTeacher($activity->getCategory()->getTeacher());
             $activityRepository->add($activity, true);
 
             return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);

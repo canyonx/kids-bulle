@@ -28,7 +28,11 @@ class ActivityType extends AbstractType
             ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
-                'class' => Category::class
+                'class' => Category::class,
+                'query_builder' => function (EntityRepository $er): QueryBuilder {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.number', 'ASC');
+                },
             ]);
 
         if ($options['edit'] === true) {

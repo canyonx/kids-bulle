@@ -40,6 +40,9 @@ class Child
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $levelSnowboard;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $license = null;
+
     public function __construct()
     {
         $this->activities = new ArrayCollection();
@@ -178,5 +181,17 @@ class Child
         $difference = $now->diff($age);
 
         return $difference->format('%y ans');
+    }
+
+    public function getLicense(): ?string
+    {
+        return $this->license;
+    }
+
+    public function setLicense(?string $license): static
+    {
+        $this->license = $license;
+
+        return $this;
     }
 }
