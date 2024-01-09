@@ -32,6 +32,11 @@ class ActivityController extends AbstractController
     public function new(Request $request, ActivityRepository $activityRepository): Response
     {
         $activity = new Activity();
+        // Dat par defaut demain 9h
+        $datetime = new \DateTime('tomorrow');
+        $datetime = $datetime->format('Y-m-d 9:00');
+        $activity->setDateAt(new \DateTimeImmutable($datetime), new \DateTimeZone("Europe/Paris"));
+
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
 
@@ -59,7 +64,7 @@ class ActivityController extends AbstractController
     #[Route(path: '/{id}/edit', name: 'app_admin_activity_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
     {
-        $form = $this->createForm(ActivityType::class, $activity);
+        $form = $this->createForm(ActivityType::class, $activity, ['edit' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

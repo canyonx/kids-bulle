@@ -85,6 +85,19 @@ class ActivityUtil
             ->setParameter('user', $user)
             ->join('a.teacher', 'u')
             ->andWhere('u.roles LIKE :role')
-            ->setParameter('role', '%ROLE_TEACHER%');;
+            ->setParameter('role', '%ROLE_TEACHER%');
+    }
+
+    /**
+     * Order Activity by Name
+     *
+     * @param QueryBuilder $qb
+     * @return QueryBuilder
+     */
+    public static function OrderByDateAndCategory(QueryBuilder $qb): QueryBuilder
+    {
+        return  $qb->orderBy('a.dateAt', 'ASC')
+            ->leftJoin('a.category', 'c')
+            ->addOrderBy('c.number', 'ASC');
     }
 }

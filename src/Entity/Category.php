@@ -30,6 +30,9 @@ class Category
     #[ORM\Column(type: 'integer', nullable: true)]
     private $number;
 
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?User $teacher = null;
+
     public function __construct()
     {
         $this->activities = new ArrayCollection();
@@ -119,6 +122,18 @@ class Category
     public function setNumber(?int $number): self
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?User
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?User $teacher): static
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }

@@ -36,18 +36,4 @@ class HomeController extends AbstractController
             'planning' => $planning
         ]);
     }
-
-    // #[Route(path: '/email', name: 'app_email')]
-    // public function email(
-    //     MailerService $mailerService,
-    //     UserRepository $userRepository
-    // ): Response {
-    //     // $mailerService->send('dauchez.matteo@oclock.school', 'test', 'message_notification', []);
-    //     // /** @var User */
-    //     // $user = $this->getUser();
-
-    //     // $user->setIsVerified(true);
-    //     // $userRepository->add($user, true);
-    //     return $this->redirectToRoute('app_home');
-    // }
 }
