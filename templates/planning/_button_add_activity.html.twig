@@ -1,3 +1,4 @@
+{# button on small screen #}
 <div class="d-block d-md-none">
     <div class="btn-group-vertical w-100">
         <a class="btn" 
@@ -14,8 +15,9 @@
     </div>
 </div>
 
-<div class="d-none d-md-block ">
-    <div class="btn-group w-100 ">
+{# button on large screen #}
+<div class="d-none d-md-block">
+    <div class="btn-group w-100">
         <a class="col-10 btn" 
         style="background-color: {{ activity.category.color }}" 
         href="{{ path('app_activity_show', {id: activity.id}) }}"
