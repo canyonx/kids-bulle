@@ -85,7 +85,8 @@ class ChildType extends AbstractType
                     'label' => 'Licence',
                     'attr' => [
                         'placeholder' => 'Numéro de licence'
-                    ]
+                    ],
+                    'required' => false
                 ]);
         }
 

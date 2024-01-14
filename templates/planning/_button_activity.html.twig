@@ -11,6 +11,8 @@
     <button class="w-100 btn" 
     style="background-color: {{ activity.category.color }}" 
     data-turbo-frame="_top">
-        {{ activity.dateAt|date("H\\h") }}   {{ activity.category }} <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
+        {{ activity.dateAt|date("H\\h") }}
+        {{ activity.category }}
+        <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
     </button>
 {% endif %}

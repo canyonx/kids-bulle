@@ -19,17 +19,15 @@ class HomeController extends AbstractController
     public function index(
         CategoryRepository $categoryRepository,
         ActivityRepository $activityRepository,
-        PlanningService $planningService,
-        Request $request
+        PlanningService $planningService
     ): Response {
 
-        $dateStart = new \DateTimeImmutable($request->get('date'));
-        $today = new \DateTimeImmutable("today");
-        if ($dateStart < $today) $dateStart = $today;
+        $dateStart = new \DateTimeImmutable('today', new \DateTimeZone("Europe/Paris"));
 
         $activities = $activityRepository->findByDateBetween($dateStart);
 
         $planning = $planningService->getPlanning($activities, $dateStart);
+
 
         return $this->render('home/index.html.twig', [
             'categories' => $categoryRepository->findBy([], ['number' => 'ASC']),
