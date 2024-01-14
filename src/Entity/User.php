@@ -232,7 +232,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-        return ucwords($this->getFirstname() . ' ' . $this->getLastname());
+        return ucfirst($this->getFirstname()) . ' ' . ucfirst($this->getLastname());
     }
 
     /**

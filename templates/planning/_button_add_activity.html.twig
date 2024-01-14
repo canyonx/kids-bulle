@@ -5,7 +5,8 @@
         style="background-color: {{ activity.category.color }}" 
         href="{{ path('app_activity_show', {id: activity.id}) }}"
         data-turbo-frame="_top">
-            {{ activity.dateAt|date("H\\h") }} - {{ activity.category }} 
+            {{ activity.dateAt|date("H\\h") }}
+            {{ activity.category }} 
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>
         </a>
         <a href="{{ path('app_child_action_activity', {child: child.id, action: 'add', activity:activity.id}) }}" 
@@ -22,7 +23,8 @@
         style="background-color: {{ activity.category.color }}" 
         href="{{ path('app_activity_show', {id: activity.id}) }}"
         data-turbo-frame="_top">
-            {{ activity.dateAt|date("H\\h") }} - {{ activity.category }} 
+            {{ activity.dateAt|date("H\\h") }}
+            {{ activity.category }} 
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>
         </a>
         <a href="{{ path('app_child_action_activity', {child: child.id, action: 'add', activity:activity.id}) }}" 

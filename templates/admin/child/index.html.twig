@@ -5,7 +5,7 @@
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h1 class="card-title">{{"Child_index"|trans}}</h1>
+            <h1 class="card-title">{{"Child_index"|trans}} - <span class="text-muted">{{ childs|length }}</span></h1>
         </div>
         <div class="card-body">
             <table class="table table-striped">
@@ -25,7 +25,7 @@
                     {% for child in childs %}
                         <tr>
                             <td>{{ child.license }}</td>
-                            <td>{{ child.lastname }} {{ child.firstname }}</td>
+                            <td>{{ child.lastname|title }} {{ child.firstname|title }}</td>
                             <td>{{ child.age }}</td>
                             <td>{{ child.user }}</td>
                             <td>{{ child.user.phone }}</td>

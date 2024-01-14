@@ -18,7 +18,11 @@ class ActivityController extends AbstractController
     #[Route(path: '/', name: 'app_admin_activity_index', methods: ['GET'])]
     public function index(Request $request, ActivityRepository $activityRepository, PlanningService $planningService): Response
     {
-        $dateStart = new \DateTimeImmutable($request->get('date'));
+        if ($request->get('date')) {
+            $dateStart = new \DateTimeImmutable($request->get('date'));
+        } else {
+            $dateStart = new \DateTimeImmutable('today', new \DateTimeZone("Europe/Paris"));
+        }
 
         $activities = $activityRepository->findByDateBetween($dateStart);
 

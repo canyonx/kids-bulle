@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ user.firstname }} {{ user.lastname }}{% endblock %}
+{% block title %}{{ user.firstname|title }} {{ user.lastname|title }}{% endblock %}
 
 {% block body %}
     <section class="card col-md-6 mx-auto">
         <div class="card-header">
-            <h1>{{ user.firstname }} {{ user.lastname }}</h1> 
+            <h1>{{ user.firstname|title }} {{ user.lastname|title }}</h1> 
             {% if not is_granted("ROLE_USER") %}
                 <small>{{ user.roles[0] | split('_')[1] | title }}</small>
             {% endif %}
@@ -21,7 +21,7 @@
             <ul class="list-group list-group-flush">
                 {% for child in user.childs %}
                     <li class="list-group-item d-flex justify-content-between">
-                        <a class="btn btn-primary" href="{{ path('app_children_planning', {'id': child.id}) }}">{{ child.firstname }}</a>
+                        <a class="btn btn-primary" href="{{ path('app_children_planning', {'id': child.id}) }}">{{ child.firstname|title }}</a>
                         <a class="btn btn-link" href="{{ path('app_children_edit', {'id': child.id}) }}">{{"edit"|trans}}</a>
                     </li>
                 {% endfor %}
