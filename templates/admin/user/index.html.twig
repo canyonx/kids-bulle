@@ -9,7 +9,7 @@
             {# <a class="btn btn-light" href="{{ path('app_admin_user_new') }}">{{"Create_new"|trans}}</a> #}
         </div>
         <div class="card-body">
-            <table class="table table-striped">
+            <table class="table table-striped" style="display: block">
                 <thead>
                     <tr>
                         <th>{{"Fullname"|trans}}</th>
@@ -28,17 +28,17 @@
                             <td>{{ user.firstname|title }} {{ user.lastname|title }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.phone }}</td>
-                            <td>{{ user.fulladress }}</td>
+                            <td>{{ user.fulladress|title }}</td>
                             <td>
                                 {% for child in user.childs %}
                                     <li>
-                                        {{ child }}
+                                        {{ child|title }}
                                     </li>
                                 {% endfor %}
                             </td>
                             <td>{{ user.roles[0] | split('_')[1] }}</td>
                             <td>
-                                <a class="btn btn-link" href="{{ path('app_admin_user_edit', {id: user.id}) }}">{{"edit"|trans}}</a>
+                                <a class="btn btn-link" href="{{ path('app_admin_user_edit', {id: user.id}) }}">Rôle</a>
                             </td>
                             <td>
                                  {{ include('admin/user/_delete_form.html.twig') }}

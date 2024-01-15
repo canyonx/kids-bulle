@@ -29,7 +29,8 @@ class DayController extends AbstractController
                 $copyTo = $newDate->getDateAt();
                 $copyTo = new \DateTimeImmutable($copyTo->format('Y-m-d 9:00'));
                 $activity->setDateAt($copyTo)
-                    ->setCategory($a->getCategory());
+                    ->setCategory($a->getCategory())
+                    ->setTeacher($a->getCategory()->getTeacher());
                 $em->persist($activity);
             }
             $em->flush();
