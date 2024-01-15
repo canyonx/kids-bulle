@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Child;
 use App\Entity\Activity;
+use App\Repository\ActivityRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,5 +19,21 @@ class ActivityController extends AbstractController
         return $this->render('activity/show.html.twig', [
             'activity' => $activity
         ]);
+    }
+
+    // Parent can also remove a child from an activity
+    #[Route(path: '/{id}/remove/{child}', name: 'app_activity_remove_child', methods: ['GET'])]
+    public function removeChild(
+        Activity $activity,
+        Child $child,
+        ActivityRepository $activityRepository
+    ): Response {
+
+        $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
+
+        $activity->removeChildren($child);
+        $activityRepository->add($activity, true);
+
+        return $this->redirectToRoute('app_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
     }
 }

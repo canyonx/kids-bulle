@@ -16,6 +16,10 @@
                     {% if loop.first %}
                         <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
                             {{ date|format_datetime(pattern='dd MMM', locale='fr')|capitalize }}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <br>
+                                <a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top">Copier</a>
+                            {% endif %}
                         </td>
                     {% endif %}
 
