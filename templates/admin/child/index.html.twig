@@ -8,11 +8,11 @@
             <h1 class="card-title">{{"Child_index"|trans}} - <span class="text-muted">{{ childs|length }}</span></h1>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="childTable" data-controller="childTableOrder">
+            <table class="table table-striped" id="childTable" data-controller="childTableOrder" style="display: block">
                 <thead>
                     <tr>
                         <th>{{"License"|trans}}</th>
-                        <th data-action="click->childTableOrder#sortTable" class="text-primary">{{"Fullname"|trans}}</th>
+                        <th data-action="click->childTableOrder#sortTable" class="text-primary pe-auto">{{"Fullname"|trans}}</th>
                         <th data-action="click->childTableOrder#sortTable" class="text-primary">{{"Age"|trans}}</th>
                         <th>{{"Parent"|trans}}</th>
                         <th>{{"Phone"|trans}}</th>
