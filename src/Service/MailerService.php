@@ -13,16 +13,17 @@ class MailerService
     private $adminMail;
 
     public function __construct(
+        string $adminMail,
         MailerInterface $mailer,
-        ParameterBagInterface $parameterBag
     ) {
         $this->mailer = $mailer;
-        $this->adminMail = $parameterBag->get('app.admin_mail');
+        $this->adminMail = $adminMail;
     }
 
     /**
      * Envoyer un email
      *
+     * @param string $to destination of the mail
      * @param string $subject of the mail
      * @param string $template link to template
      * @param array $context array variables for the template
