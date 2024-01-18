@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Repository\ActivityRepository;
-use App\Repository\UserRepository;
+use App\Form\NewPasswordType;
 use App\Service\PlanningService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\UserRepository;
+use App\Repository\ActivityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[Route(path: '/profil')]
 class UserController extends AbstractController
@@ -82,5 +84,33 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route(path: '/edit-password', name: 'app_user_edit_password')]
+    public function editPassword(
+        Request $request,
+        EntityManagerInterface $em,
+        UserPasswordHasherInterface $hasher
+    ) {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
+        /** @var User */
+        $user = $this->getUser();
+        $form = $this->createForm(NewPasswordType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $password = $form["newPassword"]->getData();
+            $hash = $hasher->hashPassword($user, $password);
+            $user->setPassword($hash);
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Le mot de passe à été changé');
+            return $this->redirectToRoute('app_user');
+        }
+
+        return $this->render('user/edit_password.html.twig', [
+            'form' => $form
+        ]);
     }
 }

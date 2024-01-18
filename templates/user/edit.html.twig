@@ -7,7 +7,7 @@
         <div class="card-header">
             <h1 class="card-title">{{"Edit_User"|trans}}</h1>
             <a class="btn btn-light" href="{{ path('app_user') }}">{{"back_to_profile"|trans}}</a>
-            <a class="btn btn-light" href="{{ path('app_register_edit_password') }}">Changer de mot de passe</a>
+            <a class="btn btn-light" href="{{ path('app_user_edit_password') }}">Changer de mot de passe</a>
         </div>
         <div class="card-body">
             {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
