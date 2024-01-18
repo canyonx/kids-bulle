@@ -25,13 +25,13 @@
                     {% for child in childs %}
                         <tr>
                             <td>{{ child.license }}</td>
-                            <td>{{ child.lastname|title }} {{ child.firstname|title }}</td>
-                            <td>{{ child.age }}</td>
+                            <td value="{{ child.firstname }}">{{ child.lastname|title }} {{ child.firstname|title }}</td>
+                            <td value="{{ child.age }}">{{ child.age }} ans</td>
                             <td>{{ child.user|title }}</td>
                             <td>{{ child.user.phone }}</td>
-                            <td>{{ child.levelSki }}</td>
-                            <td>{{ child.levelSlalom }}</td>
-                            <td>{{ child.levelSnowboard }}</td>
+                            <td value="{{ child.levelSki }}">{{ child.levelSki|capitalize }}</td>
+                            <td value="{{ child.levelSlalom }}">{{ child.levelSlalom|capitalize }}</td>
+                            <td value="{{ child.levelSnowboard }}">{{ child.levelSnowboard|capitalize }}</td>
                         </tr>
                     {% else %}
                         <tr>

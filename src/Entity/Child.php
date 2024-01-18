@@ -180,7 +180,7 @@ class Child
         $age = $this->getBirthAt();
         $difference = $now->diff($age);
 
-        return $difference->format('%y ans');
+        return $difference->format('%y');
     }
 
     public function getLicense(): ?string
