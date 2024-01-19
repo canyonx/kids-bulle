@@ -8,15 +8,15 @@
             <h1 class="card-title">{{"User_index"|trans}} - <span class="text-muted">{{ users|length }}</span></h1>
         </div>
         <div class="card-body">
-            <table class="table table-striped" style="display: block">
+            <table class="table table-striped" id="childTable" data-controller="childTableOrder" style="display: block">
                 <thead>
                     <tr>
-                        <th>{{"Fullname"|trans}}</th>
+                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Fullname"|trans}}</th>
                         <th>{{"Email"|trans}}</th>
                         <th>{{"Phone"|trans}}</th>
                         <th>{{"Address"|trans}}</th>
                         <th>{{"Childs"|trans}}</th>
-                        <th>{{"Roles"|trans}}</th>
+                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Roles"|trans}}</th>
                         <th>{{"actions"|trans}}</th>
                         <th></th>
                     </tr>
@@ -24,7 +24,7 @@
                 <tbody>
                     {% for user in users %}
                         <tr>
-                            <td>{{ user.firstname|title }} {{ user.lastname|title }}</td>
+                            <td>{{ user.lastname|title }} {{ user.firstname|title }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.phone }}</td>
                             <td>{{ user.fulladress|title }}</td>
