@@ -8,28 +8,12 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class NewPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'currentPassword',
-                PasswordType::class,
-                [
-                    'constraints' => [
-                        new UserPassword([
-                            'message' => 'Ne correspond pas a votre mot de passe actuel'
-                        ])
-                    ],
-                    'label' => 'Mot de passe actuel',
-                    'attr' => [
-                        'placeholder' => '******'
-                    ]
-                ]
-            )
             ->add(
                 'newPassword',
                 PasswordType::class,

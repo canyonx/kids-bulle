@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Form\NewPasswordType;
+use App\Form\ChangePasswordType;
 use App\Service\PlanningService;
 use App\Repository\UserRepository;
 use App\Repository\ActivityRepository;
@@ -96,7 +96,7 @@ class UserController extends AbstractController
 
         /** @var User */
         $user = $this->getUser();
-        $form = $this->createForm(NewPasswordType::class);
+        $form = $this->createForm(ChangePasswordType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $form["newPassword"]->getData();
@@ -109,7 +109,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user');
         }
 
-        return $this->render('user/edit_password.html.twig', [
+        return $this->render('user/change_password.html.twig', [
             'form' => $form
         ]);
     }
