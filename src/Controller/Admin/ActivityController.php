@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Child;
 use App\Entity\Activity;
 use App\Form\ActivityType;
+use App\Form\AddChildToActivityType;
 use App\Service\PlanningService;
 use App\Repository\ActivityRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,6 @@ class ActivityController extends AbstractController
 
         $form = $this->createForm(ActivityType::class, $activity);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             // on récupére le teacher de la category
             $activity->setTeacher($activity->getCategory()->getTeacher());
@@ -58,11 +58,23 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}', name: 'app_admin_activity_show', methods: ['GET'])]
-    public function show(Activity $activity): Response
+    #[Route(path: '/{id}', name: 'app_admin_activity_show', methods: ['GET', 'POST'])]
+    public function show(Activity $activity, Request $request, ActivityRepository $activityRepository): Response
     {
+        $form = $this->createForm(AddChildToActivityType::class, null, ['activity' => $activity->getId()]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($form["childrens"]->getData() as $child) {
+                $activity->addChildren($child);
+            }
+            $activityRepository->add($activity, true);
+
+            return $this->redirectToRoute('app_admin_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('admin/activity/show.html.twig', [
             'activity' => $activity,
+            'form' => $form
         ]);
     }
 
@@ -71,7 +83,6 @@ class ActivityController extends AbstractController
     {
         $form = $this->createForm(ActivityType::class, $activity, ['edit' => true]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $activityRepository->add($activity, true);
 

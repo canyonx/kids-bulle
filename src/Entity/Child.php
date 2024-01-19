@@ -135,7 +135,7 @@ class Child
 
     public function __toString()
     {
-        return ucfirst($this->getFirstname()) . ' ' . ucfirst($this->getLastname());
+        return ucwords(strtolower($this->getFirstname() . ' ' . $this->getLastname()));
     }
 
     public function getLevelSki(): ?string
