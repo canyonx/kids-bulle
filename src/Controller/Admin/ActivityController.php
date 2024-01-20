@@ -61,7 +61,7 @@ class ActivityController extends AbstractController
     #[Route(path: '/{id}', name: 'app_admin_activity_show', methods: ['GET', 'POST'])]
     public function show(Activity $activity, Request $request, ActivityRepository $activityRepository): Response
     {
-        $form = $this->createForm(AddChildToActivityType::class, null, ['activity' => $activity->getId()]);
+        $form = $this->createForm(AddChildToActivityType::class, null, ['activity' => $activity]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($form["childrens"]->getData() as $child) {

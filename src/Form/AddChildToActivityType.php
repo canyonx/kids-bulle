@@ -29,6 +29,7 @@ class AddChildToActivityType extends AbstractType
                     'label' => false,
                     'class' => Child::class,
                     'multiple' => true,
+                    'autocomplete' => true,
                     'query_builder' => function (EntityRepository $er) use ($activity): QueryBuilder {
                         // create a new query builder using entity manager
                         $qb = new QueryBuilder($this->em);
