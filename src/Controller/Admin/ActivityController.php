@@ -5,9 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Child;
 use App\Entity\Activity;
 use App\Form\ActivityType;
-use App\Form\AddChildToActivityType;
-use App\Form\MoveChildsToActiviyType;
 use App\Service\PlanningService;
+use App\Form\AddChildToActivityType;
+use App\Form\MoveChildsToActivityType;
 use App\Repository\ActivityRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -126,7 +126,7 @@ class ActivityController extends AbstractController
         ActivityRepository $activityRepository
     ): Response {
 
-        $form = $this->createForm(MoveChildsToActiviyType::class, null, [
+        $form = $this->createForm(MoveChildsToActivityType::class, null, [
             'activity' => $activity
         ]);
         $form->handleRequest($request);

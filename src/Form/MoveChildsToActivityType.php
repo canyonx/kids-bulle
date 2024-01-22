@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MoveChildsToActiviyType extends AbstractType
+class MoveChildsToActivityType extends AbstractType
 {
     public function __construct(
         private EntityManagerInterface $em
@@ -27,7 +27,7 @@ class MoveChildsToActiviyType extends AbstractType
                 'label' => false,
                 'class' => Activity::class,
                 'multiple' => false,
-                'autocomplete' => true,
+                // 'autocomplete' => true,
                 'query_builder' => function (EntityRepository $er) use ($activity): QueryBuilder {
                     // create a new query builder using entity manager
                     $qb = new QueryBuilder($this->em);
