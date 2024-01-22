@@ -6,6 +6,7 @@ use App\Entity\Child;
 use App\Entity\Activity;
 use App\Form\ActivityType;
 use App\Form\AddChildToActivityType;
+use App\Form\MoveChildsToActiviyType;
 use App\Service\PlanningService;
 use App\Repository\ActivityRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -116,5 +117,37 @@ class ActivityController extends AbstractController
         $activityRepository->add($activity, true);
 
         return $this->redirectToRoute('app_admin_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route(path: '/{id}/move-childs', name: 'app_admin_activity_move_child', methods: ['GET', 'POST'])]
+    public function moveChilds(
+        Activity $activity,
+        Request $request,
+        ActivityRepository $activityRepository
+    ): Response {
+
+        $form = $this->createForm(MoveChildsToActiviyType::class, null, [
+            'activity' => $activity
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $childs = $activity->getChildrens();
+
+            $toActivity = $form['activity']->getData();
+            foreach ($childs as $child) {
+                $toActivity->addChildren($child);
+                $activityRepository->add($toActivity, true);
+            }
+
+            $activity->getChildrens()->clear();
+            $activityRepository->add($activity, true);
+
+            return $this->redirectToRoute('app_admin_activity_show', ['id' => $toActivity->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('admin/activity/move_childs.html.twig', [
+            'activity' => $activity,
+            'form' => $form,
+        ]);
     }
 }

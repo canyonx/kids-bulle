@@ -6,13 +6,15 @@
     <section class="card col-md-6 mx-auto">
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>            
-                <h1 class="card-title">{{ activity.category }}</h1>
+                <h1 class="card-title" style="color: {{ activity.category.color }}">{{ activity.category }}</h1>
                 <h5 class="card-title">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
                 {% if activity.teacher %}
                     <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</h6>
                 {% endif %}
+                <a class="btn btn-link" href="{{ path('app_admin_activity_index') }}">{{"back_to_list"|trans}}</a>
             </div>
-            <i class="fa-solid fa-snowflake fa-2xl m-4" style="color: {{ activity.category.color }}"></i>
+            <a class="btn btn-primary" href="{{ path('app_admin_activity_edit', {'id': activity.id}) }}">{{"edit"|trans}}</a>
+            {# <i class="fa-solid fa-snowflake fa-2xl m-4" style="color: {{ activity.category.color }}"></i> #}
             {# <div class="d-block rounded-circle" style="background-color: {{ activity.category.color }}; height: 6rem; width: 6rem;"></div> #}
         </div>
         <div class="card-body">
@@ -29,8 +31,7 @@
             {% include "admin/activity/_form_add_child.html.twig" %}
         </div>
         <div class="card-footer d-flex justify-content-between"> 
-            <a class="btn btn-light" href="{{ path('app_admin_activity_index') }}">{{"back_to_list"|trans}}</a>
-            <a class="btn btn-primary" href="{{ path('app_admin_activity_edit', {'id': activity.id}) }}">{{"edit"|trans}}</a>
+            <a class="btn btn-link" href="{{ path('app_admin_activity_move_child', {'id': activity.id}) }}">Déplacer les inscrits</a>
             {{ include('admin/activity/_delete_form.html.twig') }}
         </div>
 

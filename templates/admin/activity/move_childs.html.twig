@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DayController!{% endblock %}
+{% block title %}Déplacer les participants{% endblock %}
 
 {% block body %}
     <div class="card col-md-6 mx-auto">
         <div class="card-header">
-            <h1 class="card-title">Copier le {{ day|format_datetime(pattern='dd MMM', locale='fr')|capitalize}}</h1>
+            <h1 class="card-title">Déplacer les participants</h1>
         </div>
         <div class="card-body">
             {{ form_start(form)}}
             {{ form_widget(form)}}
-            <button type="submit" class="btn btn-primary">Copier</button>
+            <button type="submit" class="btn btn-primary">Valider</button>
             {{ form_end(form)}}
         </div>
     </div>
