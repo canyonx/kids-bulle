@@ -96,7 +96,7 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}', name: 'app_admin_activity_delete', methods: ['POST'])]
+    #[Route(path: '/{id}/delete', name: 'app_admin_activity_delete', methods: ['POST'])]
     public function delete(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $activity->getId(), $request->request->get('_token'))) {
