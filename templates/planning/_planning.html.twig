@@ -1,52 +1,54 @@
-<table class="table text-center">
-    {# <thead>
-        <tr>
-            <th>{{"Date"|trans}}</th>
-            <th>{{"Activity"|trans}}</th>
-            {% if is_granted('ROLE_ADMIN') %}
-                <th>{{"actions"|trans}}</th>
-            {% endif %}
-        </tr>
-    </thead> #}
-    <tbody>
-        {% for date, activities in planning %}
-            {% for activity in activities %}
-                <tr class="align-middle">
-                    {# Date #}
-                    {% if loop.first %}
-                        <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
-                            {{ date|format_datetime(pattern='dd MMM', locale='fr')|capitalize }}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <br>
-                                <a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top">Copier</a>
-                            {% endif %}
+<div class="table-responsive">
+    <table class="table text-center">
+        {# <thead>
+            <tr>
+                <th>{{"Date"|trans}}</th>
+                <th>{{"Activity"|trans}}</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>{{"actions"|trans}}</th>
+                {% endif %}
+            </tr>
+        </thead> #}
+        <tbody>
+            {% for date, activities in planning %}
+                {% for activity in activities %}
+                    <tr class="align-middle">
+                        {# Date #}
+                        {% if loop.first %}
+                            <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
+                                {{ date|format_datetime(pattern='dd MMM', locale='fr')|capitalize }}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <br>
+                                    <a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top">Copier</a>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+
+                        {# Activity #}
+                        <td class="col">
+                            {% include "planning/_button_activity.html.twig" %}
                         </td>
-                    {% endif %}
 
-                    {# Activity #}
-                    <td class="col">
-                        {% include "planning/_button_activity.html.twig" %}
-                    </td>
-
-                    {# Admin #}
-                    {% if is_granted('ROLE_TEACHER') %}
+                        {# Admin #}
+                        {% if is_granted('ROLE_TEACHER') %}
+                            <td class="col-2">
+                                <a class="btn btn-secondary" 
+                                    href="{{ path('app_admin_activity_show', {id: activity.id}) }}"
+                                    data-turbo-frame="_top">
+                                    {{"manage"|trans}}                            
+                                </a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
                         <td class="col-2">
-                            <a class="btn btn-secondary" 
-                                href="{{ path('app_admin_activity_show', {id: activity.id}) }}"
-                                data-turbo-frame="_top">
-                                {{"manage"|trans}}                            
-                            </a>
+                            {{ date|format_datetime(pattern='dd MMM', locale='fr')|capitalize }}
                         </td>
-                    {% endif %}
-                </tr>
-            {% else %}
-                <tr>
-                    <td class="col-2">
-                        {{ date|format_datetime(pattern='dd MMM', locale='fr')|capitalize }}
-                    </td>
-                    <td colspan="2" class="col"></td>
-                </tr>
+                        <td colspan="2" class="col"></td>
+                    </tr>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

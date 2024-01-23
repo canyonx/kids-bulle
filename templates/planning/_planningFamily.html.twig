@@ -1,67 +1,69 @@
-<table class="table text-center">
-    <thead>
-        <tr>
-            <th>{{"Date"|trans}}</th>
-            {% if is_granted("ROLE_TEACHER") %}
-                <th>{{"Teacher_(Me)"|trans}}</th>
-            {% endif %}
-            {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
-                {% for child in app.user.childs %}
-                    <th>
-                        <a href="{{ path('app_children_planning', {id: child.id}) }}" 
-                        class="btn btn-primary" 
-                        data-turbo-frame="_top">
-                            {{ child.firstname|title }}
-                        </a>
-                    </th>
-                {% endfor %}
-            {% endif %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for date, activities in planning %}
-            {% for activity in activities %}
+<div class="table-responsive">
+    <table class="table text-center" style="display: block">
+        <thead>
+            <tr>
+                <th>{{"Date"|trans}}</th>
+                {% if is_granted("ROLE_TEACHER") %}
+                    <th>{{"Teacher_(Me)"|trans}}</th>
+                {% endif %}
+                {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
+                    {% for child in app.user.childs %}
+                        <th>
+                            <a href="{{ path('app_children_planning', {id: child.id}) }}" 
+                            class="btn btn-primary" 
+                            data-turbo-frame="_top">
+                                {{ child.firstname|title }}
+                            </a>
+                        </th>
+                    {% endfor %}
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for date, activities in planning %}
+                {% for activity in activities %}
+                        
                     
-                
-                <tr class="align-middle">
+                    <tr class="align-middle">
 
-                    {# Date #}
-                    {% if loop.first %}
-                        <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
+                        {# Date #}
+                        {% if loop.first %}
+                            <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
+                                {{ date|date('j M') }}
+                            </td>
+                        {% endif %}
+
+                        {% if is_granted("ROLE_TEACHER") %}
+                            {# Teacher #}
+                            {% if user == activity.teacher %}
+                                <td>
+                                    {% include "planning/_button_activity.html.twig" %}
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endif %}
+
+                        {# Activity #}
+                        {% for child in childs %}
+                            {% if child in activity.childrens %}
+                                <td>
+                                    {% include "planning/_button_remove_activity.html.twig" %}
+                                </td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td class="col-2">
                             {{ date|date('j M') }}
                         </td>
-                    {% endif %}
-
-                    {% if is_granted("ROLE_TEACHER") %}
-                        {# Teacher #}
-                        {% if user == activity.teacher %}
-                            <td>
-                                {% include "planning/_button_activity.html.twig" %}
-                            </td>
-                        {% else %}
-                            <td></td>
-                        {% endif %}
-                    {% endif %}
-
-                    {# Activity #}
-                    {% for child in childs %}
-                        {% if child in activity.childrens %}
-                            <td>
-                                {% include "planning/_button_remove_activity.html.twig" %}
-                            </td>
-                        {% else %}
-                            <td></td>
-                        {% endif %}
-                    {% endfor %}
-                </tr>
-            {% else %}
-                <tr>
-                    <td class="col-2">
-                        {{ date|date('j M') }}
-                    </td>
-                    <td colspan="100%"></td>
-                </tr>
+                        <td colspan="100%"></td>
+                    </tr>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
