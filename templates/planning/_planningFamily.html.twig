@@ -1,9 +1,9 @@
 <div class="table-responsive">
-    <table class="table text-center" style="display: block">
+    <table class="table text-center">
         <thead>
             <tr>
                 <th>{{"Date"|trans}}</th>
-                {% if is_granted("ROLE_TEACHER") %}
+                {% if is_granted("ROLE_TEACHER") and not is_granted("ROLE_ADMIN") %}
                     <th>{{"Teacher_(Me)"|trans}}</th>
                 {% endif %}
                 {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
@@ -33,7 +33,7 @@
                             </td>
                         {% endif %}
 
-                        {% if is_granted("ROLE_TEACHER") %}
+                        {% if is_granted("ROLE_TEACHER") and not is_granted("ROLE_ADMIN") %}
                             {# Teacher #}
                             {% if user == activity.teacher %}
                                 <td>

@@ -8,20 +8,12 @@
                 <h1 class="card-title">{{"My_family"|trans}}</h1>
             </div>
             <div class="card-body">
-                {# count activities in planning #}
-                {% set act = 0 %}
-                {% for date, activities in planning %}
-                    {% if activities %}
-                        {% set act = act + 1 %}  
-                    {% endif %}
-                {% endfor %}
-
-                {% if act == 0 %}
-                    <p>{{"No_activities_in_your_planning"|trans}} !</p>
-                {% else %}
+                {% if app.user.childs|length > 0 or is_granted("ROLE_TEACHER") %}
                     <turbo-frame id="planning_family">
                         {% include "planning/_planningFamily.html.twig" %}
                     </turbo-frame>
+                {% else %}
+                    <p>{{"No_activities_in_your_planning"|trans}} !</p>
                 {% endif %}
             </div>
         </div>

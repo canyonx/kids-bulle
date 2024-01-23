@@ -19,7 +19,7 @@
                             <th>{{"Childs"|trans}}</th>
                             <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Roles"|trans}}</th>
                             <th>{{"actions"|trans}}</th>
-                            <th></th>
+                            {# <th></th> #}
                         </tr>
                     </thead>
                     <tbody>
@@ -41,9 +41,9 @@
                                 <td>
                                     <a class="btn btn-link" href="{{ path('app_admin_user_edit', {id: user.id}) }}">Rôle</a>
                                 </td>
-                                <td>
+                                {# <td>
                                     {{ include('admin/user/_delete_form.html.twig') }}
-                                </td>
+                                </td> #}
                             </tr>
                         {% else %}
                             <tr>
