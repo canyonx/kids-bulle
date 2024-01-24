@@ -1,0 +1,62 @@
+@startuml entities
+
+entity User {
+  + email: string notNull isUnique
+  + roles: array
+  + firstname: string 
+  + lastname: string
+  + phone: string 
+  + fullAdress: string
+  + isVerified: bool
+  + resetToken: string
+
+  -- encrypted --
+  + password: string
+  
+  -- relations --
+  + childs: Child collection
+  + activities: Activity collection 
+  + categories: Category collection
+}
+
+entity Category {
+  + name: string notNull
+  + description: texts
+  + color: string
+  + number: integer
+  
+  -- relations --
+  + teacher: User categories
+  + activities: Activity category
+}
+
+entity Child {
+  + firstname: string notNull
+  + lastname: string notNull
+  + birthAt: string notNull
+  + levelSki: string
+  + levelSlalom: string
+  + levelSnowboard: string
+  
+  -- relations --
+  + activities: Activity childs
+  + user: User childrens
+}
+
+entity Activity {
+  + dateAt: datetime notNull
+  
+  -- relations --
+  + category: Category activities
+  + childrens: Childs activities
+  + teacher: User activities
+}
+
+User        "1" -- "m"      Child
+User        "1" -- "m"      Activity
+User        "1" -- "m"      Category
+
+Activity        "m" -- "m"      Child
+Activity        "m" -- "1"      Category
+
+@enduml
