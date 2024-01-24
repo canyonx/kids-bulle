@@ -14,5 +14,8 @@
         <div class="card-body">
             {{ include('admin/user/_form.html.twig', {'button_label': 'Update'}) }}
         </div>
+        <div class="card-footer text-end">
+            {{ include('admin/user/_delete_form.html.twig') }}
+        </div>
     </div>
 {% endblock %}
