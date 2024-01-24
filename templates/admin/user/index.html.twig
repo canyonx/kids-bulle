@@ -8,48 +8,51 @@
             <h1 class="card-title">{{"User_index"|trans}} - <span class="text-muted">{{ users|length }}</span></h1>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="childTable" data-controller="childTableOrder" style="display: block">
-                <thead>
-                    <tr>
-                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Fullname"|trans}}</th>
-                        <th>{{"Email"|trans}}</th>
-                        <th>{{"Phone"|trans}}</th>
-                        <th>{{"Address"|trans}}</th>
-                        <th>{{"Childs"|trans}}</th>
-                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Roles"|trans}}</th>
-                        <th>{{"actions"|trans}}</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for user in users %}
+            <div class="table-responsive">
+                <table class="table table-striped" id="childTable" data-controller="childTableOrder">
+                    <thead>
                         <tr>
-                            <td>{{ user.lastname|title }} {{ user.firstname|title }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.phone }}</td>
-                            <td>{{ user.fulladress|title }}</td>
-                            <td>
-                                {% for child in user.childs %}
-                                    <li>
-                                        {{ child|title }}
-                                    </li>
-                                {% endfor %}
-                            </td>
-                            <td>{{ user.roles[0] | split('_')[1] }}</td>
-                            <td>
-                                <a class="btn btn-link" href="{{ path('app_admin_user_edit', {id: user.id}) }}">Rôle</a>
-                            </td>
-                            <td>
-                                 {{ include('admin/user/_delete_form.html.twig') }}
-                            </td>
+                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Fullname"|trans}}</th>
+                            <th>{{"Email"|trans}}</th>
+                            <th>{{"Phone"|trans}}</th>
+                            <th>{{"Address"|trans}}</th>
+                            <th>{{"Childs"|trans}}</th>
+                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Roles"|trans}}</th>
+                            <th>{{"actions"|trans}}</th>
+                            {# <th></th> #}
                         </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">{{"No_records_found"|trans}}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td data="{{ user.lastname }}">{{ user.lastname|title }} {{ user.firstname|title }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phone }}</td>
+                                <td>{{ user.fulladress|title }}</td>
+                                <td>
+                                    {% for child in user.childs %}
+                                        <li>
+                                            {{ child|title }}
+                                        </li>
+                                    {% endfor %}
+                                </td>
+                                {% set role = user.roles[0]|split('_')[1] %}
+                                <td data="{{ role }}">{{ role|title }}</td>
+                                <td>
+                                    <a class="btn btn-link" href="{{ path('app_admin_user_edit', {id: user.id}) }}">Rôle</a>
+                                </td>
+                                {# <td>
+                                    {{ include('admin/user/_delete_form.html.twig') }}
+                                </td> #}
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">{{"No_records_found"|trans}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}

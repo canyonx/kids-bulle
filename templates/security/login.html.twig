@@ -27,13 +27,13 @@
                 <input type="hidden" name="_csrf_token"
                     value="{{ csrf_token('authenticate') }}"
                 >
-                <button class="btn btn-primary mt-3" type="submit">
-                    {{"Log_in"|trans}}
-                </button>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-primary mt-3" type="submit">
+                        {{"Log_in"|trans}}
+                    </button>
+                    <a href="{{ path('app_password_lost') }}" class="btn btn-link mt-3">Mot de passe perdu ?</a>
+                </div>
             </form>
-        </div>
-        <div class="card-footer">
-            <a href="{{ path('app_password_lost') }}" class="card-link">mot de passe perdu</a>
         </div>
     </div>    
 {% endblock %}

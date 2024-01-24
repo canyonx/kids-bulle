@@ -1,9 +1,5 @@
-// @import './_buttons.scss';
+
+@import './custom.scss';
 
 @import '~bootstrap';
 @import '~@fortawesome/fontawesome-free/css/all.css';
-
-table {
-    overflow-x: auto;
-    white-space: nowrap;
-}

@@ -8,38 +8,44 @@
             <h1 class="card-title">{{"Child_index"|trans}} - <span class="text-muted">{{ childs|length }}</span></h1>
         </div>
         <div class="card-body">
-            <table class="table table-striped" id="childTable" data-controller="childTableOrder" style="display: block">
-                <thead>
-                    <tr>
-                        <th>{{"License"|trans}}</th>
-                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Fullname"|trans}}</th>
-                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Age"|trans}}</th>
-                        <th>{{"Parent"|trans}}</th>
-                        <th>{{"Phone"|trans}}</th>
-                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Ski_level"|trans}}</th>
-                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Slalom_level"|trans}}</th>
-                        <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Snowboard_level"|trans}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for child in childs %}
+            <div class="table-responsive">
+                <table class="table table-striped" id="childTable" data-controller="childTableOrder">
+                    <thead>
                         <tr>
-                            <td>{{ child.license }}</td>
-                            <td value="{{ child.firstname }}">{{ child.lastname|title }} {{ child.firstname|title }}</td>
-                            <td value="{{ child.age }}">{{ child.age }} ans</td>
-                            <td>{{ child.user|title }}</td>
-                            <td>{{ child.user.phone }}</td>
-                            <td value="{{ child.levelSki }}">{{ child.levelSki|capitalize }}</td>
-                            <td value="{{ child.levelSlalom }}">{{ child.levelSlalom|capitalize }}</td>
-                            <td value="{{ child.levelSnowboard }}">{{ child.levelSnowboard|capitalize }}</td>
+                            <th>{{"License"|trans}}</th>
+                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Fullname"|trans}}</th>
+                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Age"|trans}}</th>
+                            <th>{{"Parent"|trans}}</th>
+                            <th>{{"Phone"|trans}}</th>
+                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Ski_level"|trans}}</th>
+                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Slalom_level"|trans}}</th>
+                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Snowboard_level"|trans}}</th>
                         </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5">{{"No_records_found"|trans}}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for child in childs %}
+                            <tr>
+                                <td>{{ child.license }}</td>
+                                <td data="{{ child.lastname }}">{{ child.lastname|title }} {{ child.firstname|title }}</td>
+                                {% set age = child.age %}
+                                {% if age|length == 1 %}
+                                    {% set age = '%02d'|format(age) %}
+                                {% endif %}
+                                <td data="{{ age }}">{{ child.age }} ans</td>
+                                <td>{{ child.user|title }}</td>
+                                <td>{{ child.user.phone }}</td>
+                                <td data="{{ child.levelSki }}">{{ child.levelSki|capitalize }}</td>
+                                <td data="{{ child.levelSlalom }}">{{ child.levelSlalom|capitalize }}</td>
+                                <td data="{{ child.levelSnowboard }}">{{ child.levelSnowboard|capitalize }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">{{"No_records_found"|trans}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}

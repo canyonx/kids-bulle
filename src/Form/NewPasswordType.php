@@ -21,11 +21,11 @@ class NewPasswordType extends AbstractType
                     'mapped' => false,
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Choisisez un mot de passe !'
+                            'message' => 'Choisisez un mot de passe.'
                         ]),
                         new Length([
-                            'min' => 5,
-                            'minMessage' => 'Aller, on trouve un mot de passe un peu plus long !'
+                            'min' => 6,
+                            'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères'
                         ])
                     ],
                     'label' => 'Nouveau mot de passe',

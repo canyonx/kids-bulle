@@ -6,7 +6,7 @@
     <div class="card col-md-6 mx-auto">
         <div class="card-header">
             <h1 class="card-title">{{"New_category"|trans}}</h1>
-            <a class="btn btn-light" href="{{ path('app_admin_category_index') }}">{{"back_to_list"|trans}}</a>
+            <a class="btn btn-link" href="{{ path('app_admin_category_index') }}">{{"back_to_list"|trans}}</a>
         </div>
         <div class="card-body">
             {{ include('admin/category/_form.html.twig') }}

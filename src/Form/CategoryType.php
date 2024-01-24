@@ -41,7 +41,10 @@ class CategoryType extends AbstractType
                 'label' => 'Catégorie'
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description'
+                'label' => 'Description',
+                'attr' => [
+                    'rows' => 4
+                ]
             ])
             ->add('Color', ColorType::class, [
                 'label' => 'Couleur'
