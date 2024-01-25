@@ -6,16 +6,19 @@
     <section class="card col-md-6 mx-auto">
         <div class="card-header">
             <h1>{{ user.firstname|title }} {{ user.lastname|title }}</h1> 
-            {% if not is_granted("ROLE_USER") %}
-                <small>{{ user.roles[0] | split('_')[1] | title }}</small>
+            {% if is_granted("ROLE_TEACHER") %}
+                <span class="text-muted">{{ user.roles[0]|split('_')[1]|title }}</span>
             {% endif %}
         </div>
-        <div class="card-body">
+        <div class="card-body d-flex align-items-center justify-content-between">
             <p>
                 {{ user.email }} <br>
                 {{ user.phone }} <br>
                 {{ user.fulladress }}
             </p>
+            <div>
+                <a class="btn btn-link" href="{{ path('app_user_edit') }}">{{"edit"|trans}}</a>
+            </div>
         </div>
         {% if user.childs|length > 0 %}
             <ul class="list-group list-group-flush">
@@ -28,9 +31,8 @@
             </ul>
         {% endif %}
             
-        <div class="card-footer d-flex justify-content-between">
+        <div class="card-footer">
             <a class="btn btn-link" href="{{ path('app_children_new') }}">{{"add_child"|trans}}</a>
-            <a class="btn btn-link" href="{{ path('app_user_edit') }}">{{"edit"|trans}}</a>
         </div>
     </section>
 {% endblock %}
