@@ -16,7 +16,7 @@
                         {# Date #}
                         {% if loop.first %}
                             <td class="col-2" {% if activities|length > 1 %}rowspan="{{ activities|length }}"{% endif %}>
-                                {{ date|format_datetime(pattern='dd MMM', locale='fr')|capitalize }}
+                                {{ date|format_datetime(pattern='dd MMM', locale='fr') }}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <br>
                                     <a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top">Copier</a>
@@ -43,7 +43,7 @@
                 {% else %}
                     <tr>
                         <td class="col-2">
-                            {{ date|format_datetime(pattern='dd MMM', locale='fr')|capitalize }}
+                            {{ date|format_datetime(pattern='dd MMM', locale='fr') }}
                         </td>
                         <td colspan="2" class="col"></td>
                     </tr>

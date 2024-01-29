@@ -7,7 +7,7 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>            
                 <h1 class="card-title" style="color: {{ activity.category.color }}">{{ activity.category }}</h1>
-                <h5 class="card-title" style="color: {{ activity.category.color }}">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
+                <h5 class="card-title" style="color: {{ activity.category.color }}">{{ activity.dateAt|format_datetime(pattern="d MMMM YYYY à HH:mm", locale='fr') }}</h5>
                 {% if activity.teacher %}
                     <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</h6>
                 {% endif %}
@@ -21,10 +21,15 @@
                 <br>
             {% endfor %}
         </div>
-        <div class="card-footer">
+        <div class="card-footer d-flex justify-content-between">
             <a class="btn btn-link" href="javascript:history.back()" data-turbo-frame="_top">
                 {{"back_to_planning"|trans}}
             </a>
+            {% if is_granted('ROLE_TEACHER') %}
+                <a class="btn btn-secondary" href="{{ path('app_admin_activity_show', {id: activity.id}) }}" data-turbo-frame="_top">
+                    {{"manage"|trans}}                            
+                </a>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

@@ -11,6 +11,10 @@ import { Controller } from '@hotwired/stimulus';
  */
 export default class extends Controller {
     connect() {
-        this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(function () {console.log('Enregistrement reussi.')})
+                .catch(function (e) {console.error(e)});
+        }
     }
 }

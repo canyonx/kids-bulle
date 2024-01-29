@@ -21,7 +21,9 @@ class ActivityController extends AbstractController
         ]);
     }
 
-    // Parent can also remove a child from an activity
+    /**
+     * User can remove is own child from an activity
+     */
     #[Route(path: '/{id}/remove/{child}', name: 'app_activity_remove_child', methods: ['GET'])]
     public function removeChild(
         Activity $activity,

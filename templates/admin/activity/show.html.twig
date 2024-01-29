@@ -7,31 +7,44 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>            
                 <h1 class="card-title" style="color: {{ activity.category.color }}">{{ activity.category }}</h1>
-                <h5 class="card-title">{{ activity.dateAt|date('j F Y à H\\hi') }}</h5>
+                <h5 class="card-title">{{ activity.dateAt|format_datetime(pattern="d MMMM YYYY à HH:mm", locale='fr') }}</h5>
                 {% if activity.teacher %}
                     <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</h6>
                 {% endif %}
                 <a class="btn btn-link" href="{{ path('app_admin_activity_index') }}">{{"back_to_list"|trans}}</a>
             </div>
             <a class="btn btn-primary" href="{{ path('app_admin_activity_edit', {'id': activity.id}) }}">{{"edit"|trans}}</a>
-            {# <i class="fa-solid fa-snowflake fa-2xl m-4" style="color: {{ activity.category.color }}"></i> #}
-            {# <div class="d-block rounded-circle" style="background-color: {{ activity.category.color }}; height: 6rem; width: 6rem;"></div> #}
         </div>
-        <div class="card-body">
+        <div class="card-body" data-controller="selectAll">
             <h6 class="card-subtitle mb-2 text-muted">{{"Registered"|trans}}</h6>
-            {% for child in activity.childrens %}
-                {% include "admin/activity/_button_child_admin.html.twig" %}
-                <br>
+            {% if activity.childrens|length > 0 %}
+                {# {% include "admin/activity/_button_child_admin.html.twig" %}
+                <br> #}
+                {{ form_start(selectChildsForm) }}
+                    <div data-action="change->selectAll#toggleParent">
+                        {{ form_row(selectChildsForm.childrens) }}
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" id="select-all" name="select-all" class="form-check-input"
+                            data-action="change->selectAll#toggle">
+                        <label class="form-check-label" for="select-all">Tout sélectionner</label>
+                    </div>
+                    <div class="d-flex">
+                        {{ form_row(selectChildsForm.move, {attr: {disabled: 'true'}}) }}
+                        {{ form_row(selectChildsForm.remove, {attr: {disabled: 'true'}}) }}
+                    </div>
+                {{ form_end(selectChildsForm) }}
             {% else %}
                 <p>Pas d'inscrits pour le moment</p>
-            {% endfor %}
+            {% endif %}
+
         </div>
         <div class="card-body border-top">
             <h6 class="card-subtitle mb-2 text-muted">Ajouter des participants</h6>
             {% include "admin/activity/_form_add_child.html.twig" %}
         </div>
-        <div class="card-footer d-flex justify-content-between"> 
-            <a class="btn btn-link" href="{{ path('app_admin_activity_move_child', {'id': activity.id}) }}">Déplacer les inscrits</a>
+        <div class="card-footer d-flex justify-content-end"> 
+            {# <a class="btn btn-link" href="{{ path('app_admin_activity_move_child', {'id': activity.id}) }}">Déplacer les inscrits</a> #}
             {{ include('admin/activity/_delete_form.html.twig') }}
         </div>
 

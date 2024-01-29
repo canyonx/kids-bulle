@@ -5,6 +5,7 @@
         <title>{% block title %}{% endblock %} - Kid's Bulle</title>
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
         <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+        <link rel="manifest" href="{{ asset('manifest.json')}}">
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
