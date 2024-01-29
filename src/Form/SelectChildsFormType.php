@@ -40,7 +40,7 @@ class SelectChildsFormType extends AbstractType
                             ->orderBy('c.lastname', 'ASC');
                     },
                     'attr' => [
-                        'class' => "select_child"
+                        'class' => 'children-checkbox'
                     ]
                 ])
                 ->add('remove', SubmitType::class, [

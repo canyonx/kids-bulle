@@ -13,6 +13,7 @@ use App\Repository\ActivityRepository;
 use App\Repository\ChildRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use PhpParser\Node\Stmt\Break_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -75,18 +76,17 @@ class ActivityController extends AbstractController
         if ($selectChildsForm->isSubmitted() && $selectChildsForm->isValid()) {
 
             // If REMOVE
-            if ($selectChildsForm->get('remove')->isClicked()) {
-                foreach ($selectChildsForm->getData()->getChildrens() as $child) {
-                    $activity->removeChildren($child);
+            if ($selectChildsForm->get('remove')->isClicked() && count($selectChildsForm->getData()->getChildrens()) > 0) {
+                foreach ($selectChildsForm->getData()->getChildrens() as $c) {
+                    $activity->removeChildren($c);
                 }
                 $activityRepository->add($activity, true);
             }
 
             // If MOVE
-            if ($selectChildsForm->get('move')->isClicked()) {
-                $childrens = $selectChildsForm->getData()->getChildrens();
+            if ($selectChildsForm->get('move')->isClicked() && count($selectChildsForm->getData()->getChildrens()) > 0) {
                 $childs = [];
-                foreach ($childrens as $c) {
+                foreach ($selectChildsForm->getData()->getChildrens() as $c) {
                     $childs[] = $c->getId();
                 }
                 // $childrens = serialize($childrens->toArray());
@@ -131,6 +131,7 @@ class ActivityController extends AbstractController
     ): Response {
         // Array of childs id
         $childrens = $request->get('childrens');
+
 
         $form = $this->createForm(MoveChildsToActivityType::class, null, ['activity' => $activity]);
         $form->handleRequest($request);
