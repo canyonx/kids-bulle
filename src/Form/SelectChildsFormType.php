@@ -38,10 +38,7 @@ class SelectChildsFormType extends AbstractType
                             ->andWhere(':activity MEMBER OF c.activities')
                             ->setParameter('activity', $activity)
                             ->orderBy('c.lastname', 'ASC');
-                    },
-                    'attr' => [
-                        'class' => 'children-checkbox'
-                    ]
+                    }
                 ])
                 ->add('remove', SubmitType::class, [
                     'label' => 'Supprimer',

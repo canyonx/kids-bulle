@@ -1,35 +1,69 @@
 import { Controller } from '@hotwired/stimulus';
 
 /*
-* This is an example Stimulus controller!
-*
-* Any element with a data-controller="hello" attribute will cause
-* this controller to be executed. The name "hello" comes from the filename:
-* hello_controller.js -> "hello"
-*
-* Delete this file or adapt it for your use!
+* This make alive a select all checkbox and checkboxes kids
 */
 export default class extends Controller {
-    connect() {
-        let selectAll = document.getElementById('select-all');
-        selectAll.addEventListener('change', function(e) {
-            // console.log(this.checked);
-            toggle(this.checked);      
-        })
+    static selectAll;
+    static checkboxes;
+    static btnMove;
+    static btnRemove;
 
-        function toggle(value) {
-            let checkboxes = document.getElementById('select_childs_form_childrens').getElementsByClassName('form-check-input');
-            // console.log(checkboxes);
-            for (var i = 0; i < checkboxes.length; i++) {
-                // console.log(checkboxes[i].checked);
-                if (value == true) {
-                    checkboxes[i].checked = true;
-                } else {
-                    checkboxes[i].checked = false;
-                }
-            };
-        }
+
+    connect() {
+        this.selectAll = document.getElementById('select-all');
+        this.checkboxes = document.getElementById('select_childs_form_childrens').getElementsByClassName('form-check-input')
+        this.btnMove = document.getElementById('select_childs_form_move');
+        this.btnRemove = document.getElementById('select_childs_form_remove');
     }
 
+    /**
+     * Un.Check all checkboxes when action on select all
+     */
+    toggle() {
+        for (let i = 0; i < this.checkboxes.length; i++) {
+            if (this.selectAll.checked == true) {
+                this.checkboxes[i].checked = true;
+            } else {
+                this.checkboxes[i].checked = false;
+            }
+        }
+
+        this.toggleButton();
+    }
+
+    /**
+     * Uncheck Select All if some checkboxes are not checked
+     * Check Select All if all checkboxes are checked
+     */
+    toggleParent() {
+        this.selectAll.checked = true;
+
+        for (let i = 0; i < this.checkboxes.length; i++) {
+            // if one unchecked, uncheck select all
+            if (this.checkboxes[i].checked == false) {
+                this.selectAll.checked = false;
+            }
+        }
+
+        this.toggleButton();
+    }
+
+    /**
+     * De.Activate buttons when some checkboxes are checked or not
+     */
+    toggleButton() {
+        for (let i = 0; i < this.checkboxes.length; i++) {
+            // if one check, activate buttons
+            if (this.checkboxes[i].checked == true) {
+                this.btnMove.removeAttribute('disabled');
+                this.btnRemove.removeAttribute('disabled');
+                return;
+            }
+        }
+
+        this.btnMove.setAttribute('disabled', true);
+        this.btnRemove.setAttribute('disabled', true);
+    }
 }
 
