@@ -3,19 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\NewPasswordType;
-use App\Form\LostPasswordType;
-use App\Service\MailerService;
 use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class RegisterController extends AbstractController
 {
@@ -33,7 +27,7 @@ class RegisterController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $form["code"]->getData() === $this->getParameter('register_code')) {
             $password = $form["plainPassword"]->getData();
             $hash = $hasher->hashPassword($user, $password);
             $user->setPassword($hash);

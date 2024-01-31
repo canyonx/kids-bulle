@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -13,13 +14,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints\EqualTo;
 
 class RegistrationFormType extends AbstractType
 {
+    public function __construct(
+        private ParameterBagInterface $parameter
+    ) {
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('email', EmailType::class, [
+                'label' => 'Email',
                 'attr' => [
                     'placeholder' => 'bob@eponge.fr'
                 ]
@@ -34,10 +41,14 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
+                'label' => 'Mot de passe',
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'placeholder' => '******'
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Choississez un mot de passe',
@@ -73,6 +84,19 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'placeholder' => '123 rue du Soleil, 04567 Astre'
                 ]
+            ])
+            ->add('code', PasswordType::class, [
+                'label' => 'Code fourni par KidsBulle',
+                'mapped' => false,
+                'attr' => [
+                    'placeholder' => '******'
+                ],
+                'constraints' => [
+                    new EqualTo([
+                        'value' => $this->parameter->get('register_code'),
+                        'message' => 'Code erroné',
+                    ]),
+                ],
             ]);
     }
 
