@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Repository\ActivityRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\UserRepository;
-use App\Service\MailerService;
 use App\Service\PlanningService;
+use App\Service\StartDateService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +17,12 @@ class HomeController extends AbstractController
     public function index(
         CategoryRepository $categoryRepository,
         ActivityRepository $activityRepository,
-        PlanningService $planningService
+        PlanningService $planningService,
+        StartDateService $startDateService,
+        Request $request
     ): Response {
-
-        $dateStart = new \DateTimeImmutable('today', new \DateTimeZone("Europe/Paris"));
+        // Set correct start date
+        $dateStart = $startDateService->getStartDate($request->get('date'));
 
         $activities = $activityRepository->findByDateBetween($dateStart);
 

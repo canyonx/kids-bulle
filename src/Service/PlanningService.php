@@ -3,8 +3,6 @@
 namespace App\Service;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Parameter;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 class PlanningService extends AbstractController
 {

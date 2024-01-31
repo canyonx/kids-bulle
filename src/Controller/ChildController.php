@@ -8,6 +8,7 @@ use App\Form\ChildType;
 use App\Repository\ActivityRepository;
 use App\Repository\ChildRepository;
 use App\Service\PlanningService;
+use App\Service\StartDateService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,14 +38,21 @@ class ChildController extends AbstractController
     }
 
     #[Route(path: '/{id}/planning', name: 'app_children_planning', methods: ['GET'])]
-    public function planning(Child $child, ActivityRepository $activityRepository, PlanningService $planningService): Response
-    {
+    public function planning(
+        Child $child,
+        ActivityRepository $activityRepository,
+        PlanningService $planningService,
+        StartDateService $startDateService,
+        Request $request
+    ): Response {
         // Voter Control
         $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
 
+        $dateStart = $startDateService->getStartDate($request->get('date'));
+
         // Child activities
-        $activities = $activityRepository->findByDateBetween();
-        $planning = $planningService->getPlanning($activities);
+        $activities = $activityRepository->findByDateBetween($dateStart);
+        $planning = $planningService->getPlanning($activities, $dateStart);
 
         return $this->render('children/index.html.twig', [
             'child' => $child,

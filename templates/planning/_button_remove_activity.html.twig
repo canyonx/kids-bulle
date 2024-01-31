@@ -3,8 +3,7 @@
     <div class="btn-group-vertical w-100">
         <a class="col-10 btn" 
         style="background-color: {{ activity.category.color }}" 
-        href="{{ path('app_activity_show', {id: activity.id}) }}"
-        data-turbo-frame="_top">
+        href="{{ path('app_activity_show', {id: activity.id}) }}">
             {{ activity.dateAt|date("H\\h") }} 
             {{ activity.category }} 
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
@@ -23,8 +22,7 @@
     <div class="btn-group w-100">
         <a class="col-10 btn" 
         style="background-color: {{ activity.category.color }}" 
-        href="{{ path('app_activity_show', {id: activity.id}) }}"
-        data-turbo-frame="_top">
+        href="{{ path('app_activity_show', {id: activity.id}) }}">
             {{ activity.dateAt|date("H\\h") }} 
             {{ activity.category }} 
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
