@@ -19,7 +19,7 @@
                                 {{ date|format_datetime(pattern='dd MMM', locale='fr') }}
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <br>
-                                    <a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top">Copier</a>
+                                    <a href="{{ path('app_admin_day_copy', {day: date}) }}" alt="Copier" class="btn btn-primary" data-turbo-frame="_top"><i class="fa-solid fa-copy"></i></a>
                                 {% endif %}
                             </td>
                         {% endif %}
