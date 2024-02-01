@@ -56,42 +56,39 @@ class ActivityRepository extends ServiceEntityRepository
     /**
      * @return Activity[] Returns an array of Activity objects
      */
-    public function findByUser(User $user): array
+    public function findByUser(User $user, \DateTimeImmutable $dateStart = null): array
     {
         $qb = $this->createQueryBuilder('a');
-        ActivityUtil::ByDateBetween($qb);
+        ActivityUtil::ByDateBetween($qb, $dateStart);
         ActivityUtil::ByChildsOfUser($qb, $user);
         ActivityUtil::OrderByDateAndCategory($qb);
-        return $qb->setMaxResults(40)
-            ->getQuery()
+        return $qb->getQuery()
             ->getResult();
     }
 
     /**
      * @return Activity[] Returns an array of Activity objects
      */
-    public function findByChild(Child $child): array
+    public function findByChild(Child $child, \DateTimeImmutable $dateStart = null): array
     {
         $qb = $this->createQueryBuilder('a');
-        ActivityUtil::ByDateBetween($qb);
+        ActivityUtil::ByDateBetween($qb, $dateStart);
         ActivityUtil::ByChild($qb, $child);
         ActivityUtil::OrderByDateAndCategory($qb);
-        return $qb->setMaxResults(40)
-            ->getQuery()
+        return $qb->getQuery()
             ->getResult();
     }
 
     /**
      * @return Activity[] Returns an array of Activity objects
      */
-    public function findByTeacher(User $user): array
+    public function findByTeacher(User $user, \DateTimeImmutable $dateStart = null): array
     {
         $qb = $this->createQueryBuilder('a');
-        ActivityUtil::ByDateBetween($qb);
+        ActivityUtil::ByDateBetween($qb, $dateStart);
         ActivityUtil::ByTeacher($qb, $user);
         ActivityUtil::OrderByDateAndCategory($qb);
-        return $qb->setMaxResults(40)
-            ->getQuery()
+        return $qb->getQuery()
             ->getResult();
     }
 

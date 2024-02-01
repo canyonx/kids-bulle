@@ -1,11 +1,18 @@
 <div class="d-flex justify-content-center">
     <ul class="nav nav-pills">
         {% for i in 0..3 %}
-            {% set date = "this month + " ~ i ~ " month" %}
+            {% set date = ("first day of this month + " ~ i ~ " month")|date('Y-m-d') %}
 
             <li class="nav-item m-1">
-                <a class="nav-link" 
-                href="{{ path(app.request.attributes.get('_route'), {date: date|date('Y-m-01')}) }}">
+                <a id="{{ 'month' ~ i }}" 
+                class="nav-month nav-link{% if app.request.get("date") == date %} active{% endif %}" 
+                
+                {% if child is defined %}
+                    href="{{ path(app.request.attributes.get('_route'), {date: date, id: child.id}) }}"
+                {% else %}
+                    href="{{ path(app.request.attributes.get('_route'), {date: date}) }}"
+                {% endif %}
+                >
                     {{ date|format_datetime(pattern='MMMM', locale='fr')|capitalize }}
                 </a>
             </li>

@@ -4,16 +4,19 @@
 
 {% block body %}
     <section class="card col-md-6 mx-auto">
-        <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="card-header d-flex justify-content-between">
             <div>            
                 <h1 class="card-title" style="color: {{ activity.category.color }}">{{ activity.category }}</h1>
                 <h5 class="card-title">{{ activity.dateAt|format_datetime(pattern="d MMMM YYYY à HH:mm", locale='fr') }}</h5>
                 {% if activity.teacher %}
                     <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</h6>
                 {% endif %}
-                <a class="btn btn-link" href="{{ path('app_admin_activity_index') }}">{{"back_to_list"|trans}}</a>
+                <a class="btn btn-link" href="javascript:history.back()" alt="{{"back_to_list"|trans}}">Retour</a>
             </div>
-            <a class="btn btn-primary" href="{{ path('app_admin_activity_edit', {'id': activity.id}) }}">{{"edit"|trans}}</a>
+            <div class="d-flex justify-content-end align-items-end">
+                <a class="btn btn-primary me-2" href="{{ path('app_admin_activity_edit', {'id': activity.id}) }}" alt="{{"edit"|trans}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                {{ include('admin/activity/_delete_form.html.twig') }}
+            </div>
         </div>
         <div class="card-body" data-controller="selectAll">
             <h6 class="card-subtitle mb-2 text-muted">{{"Registered"|trans}}</h6>
@@ -43,10 +46,10 @@
             <h6 class="card-subtitle mb-2 text-muted">Ajouter des participants</h6>
             {% include "admin/activity/_form_add_child.html.twig" %}
         </div>
-        <div class="card-footer d-flex justify-content-end"> 
-            {# <a class="btn btn-link" href="{{ path('app_admin_activity_move_child', {'id': activity.id}) }}">Déplacer les inscrits</a> #}
+        {# <div class="card-footer d-flex justify-content-end"> 
+            <a class="btn btn-link" href="{{ path('app_admin_activity_move_child', {'id': activity.id}) }}">Déplacer les inscrits</a>
             {{ include('admin/activity/_delete_form.html.twig') }}
-        </div>
+        </div> #}
 
     </section>
 {% endblock %}

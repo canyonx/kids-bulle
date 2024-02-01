@@ -8,6 +8,7 @@ use App\Form\ChangePasswordType;
 use App\Service\PlanningService;
 use App\Repository\UserRepository;
 use App\Repository\ActivityRepository;
+use App\Service\StartDateService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,18 +33,30 @@ class UserController extends AbstractController
     }
 
     #[Route(path: '/activities', name: 'app_user_activities', methods: ['GET'])]
-    public function activities(ActivityRepository $activityRepository, PlanningService $planningService): Response
-    {
+    public function activities(
+        ActivityRepository $activityRepository,
+        PlanningService $planningService,
+        StartDateService $startDateService,
+        Request $request
+    ): Response {
         /** @var User */
         $user = $this->getUser();
 
-        $aTeacher = $activityRepository->findByTeacher($this->getUser());
-        $aChilds = $activityRepository->findByUser($this->getUser());
+        // Set correct start date 
+        $dateStart = $startDateService->getStartDate($request->get('date'));
 
-        // Merge two arrrays and delete same antries
-        $activities = array_unique(array_merge($aTeacher, $aChilds));
+        if ($this->isGranted('ROLE_TEACHER')) {
+            // Get araay of teacher and childs activities
+            $aTeacher = $activityRepository->findByTeacher($this->getUser(), $dateStart);
+            $aChilds = $activityRepository->findByUser($this->getUser(), $dateStart);
+            // Merge two arrrays and delete same antries
+            $activities = array_unique(array_merge($aTeacher, $aChilds));
+        } else {
+            // Get array of child activities
+            $activities = $activityRepository->findByUser($this->getUser(), $dateStart);
+        }
 
-        $planning = $planningService->getPlanning($activities);
+        $planning = $planningService->getPlanning($activities, $dateStart);
 
         return $this->render('user/activities.html.twig', [
             'user' => $user,

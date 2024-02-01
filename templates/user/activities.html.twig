@@ -9,9 +9,10 @@
             </div>
             <div class="card-body">
                 {% if app.user.childs|length > 0 or is_granted("ROLE_TEACHER") %}
-                    <turbo-frame id="planning_family">
+                    {# <turbo-frame id="planning_family"> #}
+                        {% include "planning/_nav_month.html.twig" %}
                         {% include "planning/_planningFamily.html.twig" %}
-                    </turbo-frame>
+                    {# </turbo-frame> #}
                 {% else %}
                     <p>{{"No_activities_in_your_planning"|trans}} !</p>
                 {% endif %}
