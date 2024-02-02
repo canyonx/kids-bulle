@@ -18,21 +18,23 @@ class PlanningService extends AbstractController
     public function getArrayDates(
         \DateTimeImmutable $fromtime = null
     ): array {
+        // Date user want to show
         if ($fromtime === null) $fromtime = new \DateTimeImmutable('today');
-
         $month = $fromtime->format('Y-m');
         $dayInTheMonth = (new \DateTimeImmutable('last day of ' . $month, new \DateTimeZone("Europe/Paris")))->format('d');
 
-        // $today = new \DateTimeImmutable('today');
+        $today = new \DateTimeImmutable('today');
 
-        // if ($today->format('Y-m') == $month) {
-        //     $dayQty = $dayInTheMonth - $today->format('d') + 1;
-        //     if ($dayQty < $this->getParameter('app.planning_days')) $dayQty = $this->getParameter('app.planning_days');
-        // } else {
-        //     $dayQty = $dayInTheMonth;
-        // }
+        // If current month
+        if ($today->format('Y-m') == $month && !$this->isGranted('ROLE_ADMIN')) {
+            $dayQty = $dayInTheMonth - $today->format('d') + 1;
+            // If less than 7 days show 31 days
+            $dayQty = ($dayQty <= 7) ? $this->getParameter('app.planning_days') : $dayQty;
+        } else {
+            $dayQty = $dayInTheMonth;
+        }
 
-        $dayQty = $dayInTheMonth;
+        // $dayQty = $dayInTheMonth;
 
         for ($i = 0; $i < $dayQty; $i++) {
             $dates[] = new \DateTimeImmutable($fromtime->format('Y-m-d') . "+ $i day");

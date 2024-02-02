@@ -14,13 +14,14 @@ class StartDateService extends AbstractController
      */
     public function getStartDate(string $date = null): \DateTimeImmutable
     {
-        // Set correct start date
-        $today = (new \DateTimeImmutable('today', new \DateTimeZone("Europe/Paris")))->format('Y-m-d');
+        $dateStart = new \DateTimeImmutable('today');
 
-        if ($date && (($date > $today) || $this->isGranted('ROLE_ADMIN'))) {
-            $dateStart = new \DateTimeImmutable($date, new \DateTimeZone("Europe/Paris"));
-        } else {
-            $dateStart = new \DateTimeImmutable('today', new \DateTimeZone("Europe/Paris"));
+        if (
+            $date &&
+            // Date user want to see is later than today or user is admin
+            (($date > $dateStart->format('Y-m-d')) || $this->isGranted('ROLE_ADMIN'))
+        ) {
+            $dateStart = new \DateTimeImmutable($date);
         }
 
         return $dateStart;

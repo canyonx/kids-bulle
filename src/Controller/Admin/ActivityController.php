@@ -11,9 +11,7 @@ use App\Form\AddChildToActivityType;
 use App\Form\MoveChildsToActivityType;
 use App\Repository\ActivityRepository;
 use App\Repository\ChildRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use PhpParser\Node\Stmt\Break_;
+use App\Service\StartDateService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,13 +21,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ActivityController extends AbstractController
 {
     #[Route(path: '/', name: 'app_admin_activity_index', methods: ['GET'])]
-    public function index(Request $request, ActivityRepository $activityRepository, PlanningService $planningService): Response
-    {
-        if ($request->get('date')) {
-            $dateStart = new \DateTimeImmutable($request->get('date'));
-        } else {
-            $dateStart = new \DateTimeImmutable('today', new \DateTimeZone("Europe/Paris"));
-        }
+    public function index(
+        Request $request,
+        ActivityRepository $activityRepository,
+        PlanningService $planningService,
+        StartDateService $startDateService
+    ): Response {
+        $dateStart = $startDateService->getStartDate($request->get('date'));
 
         $activities = $activityRepository->findByDateBetween($dateStart);
 
