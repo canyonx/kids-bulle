@@ -2,16 +2,17 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use App\Entity\Child;
 use App\Entity\Activity;
 use App\Form\ActivityType;
 use App\Service\PlanningService;
+use App\Service\StartDateService;
 use App\Form\SelectChildsFormType;
+use App\Repository\ChildRepository;
 use App\Form\AddChildToActivityType;
 use App\Form\MoveChildsToActivityType;
 use App\Repository\ActivityRepository;
-use App\Repository\ChildRepository;
-use App\Service\StartDateService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,6 +35,26 @@ class ActivityController extends AbstractController
         $planning = $planningService->getPlanning($activities, $dateStart);
         return $this->render('admin/activity/index.html.twig', [
             'planning' => $planning
+        ]);
+    }
+
+    #[Route(path: '/user/{id}', name: 'app_admin_activity_user', methods: ['GET'])]
+    public function user(
+        User $user,
+        Request $request,
+        ActivityRepository $activityRepository,
+        PlanningService $planningService,
+        StartDateService $startDateService
+    ): Response {
+        $dateStart = $startDateService->getStartDate($request->get('date'));
+
+        $activities = $activityRepository->findByUser($user, $dateStart);
+
+        $planning = $planningService->getPlanning($activities, $dateStart);
+        return $this->render('admin/user/activities.html.twig', [
+            'planning' => $planning,
+            'user' => $user,
+            'childs' => $user->getChilds()
         ]);
     }
 

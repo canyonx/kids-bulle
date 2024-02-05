@@ -6,14 +6,25 @@
                 {% if is_granted("ROLE_TEACHER") and not is_granted("ROLE_ADMIN") %}
                     <th>{{"Teacher_(Me)"|trans}}</th>
                 {% endif %}
-                {% if is_granted("ROLE_USER") and (app.user.childs|length > 0) %} 
-                    {% for child in app.user.childs %}
+                {% if is_granted("ROLE_USER") and (user.childs|length > 0) %} 
+                    {% for child in user.childs %}
                         <th>
-                            <a href="{{ path('app_children_planning', {id: child.id}) }}" 
-                            class="btn btn-primary" 
-                            data-turbo-frame="_top">
-                                {{ child.firstname|title }}
-                            </a>
+                            {% if user is same as app.user %}
+                                <a 
+                                {% if app.request.get('date') %}
+                                    href="{{ path('app_children_planning', {id: child.id, date: app.request.get('date')}) }}"
+                                {% else %}
+                                    href="{{ path('app_children_planning', {id: child.id}) }}"
+                                {% endif %} 
+                                class="btn btn-primary" 
+                                data-turbo-frame="_top">
+                                    {{ child.firstname|title }}
+                                </a>
+                            {% else %}
+                                {# Desactivate link for ROLE_ADMIN #}
+                                {# Cause bad return on child page #}
+                                <button class="btn btn-primary">{{ child.firstname|title }}</button>
+                            {% endif %}
                         </th>
                     {% endfor %}
                 {% endif %}

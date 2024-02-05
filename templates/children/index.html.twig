@@ -6,7 +6,14 @@
         <div class="card">
             <div class="card-header">
                 <h1 class="card-title">{{"Planning_of"|trans}} {{ child.firstname }}</h1>
-                <a class="btn btn-link" href="{{ path('app_user_activities') }}">{{"back_to_planning"|trans}}</a>
+                <a class="btn btn-link" 
+                    {% if app.request.get('date') %}
+                        href="{{ path('app_user_activities', {date: app.request.get('date')}) }}">{{"back_to_planning"|trans}}
+                    {% else %}
+                        href="{{ path('app_user_activities') }}">{{"back_to_planning"|trans}}
+                    {% endif %}
+                </a>
+                
             </div>
             <div class="card-body">
                 {# <turbo-frame id="planning_child"> #}

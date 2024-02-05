@@ -2,6 +2,7 @@
 
 namespace App\Security\Voter;
 
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -9,6 +10,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ChildVoter extends Voter
 {
     public const ACCESS = 'CHILD_ACCESS';
+
+    public function __construct(
+        private Security $security
+    ) {
+    }
 
     protected function supports(string $attribute, $subject): bool
     {
@@ -24,6 +30,10 @@ class ChildVoter extends Voter
         // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
             return false;
+        }
+
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            return true;
         }
 
         // ... (check conditions and return true to grant permission) ...

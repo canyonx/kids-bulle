@@ -56,7 +56,8 @@ class ChildController extends AbstractController
 
         return $this->render('children/index.html.twig', [
             'child' => $child,
-            'planning' => $planning
+            'planning' => $planning,
+            'date' => $request->get('date')
         ]);
     }
 
