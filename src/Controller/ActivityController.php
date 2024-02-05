@@ -36,6 +36,8 @@ class ActivityController extends AbstractController
         $activity->removeChildren($child);
         $activityRepository->add($activity, true);
 
-        return $this->redirectToRoute('app_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_activity_show', [
+            'id' => $activity->getId()
+        ], Response::HTTP_SEE_OTHER);
     }
 }

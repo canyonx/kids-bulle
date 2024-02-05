@@ -61,7 +61,8 @@ class UserController extends AbstractController
         return $this->render('user/activities.html.twig', [
             'user' => $user,
             'childs' => $user->getChilds(),
-            'planning' => $planning
+            'planning' => $planning,
+            'date' => $dateStart
         ]);
     }
 
