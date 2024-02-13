@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class ChildVoter extends Voter
 {
     public const ACCESS = 'CHILD_ACCESS';
+    public const ADMIN = 'CHILD_ADMIN';
 
     public function __construct(
         private Security $security
@@ -32,14 +33,17 @@ class ChildVoter extends Voter
             return false;
         }
 
-        if ($this->security->isGranted('ROLE_ADMIN')) {
-            return true;
-        }
+        // if ($this->security->isGranted('ROLE_ADMIN')) {
+        //     return true;
+        // }
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::ACCESS:
                 if ($user === $subject->getUser()) return true;
+                break;
+            case self::ADMIN:
+                if ($this->security->isGranted('ROLE_ADMIN')) return true;
                 break;
         }
 
