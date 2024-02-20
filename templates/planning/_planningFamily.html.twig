@@ -71,7 +71,7 @@
                         <td class="col-2">
                             {{ date|format_datetime(pattern='dd MMM', locale='fr') }}
                         </td>
-                        <td colspan="100%"></td>
+                        <td colspan="{{childs|length}}"></td>
                     </tr>
                 {% endfor %}
             {% endfor %}

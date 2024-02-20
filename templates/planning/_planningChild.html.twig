@@ -10,7 +10,6 @@
         <tbody>
             {% for date, activities in planning %}
                 {% for activity in activities %}
-                <turbo-frame id="activity_{{activity.id}}">
                     <tr class="align-middle">
 
                         {# Date #}
@@ -22,7 +21,6 @@
 
                         {# Activities global #} 
                         {% if child in activity.childrens %}
-                            <turbo-frame id="activity_{{ activity.id }}">
                                 <td class="col-5"></td>
                                 
                                 <td class="col-5">
@@ -34,17 +32,15 @@
                                 </td>
                                 
                                 <td class="col-5"></td>
-                            </turbo-frame>
                         {% endif %}
                         
                     </tr>
-                </turbo-frame>
                 {% else %}
                     <tr>
                         <td class="col-2">
                             {{ date|format_datetime(pattern='dd MMM', locale='fr') }}
                         </td>
-                        <td colspan="100%"></td>
+                        <td colspan="2"></td>
                     </tr>
                 {% endfor %}
             {% endfor %}
