@@ -23,6 +23,7 @@ class CategoryType extends AbstractType
             ->add('number', ChoiceType::class, [
                 'label' => 'Position ',
                 'choices' => [
+                    'Non affiché' => '0',
                     '1' => '1',
                     '2' => '2',
                     '3' => '3',
