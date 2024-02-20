@@ -1,9 +1,9 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center my-1">
     <ul class="nav nav-pills">
         {% for i in 0..3 %}
             {% set date = ("first day of this month + " ~ i ~ " month")|date('Y-m-d') %}
 
-            <li class="nav-item m-1">
+            <li class="nav-item">
                 <a id="{{ 'month' ~ i }}" class="nav-month nav-link
                 {# Active button class #}
                 {% if (app.request.get("date") == date)
@@ -19,7 +19,7 @@
                     href="{{ path(app.request.attributes.get('_route'), {date: date}) }}"
                 {% endif %}
                 >
-                    {{ date|format_datetime(pattern='MMMM', locale='fr')|capitalize }}
+                    {{ date|format_datetime(pattern='MMM', locale='fr')|capitalize }}
                 </a>
             </li>
         {% endfor %}
