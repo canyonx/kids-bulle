@@ -12,6 +12,12 @@
             "src": "https://127.0.0.1:8000/images/icons/favicon512.png",
             "sizes": "512x512",
             "type": "image/png"
+        },
+        {
+            "src": "https://127.0.0.1:8000/images/icons/android-chrome-192x192.png",
+            "sizes": "196x196",
+            "type": "image/png",
+            "purpose": "maskable"
         }
 
     ],
