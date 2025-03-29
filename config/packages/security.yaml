@@ -21,6 +21,12 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 target: app_home
+            
+            # activate remember me to authenticate
+            remember_me:
+                secret:   '%kernel.secret%' # required
+                lifetime: 1209600 # 2 weeks in seconds
+                signature_properties: ['password', 'email']
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
