@@ -4,8 +4,7 @@
         <a class="btn" 
         style="background-color: {{ activity.category.color }}" 
         href="{{ path('app_activity_show', {id: activity.id}) }}">
-            {{ activity.dateAt|date("H\\h") }}
-            {{ activity.category }} 
+             {% include "planning/_button_text.html.twig" %} 
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>
         </a>
         <a href="{{ path('app_child_action_activity', {child: child.id, action: 'add', activity:activity.id}) }}" 
@@ -21,8 +20,7 @@
         <a class="col-10 btn" 
         style="background-color: {{ activity.category.color }}" 
         href="{{ path('app_activity_show', {id: activity.id}) }}">
-            {{ activity.dateAt|date("H\\h") }}
-            {{ activity.category }} 
+             {% include "planning/_button_text.html.twig" %} 
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>
         </a>
         <a href="{{ path('app_child_action_activity', {child: child.id, action: 'add', activity:activity.id}) }}" 

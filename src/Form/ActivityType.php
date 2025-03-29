@@ -33,6 +33,10 @@ class ActivityType extends AbstractType
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.number', 'ASC');
                 },
+            ])
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
+                'required' => false,
             ]);
 
         if ($options['edit'] === true) {

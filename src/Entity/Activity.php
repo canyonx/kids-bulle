@@ -28,6 +28,9 @@ class Activity
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'activities')]
     private $teacher;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $title = null;
+
     public function __construct()
     {
         $this->childrens = new ArrayCollection();
@@ -101,5 +104,17 @@ class Activity
     public function __toString()
     {
         return ucwords($this->getDateAt()->format('d.m') . ' ' . $this->getCategory()->getName());
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
     }
 }

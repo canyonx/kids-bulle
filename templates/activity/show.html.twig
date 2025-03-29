@@ -7,6 +7,9 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <div>            
                 <h1 class="card-title" style="color: {{ activity.category.color }}">{{ activity.category }}</h1>
+                {% if activity.title %}
+                    <h2 class="card-subtitle mb-2 text-muted">{{ activity.title }}</h2>
+                {% endif %}
                 <h5 class="card-title" style="color: {{ activity.category.color }}">{{ activity.dateAt|format_datetime(pattern="d MMMM YYYY à HH:mm", locale='fr') }}</h5>
                 {% if activity.teacher %}
                     <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{ activity.teacher.lastname }}</h6>

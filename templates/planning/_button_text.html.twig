@@ -1,0 +1,6 @@
+{{ activity.dateAt|date("H\\h") }}
+{% if activity.title %} 
+    {{ activity.title }} 
+{% else %}
+    {{ activity.category }}  
+{% endif %}
