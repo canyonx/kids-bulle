@@ -20,6 +20,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route(path: '/admin/activity')]
 class ActivityController extends AbstractController
 {
+    /**
+     * Admin Activity List starting from today
+     *
+     * @param Request $request
+     * @param ActivityRepository $activityRepository
+     * @param PlanningService $planningService
+     * @param StartDateService $startDateService
+     * @return Response
+     */
     #[Route(path: '/', name: 'app_admin_activity_index', methods: ['GET'])]
     public function index(
         Request $request,
@@ -37,6 +46,16 @@ class ActivityController extends AbstractController
         ]);
     }
 
+    /**
+     * Admin, Activity List for a specific user
+     *
+     * @param User $user
+     * @param Request $request
+     * @param ActivityRepository $activityRepository
+     * @param PlanningService $planningService
+     * @param StartDateService $startDateService
+     * @return Response
+     */
     #[Route(path: '/user/{id}', name: 'app_admin_activity_user', methods: ['GET'])]
     public function user(
         User $user,
@@ -57,6 +76,9 @@ class ActivityController extends AbstractController
         ]);
     }
 
+    /**
+     * Trip Create
+     */
     #[Route(path: '/new', name: 'app_admin_activity_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ActivityRepository $activityRepository): Response
     {

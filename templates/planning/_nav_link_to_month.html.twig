@@ -1,0 +1,23 @@
+<a id="{{ 'month' ~ i }}" class="nav-month nav-link
+    {# Active button class #}
+    {% if (app.request.get("date") == date)
+    or ((app.request.get("date") == null) and loop.first) %}
+        active
+    {% endif %}" 
+
+    {% set date = date|date('Y-m-d') %}
+    
+    {# Set the href attribute based on the context #}
+    {% if child is defined %}
+        {# If child is defined, use its ID #}
+        href="{{ path(app.request.attributes.get('_route'), {date: date, id: child.id}) }}"
+    {% elseif user is defined and user is not same as app.user %}
+        {# If user is defined and not the same as app.user, use its ID #}
+        href="{{ path(app.request.attributes.get('_route'), {date: date, id: user.id}) }}"
+    {% else %}
+        {# Otherwise, just use the date #}
+        href="{{ path(app.request.attributes.get('_route'), {date: date}) }}"
+    {% endif %}
+>
+    {{ date|format_datetime(pattern='MMM', locale='fr')|capitalize }}
+</a>

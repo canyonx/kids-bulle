@@ -1,26 +1,44 @@
 <div class="d-flex justify-content-center my-1">
     <ul class="nav nav-pills">
-        {% for i in 0..3 %}
-            {% set date = ("first day of this month + " ~ i ~ " month")|date('Y-m-d') %}
 
+        {% if is_granted("ROLE_ADMIN") %}
+            {# The first month is the current month - 1 month #}
+            {# This is done to ensure that the first month displayed is the previous month #}
+            {% set date = ("first day of this month - 1 month")|date('Y-m-d') %}
             <li class="nav-item">
-                <a id="{{ 'month' ~ i }}" class="nav-month nav-link
-                {# Active button class #}
-                {% if (app.request.get("date") == date)
-                 or ((app.request.get("date") == null) and loop.first) %}
-                    active
-                {% endif %}" 
-                
-                {% if child is defined %}
-                    href="{{ path(app.request.attributes.get('_route'), {date: date, id: child.id}) }}"
-                {% elseif user is defined and user is not same as app.user %}
-                    href="{{ path(app.request.attributes.get('_route'), {date: date, id: user.id}) }}"
-                {% else %}
-                    href="{{ path(app.request.attributes.get('_route'), {date: date}) }}"
-                {% endif %}
+            <a id="{{ 'month - 1' }}" class="nav-month nav-link
+                    {# Active button class #}
+                    {% if (app.request.get("date") == date) %}
+                        active
+                    {% endif %}" 
+
+                    {% set date = date|date('Y-m-d') %}
+                    
+                    {# Set the href attribute based on the context #}
+                    {% if child is defined %}
+                        {# If child is defined, use its ID #}
+                        href="{{ path(app.request.attributes.get('_route'), {date: date, id: child.id}) }}"
+                    {% elseif user is defined and user is not same as app.user %}
+                        {# If user is defined and not the same as app.user, use its ID #}
+                        href="{{ path(app.request.attributes.get('_route'), {date: date, id: user.id}) }}"
+                    {% else %}
+                        {# Otherwise, just use the date #}
+                        href="{{ path(app.request.attributes.get('_route'), {date: date}) }}"
+                    {% endif %}
                 >
                     {{ date|format_datetime(pattern='MMM', locale='fr')|capitalize }}
                 </a>
+            </li>
+        {% endif %}
+
+        {% for i in 0..3 %}
+            {# Calculate the date for the current month + i months #}
+            {# The first month is the current month, so we start from 0 #}
+            {# The date is formatted as 'Y-m-d' for consistency #}
+            {% set date = ("first day of this month + " ~ i ~ " month")|date('Y-m-d') %}
+
+            <li class="nav-item">
+                {% include "planning/_nav_link_to_month.html.twig" %}
             </li>
         {% endfor %}
     </ul>
