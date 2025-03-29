@@ -42,6 +42,7 @@ class ActivityType extends AbstractType
         if ($options['edit'] === true) {
             $builder->add('teacher', EntityType::class, [
                 'label' => 'Moniteur',
+                'required' => false,
                 'class' => User::class,
                 'query_builder' => function (EntityRepository $er): QueryBuilder {
                     return $er->createQueryBuilder('u')
