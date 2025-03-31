@@ -15,6 +15,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ActivityType extends AbstractType
 {
@@ -36,6 +37,10 @@ class ActivityType extends AbstractType
             ])
             ->add('title', TextType::class, [
                 'label' => 'Titre',
+                'required' => false,
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
                 'required' => false,
             ]);
 
