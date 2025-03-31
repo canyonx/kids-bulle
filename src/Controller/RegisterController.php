@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\SettingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +22,21 @@ class RegisterController extends AbstractController
     public function register(
         Request $request,
         EntityManagerInterface $em,
-        UserPasswordHasherInterface $hasher
+        UserPasswordHasherInterface $hasher,
+        SettingRepository $settingRepository
     ): Response {
         $user = new User;
         $form = $this->createForm(RegistrationFormType::class, $user);
 
+        $setting = $settingRepository->find(1);
+
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && $form["code"]->getData() === $this->getParameter('register_code')) {
+        if (
+            $form->isSubmitted() &&
+            $form->isValid() &&
+            // $form["code"]->getData() === $this->getParameter('register_code')
+            $form["code"]->getData() === $setting->getSignCode()
+        ) {
             $password = $form["plainPassword"]->getData();
             $hash = $hasher->hashPassword($user, $password);
             $user->setPassword($hash);

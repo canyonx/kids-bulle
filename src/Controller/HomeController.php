@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ActivityRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\SettingRepository;
 use App\Service\PlanningService;
 use App\Service\StartDateService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,7 @@ class HomeController extends AbstractController
         ActivityRepository $activityRepository,
         PlanningService $planningService,
         StartDateService $startDateService,
+        SettingRepository $settingRepository,
         Request $request
     ): Response {
         // Set correct start date
@@ -28,10 +30,14 @@ class HomeController extends AbstractController
 
         $planning = $planningService->getPlanning($activities, $dateStart);
 
+        // Home page settings
+        $setting = $settingRepository->find(1);
+
 
         return $this->render('home/index.html.twig', [
             'categories' => $categoryRepository->findBy([], ['number' => 'ASC']),
-            'planning' => $planning
+            'planning' => $planning,
+            'setting' => $setting,
         ]);
     }
 }

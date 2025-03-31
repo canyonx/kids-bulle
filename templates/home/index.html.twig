@@ -8,8 +8,20 @@
     <div class="container px-4 py-5">
         <div class="row d-flex align-items-center py-5">
             <div class="col">
-                <h1 class="text-light">Kid's Bulle</h1>
-                <p class="text-light">{{"Website_subtitle"|trans}}</p>
+                <h1 class="text-light">
+                    {% if setting.homepageTitle %}
+                        {{ setting.homepageTitle }}
+                    {% else %}
+                        Kid's Bulle
+                    {% endif %}
+                </h1>
+                <p class="text-light">
+                    {% if setting.homepageDescription %}
+                        {{ setting.homepageDescription }}
+                    {% else %}
+                        {{"Website_subtitle"|trans}}
+                    {% endif %}
+                </p>
             </div>
         </div>
         
