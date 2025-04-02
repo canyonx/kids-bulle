@@ -3,7 +3,8 @@
     <div class="btn-group-vertical w-100">
         <a class="col-10 btn" 
         style="background-color: {{ activity.category.color }}" 
-        href="{{ path('app_activity_show', {id: activity.id}) }}">
+        href="{{ path('app_activity_show', {id: activity.id}) }}"
+        data-turbo="false">
              {% include "planning/_button_text.html.twig" %}
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
         </a>
@@ -21,7 +22,8 @@
     <div class="btn-group w-100">
         <a class="col-10 btn" 
         style="background-color: {{ activity.category.color }}" 
-        href="{{ path('app_activity_show', {id: activity.id}) }}">
+        href="{{ path('app_activity_show', {id: activity.id}) }}"
+        data-turbo="false">
              {% include "planning/_button_text.html.twig" %}
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
         </a>
