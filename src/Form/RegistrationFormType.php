@@ -3,25 +3,26 @@
 namespace App\Form;
 
 use App\Entity\User;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use App\Repository\ConfigRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\EqualTo;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Validator\Constraints\EqualTo;
 
 class RegistrationFormType extends AbstractType
 {
     public function __construct(
-        private ParameterBagInterface $parameter
-    ) {
-    }
+        // private ParameterBagInterface $parameter,
+        private ConfigRepository $configRepository,
+    ) {}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -47,7 +48,6 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'placeholder' => '******'
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -86,14 +86,12 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('code', PasswordType::class, [
-                'label' => 'Code fourni par KidsBulle',
+                'label' => 'Code fourni par Kid\'s Bulle',
                 'mapped' => false,
-                'attr' => [
-                    'placeholder' => '******'
-                ],
                 'constraints' => [
                     new EqualTo([
-                        'value' => $this->parameter->get('register_code'),
+                        // 'value' => $this->parameter->get('register_code'),
+                        'value' => $this->configRepository->findOneBy(['name' => 'code'])->getValue(),
                         'message' => 'Code erroné',
                     ]),
                 ],

@@ -7,17 +7,19 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    private $usersFixtures;
-
     public function __construct(
-        UserFixtures $userFixtures
-    ) {
-        $this->usersFixtures = $userFixtures;
-    }
+        private ConfigFixtures $configFixtures,
+        private UserFixtures $userFixtures,
+        private CategoryFixtures $categoryFixtures,
+        private ActivityFixtures $activityFixtures,
+    ) {}
 
 
     public function load(ObjectManager $manager): void
     {
-        $this->usersFixtures->createUser();
+        $this->configFixtures->createConfig();
+        $this->userFixtures->createUsers();
+        $this->categoryFixtures->createCategories();
+        $this->activityFixtures->createActivities();
     }
 }

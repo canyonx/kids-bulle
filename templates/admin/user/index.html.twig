@@ -17,8 +17,9 @@
                             <th>{{"Phone"|trans}}</th>
                             <th>{{"Address"|trans}}</th>
                             <th>{{"Childs"|trans}}</th>
+                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">Code</th>
                             <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Roles"|trans}}</th>
-                            <th></th>
+                            {# <th></th> #}
                             {# <th></th> #}
                         </tr>
                     </thead>
@@ -40,11 +41,14 @@
                                         </li>
                                     {% endfor %}
                                 </td>
+                                <td data="{{ user.code }}">{{ user.code }}</td>
                                 {% set role = user.roles[0]|split('_')[1] %}
-                                <td data="{{ role }}">{{ role|title }}</td>
-                                <td>
-                                    <a href="{{ path('app_admin_user_edit', {id: user.id}) }}">Editer</a>
+                                <td data="{{ role }}">
+                                    <a href="{{ path('app_admin_user_edit', {id: user.id}) }}">{{ role|title }}</a>
                                 </td>
+                                {# <td>
+                                    <a href="{{ path('app_admin_user_edit', {id: user.id}) }}">Editer</a>
+                                </td> #}
                                 {# <td>
                                     {{ include('admin/user/_delete_form.html.twig') }}
                                 </td> #}

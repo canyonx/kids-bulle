@@ -16,8 +16,11 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
     </head>
-    <body class="bg-teal">
-
+    <body class="bg-teal" 
+        {% if config.get('color') is defined %}
+            style="background-color: {{ config.get('color') }};"
+        {% endif %}>
+        
         {# Navbar #}
         {% include 'shared/_navbar.html.twig' %}
 

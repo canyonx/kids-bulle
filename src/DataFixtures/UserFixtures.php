@@ -26,7 +26,7 @@ class UserFixtures
      *
      * @return void
      */
-    public function createUser(): void
+    public function createUsers(): void
     {
         // create Admin
         $admin = new User;
@@ -42,19 +42,36 @@ class UserFixtures
 
         $this->entityManager->persist($admin);
 
+        // create Teacher
+        for ($i = 0; $i < 3; $i++) {
+            $user = new User;
+            $user->setEmail('teacher' . $i . '@kidsbulle.fr')
+                ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'teacher'))
+                ->setRoles(['ROLE_TEACHER'])
+                ->setFirstname('exemple' . $i)
+                ->setLastname('teacher' . $i)
+                ->setPhone('0987654321')
+                ->setFullAdress('123 rue du soleil 04567 Astre');;
+
+            $this->createChildren($user);
+
+            $this->entityManager->persist($user);
+        }
+
         // create User
-        $user = new User;
-        $user->setEmail('user@kidsbulle.fr')
-            ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'user'))
-            ->setFirstname('exemple')
-            ->setLastname('user')
-            ->setPhone('0987654321')
-            ->setFullAdress('123 rue du soleil 04567 Astre');;
+        for ($i = 0; $i < 10; $i++) {
+            $user = new User;
+            $user->setEmail('user' . $i . '@kidsbulle.fr')
+                ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'user'))
+                ->setFirstname('exemple' . $i)
+                ->setLastname('user' . $i)
+                ->setPhone('0987654321')
+                ->setFullAdress('123 rue du soleil 04567 Astre');;
 
-        $this->createChildren($user);
+            $this->createChildren($user);
 
-        $this->entityManager->persist($user);
-
+            $this->entityManager->persist($user);
+        }
 
         $this->entityManager->flush();
     }

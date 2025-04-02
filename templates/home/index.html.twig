@@ -9,15 +9,15 @@
         <div class="row d-flex align-items-center py-5">
             <div class="col">
                 <h1 class="text-light">
-                    {% if setting.homepageTitle %}
-                        {{ setting.homepageTitle }}
+                    {% if config.get('homepageTitle') is defined %}
+                        {{ config.get('homepageTitle') }}
                     {% else %}
                         Kid's Bulle
                     {% endif %}
                 </h1>
                 <p class="text-light">
-                    {% if setting.homepageDescription %}
-                        {{ setting.homepageDescription }}
+                    {% if config.get('homepageDescription') is defined %}
+                        {{ config.get('homepageDescription')|nl2br }}
                     {% else %}
                         {{"Website_subtitle"|trans}}
                     {% endif %}

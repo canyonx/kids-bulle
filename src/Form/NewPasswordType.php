@@ -29,9 +29,6 @@ class NewPasswordType extends AbstractType
                         ])
                     ],
                     'label' => 'Nouveau mot de passe',
-                    'attr' => [
-                        'placeholder' => '******'
-                    ]
                 ]
             );
     }

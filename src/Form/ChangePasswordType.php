@@ -25,9 +25,6 @@ class ChangePasswordType extends AbstractType
                         ])
                     ],
                     'label' => 'Mot de passe actuel',
-                    'attr' => [
-                        'placeholder' => '******'
-                    ]
                 ]
             )
             ->add(
@@ -45,9 +42,6 @@ class ChangePasswordType extends AbstractType
                         ])
                     ],
                     'label' => 'Nouveau mot de passe',
-                    'attr' => [
-                        'placeholder' => '******'
-                    ]
                 ]
             );
     }
