@@ -14,10 +14,21 @@ class ActivityController extends AbstractController
 {
     #[Route(path: '/{id}', name: 'app_activity_show', methods: ['GET', 'POST'])]
     public function show(
-        Activity $activity
+        Activity $activity,
     ): Response {
+        /** @var User */
+        $user = $this->getUser();
+
+        // add my childs to an activity from the view
+        $enrolledChildren = $activity->getChildrens()->toArray();
+        $userChildren = $user->getChilds()->toArray();
+
+        $enrolledChildrenIds = array_map(fn($child) => $child->getId(), $enrolledChildren);
+        $notEnrolledChildren = array_filter($userChildren, fn($child) => !in_array($child->getId(), $enrolledChildrenIds));
+
         return $this->render('activity/show.html.twig', [
-            'activity' => $activity
+            'activity' => $activity,
+            'notEnrolledChildren' => $notEnrolledChildren
         ]);
     }
 
@@ -34,6 +45,26 @@ class ActivityController extends AbstractController
         $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
 
         $activity->removeChildren($child);
+        $activityRepository->add($activity, true);
+
+        return $this->redirectToRoute('app_activity_show', [
+            'id' => $activity->getId()
+        ], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * User can add his own child to an activity
+     */
+    #[Route(path: '/{id}/add/{child}', name: 'app_activity_add_child', methods: ['GET'])]
+    public function addChild(
+        Activity $activity,
+        Child $child,
+        ActivityRepository $activityRepository
+    ): Response {
+
+        $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
+
+        $activity->addChildren($child);
         $activityRepository->add($activity, true);
 
         return $this->redirectToRoute('app_activity_show', [

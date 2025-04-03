@@ -4,7 +4,7 @@
         <a class="btn" 
         style="background-color: {{ activity.category.color }}" 
         href="{{ path('app_activity_show', {id: activity.id}) }}"
-        data-turbo="false">
+        data-turbo-frame="_top">
              {% include "planning/_button_text.html.twig" %} 
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>
         </a>
@@ -21,7 +21,7 @@
         <a class="col-10 btn" 
         style="background-color: {{ activity.category.color }}" 
         href="{{ path('app_activity_show', {id: activity.id}) }}"
-        data-turbo="false">
+        data-turbo-frame="_top">
              {% include "planning/_button_text.html.twig" %} 
             <span class="badge badge-secondary">{{ activity.childrens|length }}</span>
         </a>

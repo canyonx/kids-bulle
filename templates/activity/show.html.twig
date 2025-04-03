@@ -30,8 +30,19 @@
         <br>
         {% endfor %}
     </div>
+
+    {# form to add children directly from the activity view #}
+    {% if (notEnrolledChildren|length) > 0 %}
+        <div class="card-body border-top">
+            <h6 class="card-subtitle mb-2 text-muted">Ajouter mes enfants</h6>
+            {% for child in notEnrolledChildren %}
+                {% include "activity/_button_child.html.twig" %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="card-footer d-flex justify-content-between">
-        <a class="btn btn-link" href="javascript:history.back()" data-turbo-frame="_top">
+        <a class="btn btn-link" href="{{ path('app_user_activities')}}" data-turbo-frame="_top">
             {{"back_to_planning"|trans}}
         </a>
         {% if is_granted('ROLE_TEACHER') %}

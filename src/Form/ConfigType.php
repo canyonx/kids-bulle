@@ -30,7 +30,7 @@ class ConfigType extends AbstractType
                     'placeholder' => 'Kid\'s Bulle par défaut',
                 ],
                 'required' => false,
-                'data' => $this->getConfigValue($options['data'], 'homepageDescription'),
+                'data' => $this->getConfigValue($options['data'], 'homepageTitle'),
                 // 'data' => $configs['homepageTitle'],
             ])
             ->add('homepageDescription', TextareaType::class, [

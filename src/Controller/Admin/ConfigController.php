@@ -53,7 +53,7 @@ final class ConfigController extends AbstractController
         }
 
         return $this->render('admin/config/index.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 }

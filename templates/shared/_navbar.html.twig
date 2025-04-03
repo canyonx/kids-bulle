@@ -18,9 +18,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_user') }}">{{"Profile"|trans}}</a>
                     </li>
+                    {# {% if app.user.childs|length > 0 %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_user_activities')}}">{{"Planning"|trans}}</a>
                     </li>
+                    {% endif %} #}
                 </ul>
             {% endif %}
 

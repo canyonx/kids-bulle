@@ -1,10 +1,16 @@
 <div class="btn-group m-1">
     <button class="btn btn-outline-dark" disabled>
-        {{ child|title }}
+        {{ child.firstname|title }}
     </button>    
     {% if is_granted("CHILD_ACCESS", child) %}
-        <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
-            <i class="fa-solid fa-circle-xmark fa-xl"></i>
-        </a>
+        {% if child in notEnrolledChildren %}
+            <a class="btn btn-primary" href="{{ path('app_activity_add_child', {id: activity.id, child: child.id})}}">
+                <i class="fa-solid fa-circle-plus fa-xl"></i>
+            </a>
+        {% else %}
+            <a class="btn btn-secondary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
+                <i class="fa-solid fa-circle-xmark fa-xl"></i>
+            </a>
+        {% endif %}
     {% endif %}
 </div>

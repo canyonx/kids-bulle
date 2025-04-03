@@ -1,14 +1,14 @@
 <div class="table-responsive">
-    <table class="table text-center">
+    <table class="table text-center" style="table-layout: fixed;">
         <thead>
             <tr>
-                <th>{{"Date"|trans}}</th>
+                <th class="col-2">{{"Date"|trans}}</th>
                 {% if is_granted("ROLE_TEACHER") and not is_granted("ROLE_ADMIN") %}
-                    <th>{{"Teacher_(Me)"|trans}}</th>
+                    <th class="col">{{"Teacher_(Me)"|trans}}</th>
                 {% endif %}
                 {% if is_granted("ROLE_USER") and (user.childs|length > 0) %} 
                     {% for child in user.childs %}
-                        <th>
+                        <th class="col">
                             {% if user is same as app.user %}
                                 <a 
                                 {% if app.request.get('date') %}
@@ -18,7 +18,7 @@
                                 {% endif %} 
                                 class="btn btn-primary" 
                                 data-turbo-frame="_top">
-                                    {{ child.firstname|title }}
+                                    <b>{{ child.firstname|title }}</b>
                                 </a>
                             {% else %}
                                 {# Desactivate link for ROLE_ADMIN #}
@@ -71,7 +71,11 @@
                         <td class="col-2">
                             {{ date|format_datetime(pattern='dd MMM', locale='fr') }}
                         </td>
+                        {% if is_granted("ROLE_TEACHER") and not is_granted("ROLE_ADMIN") %}
+                        <td colspan="{{childs|length + 1}}"></td>
+                        {% else %}
                         <td colspan="{{childs|length}}"></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             {% endfor %}

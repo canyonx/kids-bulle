@@ -1,5 +1,8 @@
-# kids-bulle
+# Planning Kid's Bulle 
 
+Application d'inscription des enfants sur le planning des activités du club de ski Kid's Bulle de Peyragudes
+
+## Installer 
 * Installer et créer les containers Docker
 `docker compose up -d --build`
 
@@ -27,4 +30,4 @@ MDP: symfony
 USE kids-bulle;
 SHOW tables;
 SELECT * FROM user;
-```
+```p

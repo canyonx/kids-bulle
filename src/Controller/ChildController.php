@@ -82,7 +82,6 @@ class ChildController extends AbstractController
         return $this->render('children/edit.html.twig', [
             'child' => $child,
             'form' => $form,
-            'title' => 'Edit' . $child->getFirstname()
         ]);
     }
 
