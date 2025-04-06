@@ -33,6 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\OneToMany(targetEntity: Child::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\OrderBy(["birthAt" => "DESC"])]
     private $childs;
 
     #[ORM\Column(type: 'string', length: 255)]

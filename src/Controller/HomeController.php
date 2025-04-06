@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\ActivityRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\SettingRepository;
 use App\Service\PlanningService;
 use App\Service\StartDateService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +30,25 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'categories' => $categoryRepository->findBy([], ['number' => 'ASC']),
+            'planning' => $planning,
+        ]);
+    }
+
+    #[Route(path: '/planning', name: 'app_planning')]
+    public function planning(
+        ActivityRepository $activityRepository,
+        PlanningService $planningService,
+        StartDateService $startDateService,
+        Request $request
+    ): Response {
+        // Set correct start date
+        $dateStart = $startDateService->getStartDate($request->get('date'));
+
+        $activities = $activityRepository->findByDateBetween($dateStart);
+
+        $planning = $planningService->getPlanning($activities, $dateStart);
+
+        return $this->render('home/planning.html.twig', [
             'planning' => $planning,
         ]);
     }

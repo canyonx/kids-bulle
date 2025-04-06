@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Child;
 use App\Entity\Activity;
+use App\Repository\ChildRepository;
 use App\Repository\ActivityRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,19 +17,22 @@ class ActivityController extends AbstractController
     #[Route(path: '/{id}', name: 'app_activity_show', methods: ['GET', 'POST'])]
     public function show(
         Activity $activity,
+        ChildRepository $childRepository,
     ): Response {
         /** @var User */
         $user = $this->getUser();
 
-        // add my childs to an activity from the view
-        $enrolledChildren = $activity->getChildrens()->toArray();
+        // add user childs to an activity from the view
+        // $enrolledChildren = $activity->getChildrens()->toArray();
+        $enrolledChildren = $childRepository->findByActivityOrderedByUserAndBirth($activity, $user);
         $userChildren = $user->getChilds()->toArray();
 
-        $enrolledChildrenIds = array_map(fn($child) => $child->getId(), $enrolledChildren);
-        $notEnrolledChildren = array_filter($userChildren, fn($child) => !in_array($child->getId(), $enrolledChildrenIds));
+        // $enrolledChildrenIds = array_map(fn($child) => $child->getId(), $enrolledChildren);
+        $notEnrolledChildren = array_filter($userChildren, fn($child) => !in_array($child, $enrolledChildren));
 
         return $this->render('activity/show.html.twig', [
             'activity' => $activity,
+            'activityChildren' => $enrolledChildren,
             'notEnrolledChildren' => $notEnrolledChildren
         ]);
     }

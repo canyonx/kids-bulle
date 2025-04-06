@@ -69,12 +69,40 @@ class Activity
         return $this;
     }
 
+    // /**
+    //  * @return Collection<int, Child>
+    //  */
+    // public function getChildrens(): Collection
+    // {
+    //     return $this->childrens;
+    // }
+
     /**
+     * Returns a sorted collection of children, prioritizing the ones associated with the given user,
+     * and sorting all by birth date ascending.
+     *
      * @return Collection<int, Child>
      */
-    public function getChildrens(): Collection
+    public function getChildrens(?User $user = null): Collection
     {
-        return $this->childrens;
+        $children = $this->childrens->toArray();
+
+        usort($children, function (Child $a, Child $b) use ($user) {
+            $aIsUserChild = $user && $a->getUser() === $user;
+            $bIsUserChild = $user && $b->getUser() === $user;
+
+            // Prioriser les enfants du user
+            if ($aIsUserChild && !$bIsUserChild) {
+                return -1;
+            } elseif (!$aIsUserChild && $bIsUserChild) {
+                return 1;
+            }
+
+            // Sinon, trier par birthAt décroissant
+            return $b->getBirthAt() <=> $a->getBirthAt();
+        });
+
+        return new ArrayCollection($children);
     }
 
     public function addChildren(Child $children): self

@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="{{"Website_subtitle"|trans}}">
         <link rel="manifest" href="{{ asset('manifest.json')}}">
+        
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
@@ -15,6 +16,31 @@
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
+
+        {# {% set primary = config.get('color')|default('#00758f') %}
+        {% set hover = '#00637a' %}
+        {% set hover_border = '#005e72' %}
+        {% set focus_shadow = '38, 138, 160' %}
+        {% set active_bg = '#005e72' %}
+        {% set active_border = '#00586b' %}
+        {% set disabled = primary %}
+
+        <style>
+            .btn-primary {
+                --bs-btn-bg: {{ primary }};
+                --bs-btn-border-color: {{ primary }};
+                --bs-btn-hover-bg: {{ primary }};
+                --bs-btn-hover-border-color: {{ primary }};
+                --bs-btn-active-bg: {{ primary }};
+                --bs-btn-active-border-color: {{ primary }};
+                --bs-btn-disabled-bg: {{ disabled }};
+                --bs-btn-disabled-border-color: {{ disabled }};
+            }
+            .btn:hover {
+               --bs-btn-hover-bg: {{ primary }};
+                --bs-btn-hover-border-color: {{ primary }};
+            }
+        </style> #}
     </head>
     <body class="bg-teal" 
         {% if config.get('color') is defined %}

@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\Entity\Child;
 use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**
  *

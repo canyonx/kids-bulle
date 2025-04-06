@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DayController!{% endblock %}
+{% block title %}Copier le {{ day|format_datetime(pattern='dd MMM', locale='fr')|capitalize}}{% endblock %}
 
 {% block body %}
     <div class="card col-md-6 mx-auto">

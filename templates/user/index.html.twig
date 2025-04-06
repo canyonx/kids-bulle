@@ -17,27 +17,37 @@
                 {{ user.fulladress }}
             </p>
             <div>
-                <a class="btn btn-link" href="{{ path('app_user_edit') }}">{{"edit"|trans}}</a>
+                <a class="btn btn-secondary" href="{{ path('app_user_edit') }}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
             </div>
         </div>
         {% if user.childs|length > 0 %}
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-center">
-                    <a class="btn btn-primary fw-bold" href="{{ path('app_user_activities')}}">
+                <li class="list-group-item d-flex justify-content-between">
+                    <a class="btn btn-primary" href="{{ path('app_user_activities') }}">
                         Planning de ma famille
+                    </a>
+                    <a class="btn btn-primary" href="{{ path('app_planning') }}">
+                        Planning du club
                     </a>
                 </li>
                 {% for child in user.childs %}
                     <li class="list-group-item d-flex justify-content-between">
                         <a class="btn btn-primary" href="{{ path('app_children_planning', {'id': child.id}) }}">{{ child.firstname|title }}</a>
-                        <a class="btn btn-link" href="{{ path('app_children_edit', {'id': child.id}) }}">{{"edit"|trans}}</a>
+                        <a class="btn btn-secondary" href="{{ path('app_children_edit', {'id': child.id}) }}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
         {% endif %}
             
-        <div class="card-footer">
-            <a class="btn btn-link" href="{{ path('app_children_new') }}">{{"add_child"|trans}}</a>
+        <div class="card-footer d-flex justify-content-center">
+            <a class="btn btn-secondary" href="{{ path('app_children_new') }}">
+                <i class="fa-solid fa-circle-plus fa-xl me-2"></i>
+                {{"add_child"|trans}}
+            </a>
         </div>
     </section>
 {% endblock %}

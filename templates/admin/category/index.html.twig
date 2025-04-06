@@ -6,7 +6,10 @@
     <div class="card">
         <div class="card-header">
             <h1 class="card-title">{{"Category_index"|trans}}</h1>
-            <a class="btn btn-link" href="{{ path('app_admin_category_new') }}">{{"Create_new"|trans}}</a>
+            <a class="btn btn-primary" href="{{ path('app_admin_category_new') }}">
+                <i class="fa-solid fa-circle-plus fa-xl"></i>
+                {{"Create_new"|trans}}
+            </a>
         </div>
         <div class="card-body">
             <div class="row">

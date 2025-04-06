@@ -139,7 +139,7 @@ class ActivityController extends AbstractController
             return $this->redirectToRoute('app_admin_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        // Form to add childs to activity
+        // Admin form to add childs to activity
         $form = $this->createForm(AddChildToActivityType::class, null, ['activity' => $activity]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

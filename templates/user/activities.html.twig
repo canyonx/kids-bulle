@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ app.user.firstname }} {{ app.user.lastname }}{% endblock %}
+{% block title %}{{ app.user }}{% endblock %}
 
 {% block body %}
         <div class="card">
             <div class="card-header">
-                <h1 class="card-title">{{"My_family"|trans}}</h1>
+                <h1 class="card-title">Planning de ma famille</h1>
             </div>
             <div class="card-body">
                 {% if app.user.childs|length > 0 or is_granted("ROLE_TEACHER") %}
