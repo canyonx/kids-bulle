@@ -28,30 +28,34 @@
 			</div>
 			<i class="fa-solid fa-snowflake fa-2xl m-4" style="color: {{ activity.category.color }}"></i>
 		</div>
-		<div class="card-body">
-			<h6 class="card-subtitle mb-2 text-muted">
-				{{"Registered"|trans}}
-				<span class="badge bg-secondary">{{ activity.childrens|length }}</span>
-			</h6>
-			{# List of children ordered by user and age #}
-			{% for child in activityChildren %}
-				{% include "activity/_button_child.html.twig" %}
-				<br>
-			{% endfor %}
-		</div>
-
-		{# buttons to add children directly from the activity view #}
-		{% if (notEnrolledChildren|length) > 0 %}
-			<div class="card-body border-top">
-				<h6 class="card-subtitle mb-2 text-muted">Ajouter une personne</h6>
-				{% for child in notEnrolledChildren %}
+		
+		{# Card body #}
+		<turbo-frame id="activity-view">
+			<div class="card-body">
+				<h6 class="card-subtitle mb-2 text-muted">
+					{{"Registered"|trans}}
+					<span class="badge bg-secondary">{{ activity.childrens|length }}</span>
+				</h6>
+				{# List of children ordered by user and age #}
+				{% for child in enrolledChildren %}
 					{% include "activity/_button_child.html.twig" %}
+					<br>
 				{% endfor %}
 			</div>
-		{% endif %}
+
+			{# buttons to add children directly from the activity view #}
+			{% if (notEnrolledChildren|length) > 0 %}
+				<div class="card-body border-top">
+					<h6 class="card-subtitle mb-2 text-muted">Ajouter une personne</h6>
+					{% for child in notEnrolledChildren %}
+						{% include "activity/_button_child.html.twig" %}
+					{% endfor %}
+				</div>
+			{% endif %}
+		</turbo-frame>
 
 		<div class="card-footer d-flex justify-content-between">
-			<a class="btn btn-link" href="{{ app.request.headers.get('referer') }}" data-turbo-frame="_top">
+			<a class="btn btn-link" href="javascript:history.back()" data-turbo-frame="_top">
 				Retour
 			</a>
 			{% if is_granted('ROLE_TEACHER') %}

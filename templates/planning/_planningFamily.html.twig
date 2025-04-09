@@ -59,7 +59,10 @@
                         {% for child in childs %}
                             {% if child in activity.childrens %}
                                 <td>
-                                    {% include "planning/_button_remove_activity.html.twig" %}
+                                    {% include "planning/_button_activity_action.html.twig" with {
+                                        action: 'remove',
+                                        action_icon: 'fa-circle-xmark'
+                                    } %}
                                 </td>
                             {% else %}
                                 <td></td>

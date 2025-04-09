@@ -1,16 +1,15 @@
 <div class="btn-group m-1">
 	{% if is_granted("CHILD_ACCESS", child) %}
-		{% if child in notEnrolledChildren %}
-			<a class="btn btn-primary" href="{{ path('app_activity_add_child', {id: activity.id, child: child.id})}}">
+		<form method="post" action="{{ path('app_activity_action') }}" data-turbo-frame="activity-view">
+			<input type="hidden" name="activity" value="{{ activity.id }}">
+			<input type="hidden" name="child" value="{{ child.id }}">
+			<input type="hidden" name="action" value="{{ child in notEnrolledChildren ? 'add' : 'remove' }}">
+			
+			<button type="submit" class="btn btn-primary">
 				{{ child|title }}
-				<i class="fa-solid fa-circle-plus fa-xl ms-2"></i>
-			</a>
-		{% else %}
-			<a class="btn btn-primary" href="{{ path('app_activity_remove_child', {id: activity.id, child: child.id})}}">
-				{{ child|title }}
-				<i class="fa-solid fa-circle-xmark fa-xl ms-2"></i>
-			</a>
-		{% endif %}
+				<i class="fa-solid {{ child in notEnrolledChildren ? 'fa-circle-plus' : 'fa-circle-xmark' }} fa-xl ms-2"></i>
+			</button>
+		</form>
 	{% else %}
 		<button class="btn btn-outline-dark" disabled>
 			{{ child|title }}

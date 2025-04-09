@@ -1,4 +1,9 @@
-{{ activity.dateAt|date("H\\h") }}
+{% if activity.dateAt|date("i") is not same as "00" %}
+    {{ activity.dateAt|date("H\\hi") }}
+{% else %}
+    {{ activity.dateAt|date("H\\h") }}
+{% endif %}
+
 {% if activity.title %} 
     {{ activity.title }} 
 {% else %}

@@ -24,11 +24,17 @@
                                 <td class="col-5"></td>
                                 
                                 <td class="col-5">
-                                    {% include "planning/_button_remove_activity.html.twig" %}
+                                    {% include "planning/_button_activity_action.html.twig" with {
+                                        action: 'remove',
+                                        action_icon: 'fa-circle-xmark'
+                                    } %}
                                 </td>
                             {% else %}
                                 <td class="col-5">
-                                    {% include "planning/_button_add_activity.html.twig" %}
+                                    {% include "planning/_button_activity_action.html.twig" with {
+                                        action: 'add',
+                                        action_icon: 'fa-circle-plus'
+                                    } %}
                                 </td>
                                 
                                 <td class="col-5"></td>

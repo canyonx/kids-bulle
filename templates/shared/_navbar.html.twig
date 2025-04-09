@@ -18,28 +18,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_user') }}">{{"Profile"|trans}}</a>
                     </li>
-                    {# {% if app.user.childs|length > 0 %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_user_activities')}}">{{"Planning"|trans}}</a>
+                        <a class="nav-link" href="{{ path('app_planning')}}">{{"Planning"|trans}}</a>
                     </li>
-                    {% endif %} #}
                 </ul>
             {% endif %}
 
             {% if is_granted('ROLE_TEACHER') %}
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_admin_activity_index') }}">{{"Activities"|trans}}</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_admin_child_index') }}">{{"Childs"|trans}}</a>
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_admin_category_index') }}">{{"Categories"|trans}}</a>
+                            <a class="nav-link" href="{{ path('app_admin_user_index') }}">{{"Users"|trans}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_admin_user_index') }}">{{"Users"|trans}}</a>
+                            <a class="nav-link" href="{{ path('app_admin_category_index') }}">{{"Categories"|trans}}</a>
                         </li>
                          <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_config') }}">Configuration</a>

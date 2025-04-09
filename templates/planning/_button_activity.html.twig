@@ -1,17 +1,3 @@
-{# {% if is_granted("ROLE_TEACHER") %}
-    <div class="btn-group w-100">
-        <a class="btn col-10" style="background-color: {{ activity.category.color }}" 
-        href="{{ path('app_activity_show', {id: activity.id}) }}" data-turbo-frame="_top">
-            {% include "planning/_button_text.html.twig" %}
-            <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
-        </a>
-        <a class="btn btn-secondary col-2 d-flex justify-content-center align-items-center" 
-        href="{{ path('app_admin_activity_show', {id: activity.id}) }}"
-        data-turbo-frame="_top">
-            <i class="fa-solid fa-ellipsis"></i>             
-        </a>
-    </div>
-{% elseif is_granted("ROLE_USER") %} #}
 {% if is_granted("ROLE_USER") %}
     <a class="btn col-10" style="background-color: {{ activity.category.color }}" 
     href="{{ path('app_activity_show', {id: activity.id}) }}" data-turbo-frame="_top">

@@ -24,12 +24,9 @@
         </div>
         {% if user.childs|length > 0 %}
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between">
+                <li class="list-group-item d-flex justify-content-center">
                     <a class="btn btn-primary" href="{{ path('app_user_activities') }}">
-                        Planning de ma famille
-                    </a>
-                    <a class="btn btn-primary" href="{{ path('app_planning') }}">
-                        Planning du club
+                        Ma famille
                     </a>
                 </li>
                 {% for child in user.childs %}
