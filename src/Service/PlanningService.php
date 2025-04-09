@@ -2,52 +2,73 @@
 
 namespace App\Service;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 
-class PlanningService extends AbstractController
+class PlanningService
 {
+    private Security $security;
+    private int $defaultPlanningDays;
+
+    /**
+     * Constructor
+     * 
+     * @param Security $security Injected Security service
+     * @param int $defaultPlanningDays Default number of planning days (from service.yaml)
+     */
+    public function __construct(Security $security, int $defaultPlanningDays)
+    {
+        $this->security = $security;
+        $this->defaultPlanningDays = $defaultPlanningDays;
+    }
+
     /**
      * Return array of dates
      * Array of dates to show on a planning
-     * Confid duration in days in service.yaml
+     * Config duration in days in service.yaml
      * 
-     * @param fromtime DateTime, start date 
+     * @param \DateTimeImmutable|null $fromtime Start date 
      * 
-     * @return dates[] Array
+     * @return array Array of dates
      */
     public function getArrayDates(
-        \DateTimeImmutable $fromtime = null
+        ?\DateTimeImmutable $fromtime
     ): array {
-        // Date user want to show
-        if ($fromtime === null) $fromtime = new \DateTimeImmutable('today');
+        // Date user wants to show
+        if ($fromtime === null) {
+            $fromtime = new \DateTimeImmutable('today');
+        }
+
         $month = $fromtime->format('Y-m');
         $dayInTheMonth = (new \DateTimeImmutable('last day of ' . $month, new \DateTimeZone("Europe/Paris")))->format('d');
 
         $today = new \DateTimeImmutable('today');
 
         // If current month
-        if ($today->format('Y-m') == $month && !$this->isGranted('ROLE_ADMIN')) {
+        if ($today->format('Y-m') === $month && !$this->security->isGranted('ROLE_ADMIN')) {
             $dayQty = $dayInTheMonth - $today->format('d') + 1;
-            // If less than 7 days show 31 days
-            $dayQty = ($dayQty <= 7) ? $this->getParameter('app.planning_days') : $dayQty;
+            // If less than 7 days, show the default planning days
+            $dayQty = ($dayQty <= 7) ? $this->defaultPlanningDays : $dayQty;
         } else {
             $dayQty = $dayInTheMonth;
         }
 
-        // $dayQty = $dayInTheMonth;
-
+        // Generate an array of dates
+        $dates = [];
         for ($i = 0; $i < $dayQty; $i++) {
             $dates[] = new \DateTimeImmutable($fromtime->format('Y-m-d') . "+ $i day");
         }
-        // dd($dates);
+
         return $dates;
     }
 
     /**
      * Get a full planning
+     * Organize activities by date
      *
-     * @param array $activities
-     * @return array
+     * @param array $activities List of activities
+     * @param \DateTimeImmutable|null $dateStart Start date for the planning
+     * 
+     * @return array Array of activities organized by date
      */
     public function getPlanning(array $activities, \DateTimeImmutable $dateStart = null): array
     {
@@ -56,17 +77,17 @@ class PlanningService extends AbstractController
 
         $calendar = [];
         foreach ($dates as $date) {
-            $date = $date->format('Y-m-d');
-            $calendar[$date] = [];
+            $formattedDate = $date->format('Y-m-d');
+            $calendar[$formattedDate] = [];
 
-            // Add activity to Array
+            // Add activity to the array
             foreach ($activities as $key => $activity) {
-                if ($activity->getDateAt()->format('Y-m-d') == $date) {
-                    $calendar[$date][$key] = $activity;
+                if ($activity->getDateAt()->format('Y-m-d') === $formattedDate) {
+                    $calendar[$formattedDate][$key] = $activity;
                 }
             }
         }
-        // dd($calendar);
+
         return $calendar;
     }
 }

@@ -6,7 +6,7 @@
             <li class="nav-item">
                 {% set date = ("first day of this month -1 month")|date('Y-m-d') %}
                 {% set isActive = (app.request.get("date") == date) %}
-                {% include "planning/_nav_link_to_month.html.twig" with { i: -1, date: date, isActive: isActive } %}
+                {% include "planning/_nav_link_to_month.html.twig" with { date: date, isActive: isActive } %}
             </li>
         {% endif %}
 
@@ -16,7 +16,7 @@
             {% set date = ("first day of this month + " ~ i ~ " month")|date('Y-m-d') %}
             {% set isActive = (app.request.get("date") == date) or (app.request.get("date") is null and loop.first) %}
             <li class="nav-item">
-                {% include "planning/_nav_link_to_month.html.twig" with { i: i, date: date, isActive: isActive } %}
+                {% include "planning/_nav_link_to_month.html.twig" with { date: date, isActive: isActive } %}
             </li>
         {% endfor %}
 

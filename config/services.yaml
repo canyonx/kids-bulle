@@ -31,6 +31,10 @@ services:
         arguments:
              $adminMail: '%app.admin_mail%'
 
+    App\Service\PlanningService:
+        arguments:
+            $defaultPlanningDays: '%app.planning_days%'
+
     App\Service\ConfigService:
              
     # App\EventListener\ChildUpdateListener:

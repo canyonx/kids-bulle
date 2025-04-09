@@ -1,8 +1,9 @@
 {% set formattedDate = date|date('Y-m-d') %}
 
 
-<a id="{{ 'month' ~ i }}"
+<a id="{{ formattedDate|date('Y-m') }}"
    class="nav-month nav-link {{ isActive ? 'active' }}"
+   data-turbo-frame="_top"
    {% if child is defined %}
        href="{{ path(app.request.attributes.get('_route'), {date: formattedDate, id: child.id}) }}"
    {% elseif user is defined and user is not same as app.user %}

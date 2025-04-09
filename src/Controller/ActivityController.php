@@ -55,33 +55,10 @@ class ActivityController extends AbstractController
 
         $activityRepository->add($activity, true);
 
-        dump($request->headers->get('referer'));
-
-        // return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
-        // Récupérer l'URL de la page précédente (referer)
-        $referer = $request->headers->get('referer');
-        // Si le referer contient un paramètre 'date', on l'utilise
-        if ($referer && preg_match('/\?date=([0-9\-]+)/', $referer, $matches)) {
-            // Si un paramètre de date est trouvé dans le referer, on le conserve dans la redirection
-            $date = $matches[1];
-        }
-
-        // Rediriger en fonction du referer (avec ou sans date)
-        if ($date) {
-            // Si la date est présente, rediriger vers l'URL de l'activité avec la date
-            return $this->redirectToRoute('app_activity_show', [
-                'id' => $activity->getId(),
-                'date' => $date,
-            ], Response::HTTP_SEE_OTHER);
-        } else {
-            // Sinon, rediriger vers la page d'activité sans paramètre de date
-            return $this->redirectToRoute('app_activity_show', [
-                'id' => $activity->getId(),
-            ], Response::HTTP_SEE_OTHER);
-        }
+        return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
     }
 
-    #[Route(path: '/{id}', name: 'app_activity_show', methods: ['GET', 'POST'])]
+    #[Route(path: '/{id}', name: 'app_activity_show', methods: ['GET'])]
     public function show(
         Activity $activity,
         ChildRepository $childRepository,
@@ -101,45 +78,4 @@ class ActivityController extends AbstractController
             'notEnrolledChildren' => $notEnrolledChildren
         ]);
     }
-
-    // /**
-    //  * User can remove is own child from an activity
-    //  */
-    // #[Route(path: '/{id}/remove/{child}', name: 'app_activity_remove_child', methods: ['GET'])]
-    // public function removeChild(
-    //     Activity $activity,
-    //     Child $child,
-    //     ActivityRepository $activityRepository
-    // ): Response {
-
-    //     $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
-
-    //     $activity->removeChildren($child);
-    //     $activityRepository->add($activity, true);
-
-    //     return $this->redirectToRoute('app_activity_show', [
-    //         'id' => $activity->getId()
-    //     ], Response::HTTP_SEE_OTHER);
-    // }
-
-    // /**
-    //  * User can add his own child to an activity
-    //  */
-    // #[Route(path: '/{id}/add/{child}', name: 'app_activity_add_child', methods: ['GET'])]
-    // public function addChild(
-    //     Activity $activity,
-    //     Child $child,
-    //     ActivityRepository $activityRepository
-    // ): Response {
-
-    //     $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
-
-    //     $activity->addChildren($child);
-    //     $activityRepository->add($activity, true);
-
-    //     return $this->redirectToRoute('app_activity_show', [
-    //         'id' => $activity->getId()
-    //     ], Response::HTTP_SEE_OTHER);
-    // }
-
 }

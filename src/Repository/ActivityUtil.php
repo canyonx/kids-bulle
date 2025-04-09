@@ -50,10 +50,9 @@ class ActivityUtil
      */
     public static function ByChildsOfUser(QueryBuilder $qb, User $user): QueryBuilder
     {
-        return $qb->andWhere(
-            $qb->expr()->isMemberOf(':userChilds', 'a.childrens')
-        )
-            ->setParameter('userChilds', $user->getChilds());
+        return $qb->join('a.childrens', 'ch')
+            ->andWhere('ch IN (:userChildren)')
+            ->setParameter('userChildren', $user->getChilds());
     }
 
     /**
@@ -65,10 +64,9 @@ class ActivityUtil
      */
     public static function ByChild(QueryBuilder $qb, Child $child): QueryBuilder
     {
-        return $qb->andWhere(
-            $qb->expr()->isMemberOf(':child', 'a.childrens')
-        )
-            ->setParameter('child', $child);
+        return $qb->join('a.childrens', 'ch')
+            ->andWhere('ch.id = :childId')
+            ->setParameter('childId', $child->getId());
     }
 
     /**

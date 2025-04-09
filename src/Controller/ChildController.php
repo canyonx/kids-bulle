@@ -85,28 +85,6 @@ class ChildController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{child}/{action}/{activity}', name: 'app_child_action_activity', methods: ['GET'])]
-    public function actionActivity(
-        Child $child,
-        Activity $activity,
-        string $action,
-        ChildRepository $childRepository,
-        Request $request
-    ): Response {
-        // Voter Control
-        $this->denyAccessUnlessGranted('CHILD_ACCESS', $child);
-
-        if ($action === 'remove') {
-            $child->removeActivity($activity);
-        } elseif ($action === 'add') {
-            $child->addActivity($activity);
-        }
-
-        $childRepository->add($child, true);
-
-        return $this->redirect($request->headers->get('referer'), Response::HTTP_SEE_OTHER);
-    }
-
     #[Route(path: '/{id}', name: 'app_children_delete', methods: ['POST'])]
     public function delete(Request $request, Child $child, ChildRepository $childRepository): Response
     {
