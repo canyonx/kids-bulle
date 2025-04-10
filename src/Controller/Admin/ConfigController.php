@@ -25,9 +25,6 @@ final class ConfigController extends AbstractController
         /** @var Config */
         $config = $configRepository->findAll();
 
-        // Debugging line to check the sign code
-        // dump($config);
-
         if (!$config) {
             // If no setting exists, create a new one with default values
             $configFixtures->createConfig();
@@ -38,6 +35,7 @@ final class ConfigController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // Enregistre les données du formulaire dans la base de données
+            dump($config);
             foreach ($config as $key => $value) {
                 $value->setValue($form[$value->getName()]->getData());
                 $em->persist($value);

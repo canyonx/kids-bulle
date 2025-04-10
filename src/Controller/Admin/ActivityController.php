@@ -30,20 +30,9 @@ class ActivityController extends AbstractController
      * @return Response
      */
     #[Route(path: '/', name: 'app_admin_activity_index', methods: ['GET'])]
-    public function index(
-        Request $request,
-        ActivityRepository $activityRepository,
-        PlanningService $planningService,
-        StartDateService $startDateService
-    ): Response {
-        $dateStart = $startDateService->getStartDate($request->get('date'));
-
-        $activities = $activityRepository->findByDateBetween($dateStart);
-
-        $planning = $planningService->getPlanning($activities, $dateStart);
-        return $this->render('admin/activity/index.html.twig', [
-            'planning' => $planning
-        ]);
+    public function index(): Response
+    {
+        throw new \Exception('This page is deprecated, please use the new one : app_planning');
     }
 
     /**
@@ -95,7 +84,7 @@ class ActivityController extends AbstractController
             $activity->setTeacher($activity->getCategory()->getTeacher());
             $activityRepository->add($activity, true);
 
-            return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_planning', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/activity/new.html.twig', [
@@ -210,7 +199,7 @@ class ActivityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $activityRepository->add($activity, true);
 
-            return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_planning', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/activity/edit.html.twig', [
@@ -229,7 +218,7 @@ class ActivityController extends AbstractController
             $activityRepository->remove($activity, true);
         }
 
-        return $this->redirectToRoute('app_admin_activity_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_planning', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

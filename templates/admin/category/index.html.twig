@@ -15,22 +15,26 @@
             <div class="row">
             {% for category in categories %}
                 <div class="col-md-3 mb-4">
-                    <div class="card h-100" style="background-color: {{ category.color }}">
+                    <div class="card h-100" style="background-color: {{ category.color | default('#ffffff') }}">
                      <div class="card-header">
                         <h1 class="card-title">{{ category.name }}</h1>
                         <b class="text-muted">{{ category.teacher }}</b>
                      </div>
                      <div class="card-body">
-                        {{ category.description }}
+                        {{ category.description | default('Aucune description disponible') }}
                      </div>
                      <div class="card-footer d-flex justify-content-between">
-                        <a class="card-link" href="{{ path('app_admin_category_edit', {'id': category.id}) }}">{{"edit"|trans}}</a>
+                        <a class="btn btn-secondary" href="{{ path('app_admin_category_edit', {'id': category.id}) }}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
                         <div>
+                        <span class="badge badge-secondary bg-secondary d-flex align-items-center">
                         {% if category.number == 0 %}
-                            <span class="badge badge-secondary bg-secondary">Non affiché</span>
+                            Non affiché
                         {% else %}
-                            <span class="badge badge-secondary bg-secondary">{{ category.number }}</span>
+                            {{ category.number }}
                         {% endif %}
+                        </span>
                         </div>
                      </div>
                     </div>

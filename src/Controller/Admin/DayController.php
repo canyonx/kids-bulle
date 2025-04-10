@@ -34,7 +34,9 @@ class DayController extends AbstractController
                 $em->persist($activity);
             }
             $em->flush();
-            return $this->redirectToRoute('app_admin_activity_index');
+            return $this->redirectToRoute('app_planning', [
+                'date' => $newDate->getDateAt()->format('Y-m-01'),
+            ]);
         }
 
         return $this->render('admin/day/index.html.twig', [

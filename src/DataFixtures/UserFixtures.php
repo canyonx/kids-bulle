@@ -10,15 +10,13 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures
 {
-    private $userPasswordHasherInterface;
-    private $entityManager;
+    private $faker;
 
     public function __construct(
-        EntityManagerInterface $entityManagerInterface,
-        UserPasswordHasherInterface $userPasswordHasherInterface
+        private EntityManagerInterface $entityManager,
+        private UserPasswordHasherInterface $userPasswordHasherInterface,
     ) {
-        $this->userPasswordHasherInterface = $userPasswordHasherInterface;
-        $this->entityManager = $entityManagerInterface;
+        $this->faker = Factory::create('fr_BE');
     }
 
     /**
@@ -48,7 +46,7 @@ class UserFixtures
             $user->setEmail('teacher' . $i . '@kidsbulle.fr')
                 ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'teacher'))
                 ->setRoles(['ROLE_TEACHER'])
-                ->setFirstname('exemple' . $i)
+                ->setFirstname($this->faker->firstName())
                 ->setLastname('teacher' . $i)
                 ->setPhone('0987654321')
                 ->setFullAdress('123 rue du soleil 04567 Astre');;
@@ -63,8 +61,8 @@ class UserFixtures
             $user = new User;
             $user->setEmail('user' . $i . '@kidsbulle.fr')
                 ->setPassword($this->userPasswordHasherInterface->hashPassword($user, 'user'))
-                ->setFirstname('exemple' . $i)
-                ->setLastname('user' . $i)
+                ->setFirstname($this->faker->firstName())
+                ->setLastname($this->faker->lastName())
                 ->setPhone('0987654321')
                 ->setFullAdress('123 rue du soleil 04567 Astre');;
 
@@ -85,13 +83,11 @@ class UserFixtures
      */
     public function createChildren(User $user): void
     {
-        $faker = Factory::create('fr_BE');
-
         for ($i = 0; $i < rand(1, 4); $i++) {
             $child = new Child;
-            $child->setFirstname($faker->firstName())
-                ->setLastname($faker->lastName())
-                ->setBirthAt(new \DateTimeImmutable($faker->dateTimeThisDecade()->format('y-M-d')))
+            $child->setFirstname($this->faker->firstName())
+                ->setLastname($user->getLastname())
+                ->setBirthAt(new \DateTimeImmutable($this->faker->dateTimeThisDecade()->format('y-M-d')))
                 ->setUser($user);
 
             $this->entityManager->persist($child);
