@@ -17,8 +17,7 @@ class SelectChildsFormType extends AbstractType
 {
     public function __construct(
         private EntityManagerInterface $em
-    ) {
-    }
+    ) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -43,13 +42,13 @@ class SelectChildsFormType extends AbstractType
                 ->add('remove', SubmitType::class, [
                     'label' => 'Supprimer',
                     'attr' => [
-                        'class' => 'btn btn-link'
+                        'class' => 'btn btn-danger'
                     ]
                 ])
                 ->add('move', SubmitType::class, [
                     'label' => 'Déplacer',
                     'attr' => [
-                        'class' => 'btn btn-link'
+                        'class' => 'btn btn-primary'
                     ]
                 ]);
         }

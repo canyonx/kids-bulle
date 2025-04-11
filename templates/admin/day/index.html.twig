@@ -5,8 +5,8 @@
 {% block body %}
     <div class="card col-md-6 mx-auto">
         <div class="card-header">
-            <h1 class="card-title">Copier le {{ day|format_datetime(pattern='dd MMM', locale='fr')|capitalize}}</h1>
-            <a class="btn btn-link" href="{{ path('app_planning') }}">Retour</a>
+            <h1 class="card-title">Copier le {{ day|format_datetime(pattern='dd MMMM', locale='fr')|capitalize}}</h1>
+            {{ component('BackButton', { url: path('app_planning') }) }}
         </div>
         <div class="card-body">
             {{ form_start(form)}}

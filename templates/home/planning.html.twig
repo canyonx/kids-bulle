@@ -7,26 +7,27 @@
     <div class="card">
         <div class="card-header">
             <h1 class="card-title">Planning des activités</h1>
-            {% if is_granted("ROLE_TEACHER") %}
-                <div class="d-flex justify-content-between">
-                <a class="btn btn-primary" href="{{ path('app_admin_activity_new') }}">
-                    <i class="fa-solid fa-circle-plus fa-xl me-2"></i>
-                    Créer une activité
-                </a>
-
-                <form class="" name="date" action="{{ path('app_planning') }}" method="get">
-                    <div class="d-flex">
-                        <div class="me-3">
-                            <label for="date" class="form-label required" hidden>__Date</label>
-                            <input type="date" id="date" name="date" required="required" class="form-control" />        
+            <div class="d-flex justify-content-between">
+                {% if is_granted("ROLE_TEACHER") %}
+                    <a class="btn btn-primary" href="{{ path('app_admin_activity_new') }}">
+                        <i class="fa-solid fa-circle-plus fa-xl me-2"></i>
+                        Créer une activité
+                    </a>
+                {% endif %}
+                {% if is_granted("ROLE_ADMIN") %}
+                    <form class="" name="date" action="{{ path('app_planning') }}" method="get">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <label for="date" class="form-label required" hidden>__Date</label>
+                                <input type="date" id="date" name="date" required="required" class="form-control" />        
+                            </div>
+                            <div class="me-3">
+                                <button class="btn btn-primary">{{"Search"|trans}}</button>
+                            </div>
                         </div>
-                        <div class="me-3">
-                            <button class="btn btn-primary">{{"Search"|trans}}</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
         <div class="card-body">
             <turbo-frame id="planning_home">

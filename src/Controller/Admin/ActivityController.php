@@ -12,6 +12,7 @@ use App\Repository\ChildRepository;
 use App\Form\AddChildToActivityType;
 use App\Form\MoveChildsToActivityType;
 use App\Repository\ActivityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -69,8 +70,10 @@ class ActivityController extends AbstractController
      * Trip Create
      */
     #[Route(path: '/new', name: 'app_admin_activity_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ActivityRepository $activityRepository): Response
-    {
+    public function new(
+        Request $request,
+        ActivityRepository $activityRepository
+    ): Response {
         $activity = new Activity();
         // Default Date tomorrow 9h
         $datetime = new \DateTime('tomorrow');
@@ -97,8 +100,11 @@ class ActivityController extends AbstractController
      * Trip Details
      */
     #[Route(path: '/{id}', name: 'app_admin_activity_show', methods: ['GET', 'POST'])]
-    public function show(Activity $activity, Request $request, ActivityRepository $activityRepository): Response
-    {
+    public function show(
+        Activity $activity,
+        Request $request,
+        ActivityRepository $activityRepository
+    ): Response {
         // Form to move or remove childs from activity
         $selectChildsForm = $this->createForm(SelectChildsFormType::class, null, ['activity' => $activity]);
         $selectChildsForm->handleRequest($request);
@@ -155,12 +161,16 @@ class ActivityController extends AbstractController
     public function move(
         Activity $activity,
         Request $request,
-        ActivityRepository $activityRepository,
-        ChildRepository $childRepository
+        ChildRepository $childRepository,
+        EntityManagerInterface $entityManager
     ): Response {
         // Array of childs id
         $childrens = $request->get('childrens');
 
+        if (empty($childrens)) {
+            $this->addFlash('error', 'Aucun enfant sélectionné.');
+            return $this->redirectToRoute('app_admin_activity_show', ['id' => $activity->getId()]);
+        }
 
         $form = $this->createForm(MoveChildsToActivityType::class, null, ['activity' => $activity]);
         $form->handleRequest($request);
@@ -172,12 +182,16 @@ class ActivityController extends AbstractController
                 $child = $childRepository->find($child);
                 // Add child to new activity
                 $toActivity->addChildren($child);
-                $activityRepository->add($toActivity, true);
+                // $activityRepository->add($toActivity, true);
+                $entityManager->persist($toActivity);
                 // Remove child from activity
                 $activity->removeChildren($child);
-                $activityRepository->add($activity, true);
+                // $activityRepository->add($activity, true);
+                $entityManager->persist($activity);
             }
 
+            $entityManager->flush();
+            $this->addFlash('success', 'Les enfants ont été déplacés avec succès.');
 
             return $this->redirectToRoute('app_admin_activity_show', ['id' => $activity->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -219,41 +233,5 @@ class ActivityController extends AbstractController
         }
 
         return $this->redirectToRoute('app_planning', [], Response::HTTP_SEE_OTHER);
-    }
-
-    /**
-     * Move all childs to another activity the same day
-     * Remove all childs from activity
-     */
-    #[Route(path: '/{id}/move-childs', name: 'app_admin_activity_move_child', methods: ['GET', 'POST'])]
-    public function moveChilds(
-        Activity $activity,
-        Request $request,
-        ActivityRepository $activityRepository
-    ): Response {
-
-        $form = $this->createForm(MoveChildsToActivityType::class, null, [
-            'activity' => $activity
-        ]);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $childs = $activity->getChildrens();
-
-            $toActivity = $form['activity']->getData();
-            foreach ($childs as $child) {
-                $toActivity->addChildren($child);
-                $activityRepository->add($toActivity, true);
-            }
-
-            $activity->getChildrens()->clear();
-            $activityRepository->add($activity, true);
-
-            return $this->redirectToRoute('app_admin_activity_show', ['id' => $toActivity->getId()], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('admin/activity/move_childs.html.twig', [
-            'activity' => $activity,
-            'form' => $form,
-        ]);
     }
 }

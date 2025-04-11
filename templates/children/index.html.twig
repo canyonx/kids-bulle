@@ -7,10 +7,7 @@
             <div class="card-header">
                 <h1 class="card-title">{{"Planning_of"|trans}} {{ child.firstname }}</h1>
                 {% set dateParam = app.request.get('date') is defined ? {'date': app.request.get('date')} : {} %}
-                <a class="btn btn-link" href="{{ path('app_user_activities', dateParam) }}">
-                    Retour
-                </a>
-                
+                {{ component('BackButton', { url: path('app_user_activities', dateParam) }) }}
             </div>
             <div class="card-body">
                 <turbo-frame id="planning_child">

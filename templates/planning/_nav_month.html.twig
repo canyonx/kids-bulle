@@ -1,22 +1,25 @@
+{% set activeMonth = app.request.get("date") is not null 
+    ? app.request.get("date")|date("Y-m") 
+    : ("now")|date("Y-m") %}
+
 <div class="d-flex justify-content-center my-1">
     <ul class="nav nav-pills">
 
         {# Partie ADMIN - mois précédent #}
         {% if is_granted("ROLE_ADMIN") %}
+            {% set monthDate = ("first day of this month -1 month")|date('Y-m-d') %}
+            {% set isActive = activeMonth == monthDate|date("Y-m") %}
             <li class="nav-item">
-                {% set date = ("first day of this month -1 month")|date('Y-m-d') %}
-                {% set isActive = (app.request.get("date") == date) %}
-                {% include "planning/_nav_link_to_month.html.twig" with { date: date, isActive: isActive } %}
+                {% include "planning/_nav_link_to_month.html.twig" with { date: monthDate, isActive: isActive } %}
             </li>
         {% endif %}
 
-
-
+        {# Mois actuel + 3 mois suivants #}
         {% for i in 0..3 %}
-            {% set date = ("first day of this month + " ~ i ~ " month")|date('Y-m-d') %}
-            {% set isActive = (app.request.get("date") == date) or (app.request.get("date") is null and loop.first) %}
+            {% set monthDate = ("first day of this month + " ~ i ~ " month")|date('Y-m-d') %}
+            {% set isActive = activeMonth == monthDate|date("Y-m") %}
             <li class="nav-item">
-                {% include "planning/_nav_link_to_month.html.twig" with { date: date, isActive: isActive } %}
+                {% include "planning/_nav_link_to_month.html.twig" with { date: monthDate, isActive: isActive } %}
             </li>
         {% endfor %}
 

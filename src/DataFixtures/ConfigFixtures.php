@@ -21,8 +21,8 @@ class ConfigFixtures
         $config = [
             'homepageTitle' => 'Welcome to our website',
             'homepageDescription' => 'This is the homepage of our website',
-            'color' => '#ffffff',
-            'colorTheme' => '#666666',
+            'color' => '#26a269',
+            'colorTheme' => '#26a269',
             'code' => 'kb31'
         ];
 

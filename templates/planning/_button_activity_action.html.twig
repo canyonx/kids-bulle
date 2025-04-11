@@ -31,7 +31,7 @@
 {# Boutons pour les grands écrans (réutilisation du même formulaire) #}
 <div class="d-none d-lg-block">
     <div class="btn-group w-100 align-items-stretch">
-        <a class="col-10 btn h-100" 
+        <a class="btn h-100" 
            style="background-color: {{ activity.category.color }}" 
            href="{{ path('app_activity_show', {id: activity.id, date: app.request.get('date')}) }}"
            data-turbo-frame="_top">
