@@ -1,4 +1,16 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div class="border rounded p-2 mb-2 bg-light">
+        <h6 class="text-muted">Page d'accueil</h6>
+        {{ form_row(form.homepageTitle, {'label': 'Titre'})}}
+        {{ form_row(form.homepageDescription, {'label': 'Description'})}}
+    </div>
+    <div class="border rounded p-2 mb-2 bg-light">
+        <h6 class="text-muted">Couleurs</h6>
+        <div class="d-flex justify-content-around ">
+        {{ form_row(form.color)}}
+        {{ form_row(form.colorTheme)}}
+        </div>
+    </div>
+    {{ form_row(form.code)}}
     <button class="btn btn-primary">{{"Save"|trans}}</button>
 {{ form_end(form) }}

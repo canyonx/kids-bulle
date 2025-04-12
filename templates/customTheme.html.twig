@@ -1,0 +1,77 @@
+{% set primary = config.get('colorTheme')|default('#007bff') %}
+{% set rgb = primary|hex_to_rgb %}
+{% set factor = 0.85 %}
+
+{# Calculer les variantes sombres (hover, active...) #}
+{% set r_d = (rgb.r * factor)|round(0, 'floor') %}
+{% set g_d = (rgb.g * factor)|round(0, 'floor') %}
+{% set b_d = (rgb.b * factor)|round(0, 'floor') %}
+
+{% set hover = 'rgb(' ~ r_d ~ ', ' ~ g_d ~ ', ' ~ b_d ~ ')' %}
+{% set primary_rgb = rgb.r ~ ', ' ~ rgb.g ~ ', ' ~ rgb.b %}
+
+
+
+<style>
+    :root {
+        --bs-primary: {{ primary }};
+        --bs-primary-rgb: {{ primary_rgb }};
+
+        --bs-link-color: var(--bs-primary);
+        --bs-link-hover-color: {{ hover }};
+
+        /* --bs-link-color-rgb: {{ primary_rgb }}; */
+
+        --bs-btn-bg: var(--bs-primary);
+        --bs-btn-border-color: var(--bs-primary);
+        --bs-btn-hover-bg: {{ hover }};
+        --bs-btn-hover-border-color: {{ hover }};
+        --bs-btn-active-bg: {{ hover }};
+        --bs-btn-active-border-color: {{ hover }};
+        --bs-btn-focus-shadow-rgb: {{ primary_rgb }};
+        --bs-btn-disabled-bg: var(--bs-primary);
+        --bs-btn-disabled-border-color: var(--bs-primary);
+
+        --bs-badge-bg: var(--bs-primary);
+        --bs-badge-color: #fff;
+
+        --bs-alert-bg: rgba({{ primary_rgb }}, 0.1);
+        --bs-alert-border-color: rgba({{ primary_rgb }}, 0.25);
+        --bs-alert-color: var(--bs-primary);
+
+        --bs-progress-bar-bg: var(--bs-primary);
+
+        --bs-list-group-active-bg: var(--bs-primary);
+        --bs-list-group-active-border-color: var(--bs-primary);
+        --bs-list-group-active-color: #fff;
+
+        --bs-nav-link-active-bg: var(--bs-primary);
+        --bs-nav-link-active-color: #fff;
+
+        --bs-link-hover-color-rgb: {{ hover }};
+    }
+
+    .btn-primary {
+        --bs-btn-bg: var(--bs-primary);
+        --bs-btn-border-color: var(--bs-primary);
+        --bs-btn-hover-bg: {{ hover }};
+        --bs-btn-hover-border-color: {{ hover }};
+        --bs-btn-active-bg: {{ hover }};
+        --bs-btn-active-border-color: {{ hover }};
+        --bs-btn-focus-shadow-rgb: {{ primary_rgb }};
+        --bs-btn-disabled-bg: var(--bs-primary);
+        --bs-btn-disabled-border-color: var(--bs-primary);
+    }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        background-color: var(--bs-primary);
+    }
+    
+    a {
+        color: var(--bs-primary);
+    }
+
+    a:hover {
+        color: var(--bs-link-hover-color);
+    }
+</style>

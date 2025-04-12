@@ -35,13 +35,12 @@ final class ConfigController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             // Enregistre les données du formulaire dans la base de données
-            dump($config);
-            foreach ($config as $key => $value) {
-                $value->setValue($form[$value->getName()]->getData());
-                $em->persist($value);
+            foreach ($config as $key => $conf) {
+                $conf->setValue($form[$conf->getName()]->getData());
+                $em->persist($conf);
             }
             $em->flush();
-            // $configRepository->add($config, true);
+
             $this->addFlash('success', 'Mis à jour avec succès !');
             return $this->redirectToRoute('app_admin_config');
         }

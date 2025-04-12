@@ -43,13 +43,13 @@ class ConfigType extends AbstractType
                 // 'data' => $configs['homepageDescription'],
             ])
             ->add('color', ColorType::class, [
-                'label' => 'Couleur d\'arrière plan',
+                'label' => 'Arrière plan',
                 'data' => $this->getConfigValue($options['data'], 'color'),
                 // 'data' => $configs['color'],
             ])
             ->add('colorTheme', ColorType::class, [
-                'label' => 'Couleur du thème',
-                'data' => $this->getConfigValue($options['data'], 'color'),
+                'label' => 'Thème',
+                'data' => $this->getConfigValue($options['data'], 'colorTheme'),
                 // 'data' => $configs['color'],
             ])
             ->add('code', TextType::class, [

@@ -36,6 +36,9 @@ services:
             $defaultPlanningDays: '%app.planning_days%'
 
     App\Service\ConfigService:
+
+    App\Twig\Extensions\ColorExtension:
+        tags: [ 'twig.extension' ]
              
     # App\EventListener\ChildUpdateListener:
     #     tags:

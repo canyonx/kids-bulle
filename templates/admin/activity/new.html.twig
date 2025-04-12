@@ -6,7 +6,7 @@
     <div class="card col-md-6 mx-auto">
         <div class="card-header">
             <h1 class="card-title">{{"New_activity"|trans}}</h1>
-            <a class="btn btn-link" href="{{ path('app_planning') }}">{{"back_to_list"|trans}}</a>
+            {{ component('BackButton', { url: path('app_planning') }) }}
         </div>
         <div class="card-body">
             {{ include('admin/activity/_form.html.twig') }}
