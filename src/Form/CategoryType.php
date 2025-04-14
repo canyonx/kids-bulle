@@ -22,7 +22,7 @@ class CategoryType extends AbstractType
     {
         $builder
             ->add('number', NumberType::class, [
-                'label' => 'Position | négatif: non affiché',
+                'label' => 'Position d\'affichage | Négatif non affiché',
             ])
             ->add('name', TextType::class, [
                 'label' => 'Catégorie'

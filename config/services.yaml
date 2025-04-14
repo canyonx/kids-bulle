@@ -8,6 +8,7 @@ parameters:
     timezone: 'Europe/Paris'
     app.planning_days: "%env(string:default::APP_PLANNING_DAYS)%"
     app.admin_mail: "%env(string:APP_ADMIN_MAIL)%"
+    app.uploadDir: '%kernel.project_dir%/public/uploads/'
 
 services:
     # default configuration for services in *this* file
@@ -39,6 +40,17 @@ services:
 
     App\Twig\Extensions\ColorExtension:
         tags: [ 'twig.extension' ]
+
+    App\Service\LogoUploaderService:
+        arguments:
+            $uploadDir: '%app.uploadDir%'
+
+    App\MessageHandler\ProcessLogoImagesHandler:
+        tags: [messenger.message_handler]
+        arguments:
+            $uploadDir: '%app.uploadDir%'
+            $projectDir: '%kernel.project_dir%'
+
              
     # App\EventListener\ChildUpdateListener:
     #     tags:

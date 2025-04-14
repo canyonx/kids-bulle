@@ -2,10 +2,12 @@
     <div class="container-fluid">
 
         <a href="{{ path('app_home') }}">
-            <img src="{{ asset('images/kidsbulle-logo.png') }}" height="40" alt="Logo">
+            {% if config.get('logoFilename') is not null %}
+                <img src="{{ asset(config.get('logoFilename')) }}" height="40" alt="Logo">
+            {% endif %}
         </a>
         <a class="navbar-brand mx-2" href="{{ path('app_home') }}">
-            Kid's Bulle
+            {{ config.get('brandName') }}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar02" aria-controls="navbar02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

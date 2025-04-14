@@ -19,11 +19,18 @@ class ConfigFixtures
     public function createConfig(): void
     {
         $config = [
+            // Accueil
             'homepageTitle' => 'Welcome to our website',
             'homepageDescription' => 'This is the homepage of our website',
-            'color' => '#26a269',
-            'colorTheme' => '#26a269',
-            'code' => 'kb31'
+            'columnNumber' => '3',
+            // Couleurs
+            'brandName' => 'Kid\'s Bulle',
+            'color' => '#9a9996',
+            'colorTheme' => '#3584e4',
+            'logoFilename' => 'images/logo.png',
+            // Sécurité
+            'homepagePlanning' => 'true',
+            'code' => 'kb31',
         ];
 
         foreach ($config as $key => $value) {

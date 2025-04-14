@@ -11,11 +11,14 @@
             {% endif %}
         </div>
         <div class="card-body d-flex align-items-center justify-content-between">
-            <p>
-                {{ user.email }} <br>
-                {{ user.phone }} <br>
-                {{ user.fulladress }}
-            </p>
+            <div class="">
+                <h6 class="text-muted">Mes coordonnées</h6>
+                <p>
+                    {{ user.email }} <br>
+                    {{ user.phone }} <br>
+                    {{ user.fulladress }}
+                </p>
+            </div>
             <div>
                 <a class="btn btn-secondary" href="{{ path('app_user_edit') }}">
                     <i class="fa-solid fa-pen-to-square"></i>

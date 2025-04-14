@@ -4,8 +4,12 @@ namespace App\Form;
 
 use App\Repository\ConfigRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,44 +22,96 @@ class ConfigType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // dump($this->getConfigValue($options['data'], 'homepageTitle'));
-
-        // Récupérer les configurations de la base de données
-        // $configs = $this->getConfigValues($options['data']);
-
         $builder
+            ->add('brandName', TextType::class, [
+                'label' => 'Nom du site',
+                'attr' => [
+                    'placeholder' => 'MyBrand',
+                ],
+                'required' => false,
+                'data' => $this->getConfigValue($options['data'], 'brandName'),
+            ])
             ->add('homepageTitle', TextType::class, [
                 'label' => 'Titre de la page d\'accueil',
                 'attr' => [
-                    'placeholder' => 'Kid\'s Bulle par défaut',
+                    'placeholder' => 'Titre de la page d\'accueil',
                 ],
                 'required' => false,
                 'data' => $this->getConfigValue($options['data'], 'homepageTitle'),
-                // 'data' => $configs['homepageTitle'],
             ])
             ->add('homepageDescription', TextareaType::class, [
                 'label' => 'Description de la page d\'accueil',
                 'attr' => [
+                    'placeholder' => 'Description de la page d\'accueil',
                     'rows' => 4,
                 ],
                 'required' => false,
                 'data' => $this->getConfigValue($options['data'], 'homepageDescription'),
-                // 'data' => $configs['homepageDescription'],
             ])
             ->add('color', ColorType::class, [
                 'label' => 'Arrière plan',
+                'label_attr' => [
+                    'class' => 'd-flex flex-column align-items-center',
+                ],
                 'data' => $this->getConfigValue($options['data'], 'color'),
-                // 'data' => $configs['color'],
             ])
             ->add('colorTheme', ColorType::class, [
                 'label' => 'Thème',
+                'label_attr' => [
+                    'class' => 'd-flex flex-column align-items-center',
+                ],
                 'data' => $this->getConfigValue($options['data'], 'colorTheme'),
-                // 'data' => $configs['color'],
+            ])
+            ->add('homepagePlanning', ChoiceType::class, [
+                'label' => 'Afficher le planning sur la page d\'accueil',
+                'required' => true,
+                'choices' => [
+                    'Oui' => 'true',
+                    'Non' => 'false',
+                ],
+                'data' => $this->getConfigValue($options['data'], 'homepagePlanning'),
+                'expanded' => true,
+                'multiple' => false,
+                'label_attr' => [
+                    'class' => 'radio-inline',
+                ],
             ])
             ->add('code', TextType::class, [
                 'label' => 'Code de vérification',
                 'data' => $this->getConfigValue($options['data'], 'code'),
-                // 'data' => $configs['code'],
+            ])
+            ->add('logoFilename', FileType::class, [
+                'label' => 'Logo du site',
+                // 'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/webp',
+                            'image/x-icon',
+                            'image/svg+xml',
+                        ],
+                        'mimeTypesMessage' => 'Format d\'image non valide.',
+                    ])
+                ],
+            ])
+            ->add('columnNumber', ChoiceType::class, [
+                'label' => 'Afficher le planning sur la page d\'accueil',
+                'required' => true,
+                'choices' => [
+                    '2' => '6',
+                    '3' => '4',
+                    '4' => '3',
+                ],
+                'data' => $this->getConfigValue($options['data'], 'columnNumber'),
+                'expanded' => true,
+                'multiple' => false,
+                'label_attr' => [
+                    'class' => 'radio-inline',
+                ],
             ])
         ;
     }
@@ -83,28 +139,5 @@ class ConfigType extends AbstractType
             }
         }
         return $default;
-    }
-
-    /**
-     * Get the values of configurations as an associative array.
-     *
-     * Ici pour se souvenir comment mapper un tableau d'objets
-     *
-     * @param array $configs The array of Config objects.
-     * @return array An associative array with configuration names as keys and their values as values.
-     */
-    private function getConfigValues(array $configs): array
-    {
-        return array_column(
-            array_map(
-                fn($config) => [
-                    'name' => $config->getName(),
-                    'value' => $config->getValue()
-                ],
-                $configs
-            ),
-            'value',
-            'name'
-        );
     }
 }

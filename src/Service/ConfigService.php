@@ -11,7 +11,7 @@ class ConfigService
         private ConfigRepository $configRepository,
     ) {}
 
-    public function get(string $name): string
+    public function get(string $name): string|null
     {
         $config = $this->configRepository->findOneBy(['name' => $name]);
 
@@ -19,7 +19,7 @@ class ConfigService
             return $config->getValue();
         }
 
-        return '';
+        return null;
     }
 
     public function getAll(): array

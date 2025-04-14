@@ -28,7 +28,7 @@
         <div class="row">
             {% for category in categories %}
                 {% if category.number > 0 %}
-                    <div class="col-md-3 mb-4">
+                    <div class="col-md-{{ config.get('columnNumber') }} mb-4">
                         <div class="card h-100" style="background-color:{{ category.color }}">
                             <div class="card-header">
                                 <h2 class="card-title fs-3">{{ category.name }}</h2>
@@ -47,18 +47,20 @@
     </div>
 </section>
 
-<section class="mb-4">
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">{{"Planning"|trans}}</h1>
+{% if config.get('homepagePlanning') is same as 'true' %}
+    <section class="mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">{{"Planning"|trans}}</h1>
+            </div>
+            <div class="card-body">
+                <turbo-frame id="planning_home">
+                    {% include "planning/_nav_month.html.twig" with { frame: 'planning_home'} %}
+                    {% include "planning/_planning.html.twig" %}
+                </turbo-frame>
+            </div>
         </div>
-        <div class="card-body">
-            <turbo-frame id="planning_home">
-                {% include "planning/_nav_month.html.twig" with { frame: 'planning_home'} %}
-                {% include "planning/_planning.html.twig" %}
-            </turbo-frame>
-        </div>
-    </div>
-</section>
+    </section>
+{% endif %}
 
 {% endblock %}
