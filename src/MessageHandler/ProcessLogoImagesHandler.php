@@ -4,64 +4,62 @@ namespace App\MessageHandler;
 
 use App\Message\ProcessLogoImages;
 use Symfony\Component\Filesystem\Filesystem;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Liip\ImagineBundle\Imagine\Data\DataManager;
+use Liip\ImagineBundle\Imagine\Filter\FilterManager;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 final class ProcessLogoImagesHandler
 {
-    private string $logosDir;
-    private string $publicDir;
-
     public function __construct(
-        private CacheManager $cacheManager,
+        private DataManager $dataManager,
+        private FilterManager $filterManager,
+        private string $publicDir, // set in services.yaml
         private string $uploadDir,
-        private string $projectDir
-    ) {
-        $this->publicDir = $this->projectDir . '/public';
-        $this->logosDir = $this->uploadDir . 'logos/';
-    }
+    ) {}
 
     public function __invoke(ProcessLogoImages $message): void
     {
         $filesystem = new Filesystem();
 
-        // Nettoyage du dossier logos
-        try {
-            $filesystem->remove($this->projectDir . '/media/cache');
-        } catch (\Exception $e) {
-            throw new \RuntimeException("Erreur lors de la suppression du dossier logos : " . $e->getMessage());
-        }
-
-        $filesystem->mkdir($this->logosDir);
-
-        $filePath = $message->getFilePath(); // Chemin absolu
-        $relativePath = str_replace($this->publicDir, '', $filePath); // ex: /uploads/logo_original.png
-        // dd($filePath);
+        // Tableau de correspondance entre les filtres et les noms de fichiers
         $filtersMap = [
             'android_192'      => 'android-chrome-192x192.png',
             'android_512'      => 'android-chrome-512x512.png',
             'apple_touch_icon' => 'apple-touch-icon.png',
             'favicon_16'       => 'favicon-16x16.png',
             'favicon_32'       => 'favicon-32x32.png',
+            'navbar_40'        => 'navbar-40x40.png',
         ];
 
-        foreach ($filtersMap as $filter => $targetFilename) {
-            // Génère le cache
-            // $this->cacheManager->remove($relativePath, $filter);
-            $this->cacheManager->resolve('uploads/logo_original.png', $filter);
+        // Chemin de l'image d'origine ex: /uploads/logo_original.png
+        $relativePath = str_replace($this->publicDir, '', $message->getFilePath());
 
-            // Construire le chemin du fichier sur le disque
-            $absolutePath = $this->publicDir . '/media/cache/' . $filter . $relativePath;
+        // Vérifier que le dossier de destination existe
+        $filesystem->mkdir($this->publicDir . "/images/icons/");
 
-            if (!file_exists($absolutePath)) {
-                throw new \RuntimeException("Image générée introuvable pour '$filter' : $absolutePath");
+        // Appliquer les filtres et sauvegarder les images
+        foreach ($filtersMap as $filter => $outputFilename) {
+            try {
+                // Charger le fichier en tant que BinaryInterface
+                $binary = $this->dataManager->find($filter, $relativePath);
+
+                // Appliquer le filtre
+                $filteredImage = $this->filterManager->applyFilter($binary, $filter);
+
+                // Sauvegarder l'image filtrée
+                $outputPath = $this->publicDir . "/images/icons/" . $outputFilename;
+                file_put_contents($outputPath, $filteredImage->getContent());
+            } catch (\Exception $e) {
+                throw new \Exception("Failed to generate image for filter $filter : " . $e->getMessage());
             }
-
-            $filesystem->copy($absolutePath, $this->logosDir . $targetFilename, true);
         }
 
-        // Optionnel : copie favicon.ico
-        $filesystem->copy($this->logosDir . 'favicon-32x32.png', $this->logosDir . 'favicon.ico', true);
+        // Créer le fichier favicon.ico
+        $filesystem->copy(
+            $this->publicDir . "/images/icons/" . 'favicon-32x32.png',
+            $this->publicDir . '/favicon.ico',
+            true
+        );
     }
 }

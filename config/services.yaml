@@ -49,7 +49,7 @@ services:
         tags: [messenger.message_handler]
         arguments:
             $uploadDir: '%app.uploadDir%'
-            $projectDir: '%kernel.project_dir%'
+            $publicDir: '%kernel.project_dir%/public'
 
              
     # App\EventListener\ChildUpdateListener:

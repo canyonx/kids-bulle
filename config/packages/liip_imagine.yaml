@@ -36,3 +36,8 @@ liip_imagine:
             quality: 90
             filters:
                 thumbnail: { size: [32, 32], mode: outbound }
+
+        navbar_40:
+            quality: 90
+            filters:
+                thumbnail: { size: [40, 40], mode: outbound }

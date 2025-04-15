@@ -2,13 +2,18 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %} - Kid's Bulle</title>
-        <link rel="icon" href="{{ asset('uploads/logos/favicon.ico') }}" type="image/x-icon">
+        <title>{% block title %}{% endblock %} - {{ config.get('brandName')|default('MyBrand') }}</title>
+        <link rel="icon" href="{{ asset('images/icons/favicon.ico') }}" type="image/x-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="{{"Website_subtitle"|trans}}">
+        <meta name="description" content="{{ config.get('homepageDescription')|default('') }}">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/icons/apple-touch-icon.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/icons/favicon-32x32.png')}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/icons/favicon-16x16.png')}}">
+
         <link rel="manifest" href="{{ asset('manifest.json')}}">
-        
-		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <meta name="theme-color" content="{{ config.get('color')|default('#5e5c64') }}">
+
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
@@ -20,10 +25,7 @@
         {# Theming perso #}
         {% include "customTheme.html.twig" %}
     </head>
-    <body class="bg-teal" 
-        {% if config.get('color') is defined %}
-            style="background-color: {{ config.get('color') }};"
-        {% endif %}>
+    <body style="background-color: {{ config.get('color')|default('#5e5c64') }};">
         
         {# Navbar #}
         {% include 'shared/_navbar.html.twig' %}
