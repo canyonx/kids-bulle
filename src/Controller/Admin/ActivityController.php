@@ -12,6 +12,7 @@ use App\Repository\ChildRepository;
 use App\Form\AddChildToActivityType;
 use App\Form\MoveChildsToActivityType;
 use App\Repository\ActivityRepository;
+use App\Service\ConfigService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,8 +73,18 @@ class ActivityController extends AbstractController
     #[Route(path: '/new', name: 'app_admin_activity_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
-        ActivityRepository $activityRepository
+        ActivityRepository $activityRepository,
+        ConfigService $configService,
     ): Response {
+        // Check config allowTeacherCreation
+        if (
+            $configService->get('allowTeacherCreation') === 'false'
+            && !$this->isGranted('ROLE_ADMIN')
+        ) {
+            $this->addFlash('danger', 'Vous n\'avez pas les droits pour effectuer cette action.');
+            return $this->redirectToRoute('app_planning', [], Response::HTTP_SEE_OTHER);
+        }
+
         $activity = new Activity();
         // Default Date tomorrow 9h
         $datetime = new \DateTime('tomorrow');
@@ -228,8 +239,14 @@ class ActivityController extends AbstractController
     #[Route(path: '/{id}/delete', name: 'app_admin_activity_delete', methods: ['POST'])]
     public function delete(Request $request, Activity $activity, ActivityRepository $activityRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $activity->getId(), $request->request->get('_token'))) {
+        if (
+            $this->isCsrfTokenValid('delete' . $activity->getId(), $request->request->get('_token'))
+            // Only delete if activity is in the future
+            && $activity->getDateAt() > new \DateTimeImmutable('now', new \DateTimeZone("Europe/Paris"))
+        ) {
             $activityRepository->remove($activity, true);
+        } else {
+            $this->addFlash('danger', 'Impossible de supprimer cette activité.');
         }
 
         return $this->redirectToRoute('app_planning', [], Response::HTTP_SEE_OTHER);

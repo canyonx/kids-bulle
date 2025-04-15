@@ -111,7 +111,7 @@ class ConfigType extends AbstractType
 
             // Sécurité
             ->add('allowTeacherCreation', CheckboxType::class, [
-                'label' => 'Autoriser les moniteurs à créer des activités',
+                'label' => 'Autoriser les moniteurs à ajouter/supprimer des activités',
                 'required' => false,
                 'data' => $this->getConfigValue($options['data'], 'allowTeacherCreation') ? true : false,
                 'label_attr' => [

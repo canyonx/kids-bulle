@@ -20,23 +20,23 @@ class CategoryFixtures
     {
         // create Categories
         $categories = [
+            'Evenement',
             'Ski baby',
             'Ski sport',
             'Ski freeride',
             'Snow mini',
             'Snow sport',
             'Snow freeride',
-            'Evenement'
         ];
 
         $colors = [
+            '#30D078',
             '#62A1EB',
             '#3585E5',
             '#1A72D8',
             '#FFBD6D',
             '#FFA348',
             '#FF7800',
-            '#30D078'
         ];
 
         foreach ($categories as $k => $category) {
@@ -44,7 +44,7 @@ class CategoryFixtures
             $cat->setName($category)
                 ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus, congue vel laoreet ac, dictum vitae odio.')
                 ->setColor($colors[$k])
-                ->setNumber(1);
+                ->setNumber($k);
             $this->entityManager->persist($cat);
         }
         $this->entityManager->flush();
