@@ -23,14 +23,7 @@ class ConfigType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('brandName', TextType::class, [
-                'label' => 'Nom du site',
-                'attr' => [
-                    'placeholder' => 'MyBrand',
-                ],
-                'required' => false,
-                'data' => $this->getConfigValue($options['data'], 'brandName'),
-            ])
+            // Accueil
             ->add('homepageTitle', TextType::class, [
                 'label' => 'Titre de la page d\'accueil',
                 'attr' => [
@@ -48,37 +41,39 @@ class ConfigType extends AbstractType
                 'required' => false,
                 'data' => $this->getConfigValue($options['data'], 'homepageDescription'),
             ])
-            ->add('color', ColorType::class, [
-                'label' => 'Arrière plan',
-                'label_attr' => [
-                    'class' => 'd-flex flex-column align-items-center',
-                ],
-                'data' => $this->getConfigValue($options['data'], 'color'),
-            ])
-            ->add('colorTheme', ColorType::class, [
-                'label' => 'Thème',
-                'label_attr' => [
-                    'class' => 'd-flex flex-column align-items-center',
-                ],
-                'data' => $this->getConfigValue($options['data'], 'colorTheme'),
-            ])
-            ->add('homepagePlanning', ChoiceType::class, [
+            ->add('columnNumber', ChoiceType::class, [
                 'label' => 'Afficher le planning sur la page d\'accueil',
                 'required' => true,
                 'choices' => [
-                    'Oui' => 'true',
-                    'Non' => 'false',
+                    '2' => '6',
+                    '3' => '4',
+                    '4' => '3',
                 ],
-                'data' => $this->getConfigValue($options['data'], 'homepagePlanning'),
+                'data' => $this->getConfigValue($options['data'], 'columnNumber'),
                 'expanded' => true,
                 'multiple' => false,
                 'label_attr' => [
                     'class' => 'radio-inline',
                 ],
             ])
-            ->add('code', TextType::class, [
-                'label' => 'Code de vérification',
-                'data' => $this->getConfigValue($options['data'], 'code'),
+            ->add('homepagePlanning', CheckboxType::class, [
+                'label' => 'Afficher le planning sur la page d\'accueil',
+                'required' => false,
+                'data' => $this->getConfigValue($options['data'], 'homepagePlanning') ? true : false,
+                'label_attr' => [
+                    'class' => 'checkbox-switch',
+                ],
+            ])
+
+
+            // Couleurs
+            ->add('brandName', TextType::class, [
+                'label' => 'Nom du site',
+                'attr' => [
+                    'placeholder' => 'MyBrand',
+                ],
+                'required' => false,
+                'data' => $this->getConfigValue($options['data'], 'brandName'),
             ])
             ->add('logoFilename', FileType::class, [
                 'label' => 'Logo du site',
@@ -98,20 +93,34 @@ class ConfigType extends AbstractType
                     ])
                 ],
             ])
-            ->add('columnNumber', ChoiceType::class, [
-                'label' => 'Afficher le planning sur la page d\'accueil',
-                'required' => true,
-                'choices' => [
-                    '2' => '6',
-                    '3' => '4',
-                    '4' => '3',
-                ],
-                'data' => $this->getConfigValue($options['data'], 'columnNumber'),
-                'expanded' => true,
-                'multiple' => false,
+            ->add('color', ColorType::class, [
+                'label' => 'Arrière plan',
                 'label_attr' => [
-                    'class' => 'radio-inline',
+                    'class' => 'd-flex flex-column align-items-center',
                 ],
+                'data' => $this->getConfigValue($options['data'], 'color'),
+            ])
+            ->add('colorTheme', ColorType::class, [
+                'label' => 'Thème',
+                'label_attr' => [
+                    'class' => 'd-flex flex-column align-items-center',
+                ],
+                'data' => $this->getConfigValue($options['data'], 'colorTheme'),
+            ])
+
+
+            // Sécurité
+            ->add('allowTeacherCreation', CheckboxType::class, [
+                'label' => 'Autoriser les moniteurs à créer des activités',
+                'required' => false,
+                'data' => $this->getConfigValue($options['data'], 'allowTeacherCreation') ? true : false,
+                'label_attr' => [
+                    'class' => 'checkbox-switch',
+                ],
+            ])
+            ->add('code', TextType::class, [
+                'label' => 'Code de vérification',
+                'data' => $this->getConfigValue($options['data'], 'code'),
             ])
         ;
     }

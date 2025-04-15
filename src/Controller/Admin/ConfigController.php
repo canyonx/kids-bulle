@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Config;
 use App\Form\ConfigType;
-use App\DataFixtures\ConfigFixtures;
+use Symfony\Component\Yaml\Yaml;
 use App\Repository\ConfigRepository;
 use App\Service\LogoUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +20,6 @@ final class ConfigController extends AbstractController
     #[Route('/', name: 'app_admin_config')]
     public function index(
         ConfigRepository $configRepository,
-        ConfigFixtures $configFixtures,
         EntityManagerInterface $em,
         Request $request,
         LogoUploaderService $logoUploader,
@@ -28,11 +27,23 @@ final class ConfigController extends AbstractController
         /** @var Config */
         $config = $configRepository->findAll();
 
-        if (!$config) {
-            // If no setting exists, create a new one with default values
-            $configFixtures->createConfig();
+        // Charger les champs depuis le fichier YAML
+        $expectedFields = Yaml::parseFile($this->getParameter('kernel.project_dir') . '/config/database_config_fields.yaml')['fields'];
+
+        // Créer les champs manquants dans la base de données
+        foreach ($expectedFields as $fieldName => $defaultValue) {
+            if (!$configRepository->findOneBy(['name' => $fieldName])) {
+                $newConfig = new Config();
+                $newConfig->setName($fieldName);
+                $newConfig->setValue($defaultValue);
+                $em->persist($newConfig);
+                $config[] = $newConfig;
+            }
         }
 
+        $em->flush(); // Sauvegarder les nouvelles configurations si nécessaire
+
+        // Créer le formulaire avec $config
         $form = $this->createForm(ConfigType::class, $config);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,18 +53,14 @@ final class ConfigController extends AbstractController
 
             // Enregistre les données du formulaire dans la base de données
             foreach ($config as $key => $conf) {
-                // // Si la configuration n'existe pas, on la crée
-                // if (!$configRepository->findOneBy(['name' => $key])) {
-                //     $c = new Config();
-                //     $c->setName($key);
-                //     $c->setValue($conf);
-                //     $configRepository->add($c, true);
-                //     continue;
-                // }
-
                 // Si la configuration existe, on met à jour sa valeur
                 if ($conf->getName() !== 'logoFilename') {
-                    $conf->setValue($form[$conf->getName()]->getData());
+                    // On vérifie si la valeur est un booléen
+                    if (is_bool($form[$conf->getName()]->getData())) {
+                        $conf->setValue($form[$conf->getName()]->getData() ? 'true' : 'false');
+                    } else {
+                        $conf->setValue($form[$conf->getName()]->getData());
+                    }
                 }
 
                 // Si le champ est logoFilename et qu'un fichier a été uploadé

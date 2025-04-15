@@ -1,0 +1,18 @@
+# This file is used to configure the database fields for the application.
+
+fields:
+    # Accueil
+    homepageTitle: "Welcome to our website"
+    homepageDescription: "This is the homepage of our website"
+    columnNumber: "3"
+    homepagePlanning: "true"
+
+    # Couleurs
+    brandName: "Kid's Bulle"
+    color: "#9a9996"
+    colorTheme: "#3584e4"
+    logoFilename: "images/logo.png"
+    
+    # Securité
+    allowTeacherCreation: "true"
+    code: "kb31"

@@ -3,12 +3,15 @@
 namespace App\DataFixtures;
 
 use App\Entity\Config;
+use Symfony\Component\Yaml\Yaml;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ConfigFixtures
 {
     public function __construct(
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
+        private ParameterBagInterface $parameterBag,
     ) {}
 
     /**
@@ -18,20 +21,8 @@ class ConfigFixtures
      */
     public function createConfig(): void
     {
-        $config = [
-            // Accueil
-            'homepageTitle' => 'Welcome to our website',
-            'homepageDescription' => 'This is the homepage of our website',
-            'columnNumber' => '3',
-            // Couleurs
-            'brandName' => 'Kid\'s Bulle',
-            'color' => '#9a9996',
-            'colorTheme' => '#3584e4',
-            'logoFilename' => 'images/logo.png',
-            // Sécurité
-            'homepagePlanning' => 'true',
-            'code' => 'kb31',
-        ];
+        // Load the configuration fields from the YAML file /config/database_config_fields.yaml
+        $config = Yaml::parseFile($this->parameterBag->get('kernel.project_dir') . '/config/database_config_fields.yaml')['fields'];
 
         foreach ($config as $key => $value) {
             $config = new Config();
