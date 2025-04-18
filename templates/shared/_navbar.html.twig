@@ -6,9 +6,22 @@
                 <img src="{{ asset('images/icons/navbar-40x40.png') }}" height="40" alt="Logo">
             {% endif %}
         </a>
-        <a class="navbar-brand mx-2" href="{{ path('app_home') }}">
-            {{ config.get('brandName') }}
-        </a>
+        {# Brand on large screen #}
+        <div class="d-none d-lg-block">
+            <a class="navbar-brand mx-2" href="{{ path('app_home') }}">
+                {{ config.get('brandName') }}
+            </a>
+        </div>
+        {# Buttons nav on small screen #}
+        <div class="d-lg-none">
+            <div class="d-flex justify-content-around">
+                {% if is_granted('ROLE_USER') %}
+                    <a class="btn btn-light text-primary" href="{{ path('app_user') }}">
+                    <i class="fa-solid fa-user me-2"></i>{{"Profile"|trans}}</a>
+                    <a class="btn btn-light text-primary" href="{{ path('app_planning')}}"><i class="fa-solid fa-calendar me-2"></i>{{"Planning"|trans}}</a>
+                {% endif %}
+            </div>
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar02" aria-controls="navbar02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
