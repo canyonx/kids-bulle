@@ -1,35 +1,51 @@
+{% set isActivity = false %}
+
 <div class="table-responsive">
 	<table class="table text-center">
 		<tbody>
 			{% for date, activities in planning %}
-				<tr
-					class="align-middle">
+				{% if activities|length > 0 %}
 
-					{# Date #}
-					<td class="col-2">
-						{{ date|format_datetime(pattern='dd MMM', locale='fr') }}
-						{% if is_granted('ROLE_ADMIN') and activities|length > 0 %}
-							<br>
-							<a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top">
-								<i class="fa-solid fa-copy"></i>
-							</a>
-						{% endif %}
-					</td>
+					{% set isActivity = true %}
 
-					{# Activity #}
-					<td class="col">
-						<div class="row row-cols-1 row-cols-md-3 row-cols-lg-auto g-2">
-							{% for activity in activities %}
-								{# {% include "planning/_button_activity.html.twig" %} #}
-								<div class="col">
-									{{ component("ActivityCard", { activity: activity}) }}
-								</div>
-							{% endfor %}
-						</div>
-					</td>
+					<tr
+						class="align-middle">
 
-				</tr>
+						{# Date #}
+						<td class="col-2">
+							{{ date|format_datetime(pattern="E dd MMM", locale='fr') }}
+							{% if is_granted('ROLE_ADMIN') and activities|length > 0 %}
+								<br>
+								<a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top">
+									<i class="fa-solid fa-copy"></i>
+								</a>
+							{% endif %}
+						</td>
+
+						{# Activity #}
+						<td class="col">
+							<div class="row row-cols-1 row-cols-md-3 row-cols-lg-auto g-2">
+								{% for activity in activities %}
+									{# {% include "planning/_button_activity.html.twig" %} #}
+									<div class="col">
+										{{ component("ActivityCard", { activity: activity}) }}
+									</div>
+								{% endfor %}
+							</div>
+						</td>
+
+					</tr>
+				{% endif %}
 			{% endfor %}
+
+			{% if not isActivity  %}
+				<div class="m-4 p-4" role="alert">
+
+					<p class="text-center fw-bold text-muted">
+						Pas d'activités ce mois-ci !
+					</p>
+				</div>
+			{% endif %}
 		</tbody>
 	</table>
 </div>
