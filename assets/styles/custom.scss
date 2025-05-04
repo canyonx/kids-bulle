@@ -8,11 +8,14 @@ $primary: #00758f;
     background-color: $primary;
 }
 
-.custom-popover {
-  --bs-popover-max-width: 200px;
-  --bs-popover-border-color: var(--bd-violet-bg);
-  --bs-popover-header-bg: var(--bd-violet-bg);
-  --bs-popover-header-color: var(--bs-white);
-  --bs-popover-body-padding-x: 1rem;
-  --bs-popover-body-padding-y: .5rem;
+// Rounded card corner
+$card-border-radius: var(--bs-border-radius-xl);
+
+// Activity button styles
+.activity-button {
+    transition: filter 0.2s ease-in-out;
+}
+
+.activity-button:hover {
+    filter: brightness(95%);
 }
