@@ -1,12 +1,11 @@
 {% if is_granted("ROLE_USER") %}
-    <a class="btn col-10" style="background-color: {{ activity.category.color }}" 
-    href="{{ path('app_activity_show', {id: activity.id}) }}" data-turbo-frame="_top">
-         {% include "planning/_button_text.html.twig" %}
-        <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
-    </a>
+	<a class="btn col-10" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id}) }}" data-turbo-frame="_top">
+		{% include "planning/_button_text.html.twig" %}
+		<span class="badge badge-secondary">{{ activity.childrens|length }}</span>
+	</a>
 {% else %}
-    <button class="btn col-10" style="background-color: {{ activity.category.color }}">
-        {% include "planning/_button_text.html.twig" %}
-        <span class="badge badge-secondary">{{ activity.childrens|length }}</span>                           
-    </button>
+	<button class="btn col-10" style="background-color: {{ activity.category.color }}">
+		{% include "planning/_button_text.html.twig" %}
+		<span class="badge badge-secondary">{{ activity.childrens|length }}</span>
+	</button>
 {% endif %}

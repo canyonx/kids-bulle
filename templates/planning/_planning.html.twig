@@ -1,33 +1,35 @@
 <div class="table-responsive">
-    <table class="table text-center">
-        <tbody>
-            {% for date, activities in planning %}
-                {% for activity in activities %}
-                    <tr class="align-middle">
-                        {# Date #}
-                        {% if loop.first %}
-                            <td class="col-2"  {% if activities|length > 1 %} rowspan="{{ activities|length }}" {% endif %}>
-                                {{ date|format_datetime(pattern='dd MMM', locale='fr') }}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <br>
-                                    <a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top"><i class="fa-solid fa-copy"></i></a>
-                                {% endif %}
-                            </td>
-                        {% endif %}
-                        {# Activity #}
-                        <td class="col">
-                            {% include "planning/_button_activity.html.twig" %}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td class="col-2">
-                            {{ date|format_datetime(pattern='dd MMM', locale='fr') }}
-                        </td>
-                        <td class="col"></td>
-                    </tr>
-                {% endfor %}
-            {% endfor %}
-        </tbody>
-    </table>
+	<table class="table text-center">
+		<tbody>
+			{% for date, activities in planning %}
+				<tr
+					class="align-middle">
+
+					{# Date #}
+					<td class="col-2">
+						{{ date|format_datetime(pattern='dd MMM', locale='fr') }}
+						{% if is_granted('ROLE_ADMIN') and activities|length > 0 %}
+							<br>
+							<a href="{{ path('app_admin_day_copy', {day: date}) }}" class="btn btn-primary" data-turbo-frame="_top">
+								<i class="fa-solid fa-copy"></i>
+							</a>
+						{% endif %}
+					</td>
+
+					{# Activity #}
+					<td class="col">
+						<div class="row row-cols-1 row-cols-md-3 row-cols-lg-auto g-2">
+							{% for activity in activities %}
+								{# {% include "planning/_button_activity.html.twig" %} #}
+								<div class="col">
+									{{ component("ActivityCard", { activity: activity}) }}
+								</div>
+							{% endfor %}
+						</div>
+					</td>
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
