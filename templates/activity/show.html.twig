@@ -26,27 +26,36 @@
 					</h6>
 				{% endif %}
 				{{ component('BackButton', { url: path('app_planning', {date: activity.dateAt|date("Y-m-01")}) }) }}
+				{% if is_granted('ROLE_TEACHER') %}
+					<a class="btn btn-secondary" href="{{ path('app_admin_activity_show', {id: activity.id}) }}" data-turbo-frame="_top">
+						{{"manage"|trans}}
+					</a>
+				{% endif %}
 			</div>
 			<i class="fa-solid fa-snowflake fa-2xl m-4" style="color: {{ activity.category.color }}"></i>
 		</div>
-		
+
 		{# Card body #}
 		<turbo-frame id="activity-view">
 			<div class="card-body">
-				<h6 class="card-subtitle mb-2 text-muted">
-					{{"Registered"|trans}}
-					<span class="badge bg-secondary">{{ activity.childrens|length }}</span>
-				</h6>
-				{# List of children ordered by user and age #}
-				{% for child in enrolledChildren %}
-					{% include "activity/_button_child.html.twig" %}
-					<br>
-				{% endfor %}
+				<div class="card" style="background-color: {{ config.get('color') | alt_bg_color }};">
+					<div class="card-body">
+						<h6 class="card-subtitle mb-2 text-muted">
+							{{"Registered"|trans}}
+							<span class="badge bg-light rounded-pill text-muted">{{ activity.childrens|length }}</span>
+						</h6>
+						{# List of children ordered by user and age #}
+						{% for child in enrolledChildren %}
+							{% include "activity/_button_child.html.twig" %}
+							<br>
+						{% endfor %}
+					</div>
+				</div>
 			</div>
 
 			{# buttons to add children directly from the activity view #}
 			{% if (notEnrolledChildren|length) > 0 %}
-				<div class="card-body border-top">
+				<div class="card-body">
 					<h6 class="card-subtitle mb-2 text-muted">Ajouter une personne</h6>
 					{% for child in notEnrolledChildren %}
 						{% include "activity/_button_child.html.twig" %}
@@ -54,13 +63,5 @@
 				</div>
 			{% endif %}
 		</turbo-frame>
-
-		<div class="card-footer d-flex justify-content-end">
-			{% if is_granted('ROLE_TEACHER') %}
-				<a class="btn btn-secondary" href="{{ path('app_admin_activity_show', {id: activity.id}) }}" data-turbo-frame="_top">
-					{{"manage"|trans}}
-				</a>
-			{% endif %}
-		</div>
 	</section>
 {% endblock %}

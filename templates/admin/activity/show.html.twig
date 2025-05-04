@@ -1,60 +1,72 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{"Activity"|trans}}{% endblock %}
+{% block title %}
+	{{"Activity"|trans}}
+{% endblock %}
+
+{% set bgColor = config.get('color') ~ "11" %}
 
 {% block body %}
-<section class="card col-md-6 mx-auto">
-    <div class="card-header d-flex justify-content-between">
-        <div>
-            <h1 class="card-title" style="color: {{ activity.category.color }}">{{ activity.category }}</h1>
-            {% if activity.title %}
-            <h2 class="card-subtitle mb-2 text-muted">{{ activity.title }}</h2>
-            {% endif %}
-            {% if activity.description %}
-            <p>{{ activity.description }}</p>
-            {% endif %}
-            <h5 class="card-title">{{ activity.dateAt|format_datetime(pattern="d MMMM YYYY à HH:mm", locale='fr') }}
-            </h5>
-            {% if activity.teacher %}
-            <h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}} {{ activity.teacher.firstname }} {{
+	<section class="card col-md-6 mx-auto">
+		<div class="card-header d-flex justify-content-between">
+			<div>
+				<h1 class="card-title" style="color: {{ activity.category.color }}">{{ activity.category }}</h1>
+				{% if activity.title %}
+					<h2 class="card-subtitle mb-2 text-muted">{{ activity.title }}</h2>
+				{% endif %}
+				{% if activity.description %}
+					<p>{{ activity.description }}</p>
+				{% endif %}
+				<h5 class="card-title">{{ activity.dateAt|format_datetime(pattern="d MMMM YYYY à HH:mm", locale='fr') }}
+				</h5>
+				{% if activity.teacher %}
+					<h6 class="card-subtitle mb-2 text-muted">{{"With"|trans}}
+						{{ activity.teacher.firstname }}
+						{{
                 activity.teacher.lastname }}</h6>
-            {% endif %}
-            {{ component('BackButton', { url: path('app_activity_show', {id: activity.id}) }) }}
-        </div>
-        <div class="d-flex justify-content-end align-items-end">
-            <a class="btn btn-primary me-2" href="{{ path('app_admin_activity_edit', {'id': activity.id}) }}" alt="{{"
-                edit"|trans}}"><i class="fa-solid fa-pen-to-square"></i></a>
-            {% if activity.dateAt < "now"|date("Y-m-d H:i:s", "Europe/Paris") %}
-                {# hide if activity is in the past #}
-                {{ include('admin/activity/_delete_form.html.twig') }}
-            {% endif %}
-        </div>
-    </div>
-    <div class="card-body" data-controller="selectAll">
-        <h6 class="card-subtitle mb-2 text-muted">{{"Registered"|trans}}</h6>
-        {% if activity.childrens|length > 0 %}
-            {{ form_start(selectChildsForm) }}
-            <div data-action="change->selectAll#toggleParent">
-                {{ form_row(selectChildsForm.childrens) }}
-            </div>
-            <hr>
-            <div class="form-check">
-                <input type="checkbox" id="select-all" name="select-all" class="form-check-input"
-                    data-action="change->selectAll#toggle">
-                <label class="form-check-label" for="select-all">Tout sélectionner</label>
-            </div>
-            <div class="d-flex gap-2 mt-3">
-                {{ form_row(selectChildsForm.move, {attr: {disabled: 'true'}}) }}
-                {{ form_row(selectChildsForm.remove, {attr: {disabled: 'true'}}) }}
-            </div>
-            {{ form_end(selectChildsForm) }}
-        {% else %}
-            <p>Pas d'inscrits pour le moment</p>
-        {% endif %}
-    </div>
-    <div class="card-body border-top">
-        <h6 class="card-subtitle mb-2 text-muted">Ajouter des participants</h6>
-        {% include "admin/activity/_form_add_child.html.twig" %}
-    </div>
-</section>
+				{% endif %}
+				{{ component('BackButton', { url: path('app_activity_show', {id: activity.id}) }) }}
+			</div>
+			<div class="d-flex justify-content-end align-items-end">
+				<a class="btn btn-primary me-2" href="{{ path('app_admin_activity_edit', {'id': activity.id}) }}" alt="{{" edit"|trans}}">
+					<i class="fa-solid fa-pen-to-square"></i>
+				</a>
+				{% if activity.dateAt < "now"|date("Y-m-d H:i:s", "Europe/Paris") %}
+					{# hide if activity is in the past #}
+					{{ include('admin/activity/_delete_form.html.twig') }}
+				{% endif %}
+			</div>
+		</div>
+		<div class="card-body" data-controller="selectAll">
+			<div class="card" style="background-color: {{ config.get('color') | alt_bg_color }};">
+				<div class="card-body">
+					<h6 class="card-subtitle mb-2">{{"Registered"|trans}}
+						<span class="badge text-bg-secondary rounded-pill">{{ activity.childrens|length }}</span>
+					</h6>
+					{% if activity.childrens|length > 0 %}
+						{{ form_start(selectChildsForm) }}
+						<div data-action="change->selectAll#toggleParent">
+							{{ form_row(selectChildsForm.childrens) }}
+						</div>
+						<hr>
+						<div class="form-check">
+							<input type="checkbox" id="select-all" name="select-all" class="form-check-input" data-action="change->selectAll#toggle">
+							<label class="form-check-label" for="select-all">Tout sélectionner</label>
+						</div>
+						<div class="d-flex gap-2 mt-3">
+							{{ form_row(selectChildsForm.move, {attr: {disabled: 'true'}}) }}
+							{{ form_row(selectChildsForm.remove, {attr: {disabled: 'true'}}) }}
+						</div>
+						{{ form_end(selectChildsForm) }}
+					{% else %}
+						<p>Pas d'inscrits pour le moment</p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<h6 class="card-subtitle mb-2 text-muted">Ajouter des participants</h6>
+			{% include "admin/activity/_form_add_child.html.twig" %}
+		</div>
+	</section>
 {% endblock %}

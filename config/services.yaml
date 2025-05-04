@@ -30,7 +30,7 @@ services:
 
     App\Service\MailerService:
         arguments:
-             $adminMail: '%app.admin_mail%'
+            $adminMail: '%app.admin_mail%'
 
     App\Service\PlanningService:
         arguments:
@@ -39,6 +39,12 @@ services:
     App\Service\ConfigService:
 
     App\Twig\Extensions\ColorExtension:
+        tags: [ 'twig.extension' ]
+
+    App\Twig\Extensions\TextColorExtension:
+        tags: [ 'twig.extension' ]
+
+    App\Twig\Extensions\AltBgColorExtension:
         tags: [ 'twig.extension' ]
 
     App\Service\LogoUploaderService:
@@ -51,7 +57,6 @@ services:
             $uploadDir: '%app.uploadDir%'
             $publicDir: '%kernel.project_dir%/public'
 
-             
     # App\EventListener\ChildUpdateListener:
     #     tags:
     #         -

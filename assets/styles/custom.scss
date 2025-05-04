@@ -10,6 +10,14 @@ $primary: #00758f;
 
 // Rounded card corner
 $card-border-radius: var(--bs-border-radius-xl);
+$card-border-color: transparent;
+$card-border-width: 0px;
+$card-cap-bg: transparent;
+
+$btn-border-radius: var(--bs-border-radius-xxl);
+
+$list-group-bg: transparent;
+$list-group-item-bg: transparent;
 
 // Activity button styles
 .activity-button {

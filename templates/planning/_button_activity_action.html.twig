@@ -2,55 +2,49 @@
 
 {# Boutons pour les petits écrans (réutilisation du même formulaire) #}
 <div class="d-block d-lg-none">
-    <div class="btn-group-vertical w-100">
-        <a class="btn w-100" 
-           style="background-color: {{ activity.category.color }}" 
-           href="{{ path('app_activity_show', {id: activity.id, date: app.request.get('date')}) }}"
-           data-turbo-frame="_top">
-            {% include "planning/_button_text.html.twig" %}
-            <span class="badge badge-secondary">{{ activity.childrens|length }}</span>
-        </a>
-        
-        {# Formulaire d'action sur petits écrans #}
-        {% if is_granted('CHILD_ACCESS', child) %}
-            <form method="post" action="{{ path('app_activity_action') }}" class="m-0 w-100">
-                <input type="hidden" name="activity" value="{{ activity.id }}">
-                <input type="hidden" name="child" value="{{ child.id }}">
-                <input type="hidden" name="action" value="{{ action }}">
-                <input type="hidden" name="date" value="{{ app.request.get('date') }}">
-                
-                <button type="submit" class="btn btn-secondary rounded-0 rounded-bottom w-100">
-                    <i class="fa-solid {{ action == 'add' ? 'fa-circle-plus' : 'fa-circle-xmark' }} fa-xl"></i>
-                </button>
-            </form>
-        {% endif %}
-        
-    </div>
+	<div class="btn-group-vertical w-100">
+		<a class="btn w-100" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id, date: app.request.get('date')}) }}" data-turbo-frame="_top">
+			{% include "planning/_button_text.html.twig" %}
+			<span class="badge badge-secondary">{{ activity.childrens|length }}</span>
+		</a>
+
+		{# Formulaire d'action sur petits écrans #}
+		{% if is_granted('CHILD_ACCESS', child) %}
+			<form method="post" action="{{ path('app_activity_action') }}" class="m-0 w-100">
+				<input type="hidden" name="activity" value="{{ activity.id }}">
+				<input type="hidden" name="child" value="{{ child.id }}">
+				<input type="hidden" name="action" value="{{ action }}">
+				<input type="hidden" name="date" value="{{ app.request.get('date') }}">
+
+				<button type="submit" class="btn btn-secondary rounded-0 rounded-bottom-5 w-100">
+					<i class="fa-solid {{ action == 'add' ? 'fa-circle-plus' : 'fa-circle-xmark' }} fa-xl"></i>
+				</button>
+			</form>
+		{% endif %}
+
+	</div>
 </div>
 
 {# Boutons pour les grands écrans (réutilisation du même formulaire) #}
 <div class="d-none d-lg-block">
-    <div class="btn-group w-100 align-items-stretch">
-        <a class="btn h-100" 
-           style="background-color: {{ activity.category.color }}" 
-           href="{{ path('app_activity_show', {id: activity.id, date: app.request.get('date')}) }}"
-           data-turbo-frame="_top">
-            {% include "planning/_button_text.html.twig" %}
-            <span class="badge badge-secondary">{{ activity.childrens|length }}</span>
-        </a>
-        
-        {# Formulaire d'action sur grands écrans #}
-        {% if is_granted('CHILD_ACCESS', child) %}
-            <form method="post" action="{{ path('app_activity_action') }}" class="m-0 d-flex">
-                <input type="hidden" name="activity" value="{{ activity.id }}">
-                <input type="hidden" name="child" value="{{ child.id }}">
-                <input type="hidden" name="action" value="{{ action }}">
-                <input type="hidden" name="date" value="{{ app.request.get('date') }}">
-                
-                <button type="submit" class="btn btn-secondary rounded-0 rounded-end h-100">
-                    <i class="fa-solid {{ action == 'add' ? 'fa-circle-plus' : 'fa-circle-xmark' }} fa-xl"></i>
-                </button>
-            </form>
-        {% endif %}
-    </div>
+	<div class="btn-group w-100 align-items-stretch">
+		<a class="btn h-100" style="background-color: {{ activity.category.color }}" href="{{ path('app_activity_show', {id: activity.id, date: app.request.get('date')}) }}" data-turbo-frame="_top">
+			{% include "planning/_button_text.html.twig" %}
+			<span class="badge badge-secondary">{{ activity.childrens|length }}</span>
+		</a>
+
+		{# Formulaire d'action sur grands écrans #}
+		{% if is_granted('CHILD_ACCESS', child) %}
+			<form method="post" action="{{ path('app_activity_action') }}" class="m-0 d-flex">
+				<input type="hidden" name="activity" value="{{ activity.id }}">
+				<input type="hidden" name="child" value="{{ child.id }}">
+				<input type="hidden" name="action" value="{{ action }}">
+				<input type="hidden" name="date" value="{{ app.request.get('date') }}">
+
+				<button type="submit" class="btn btn-secondary rounded-0 rounded-end-5 h-100">
+					<i class="fa-solid {{ action == 'add' ? 'fa-circle-plus' : 'fa-circle-xmark' }} fa-xl"></i>
+				</button>
+			</form>
+		{% endif %}
+	</div>
 </div>

@@ -1,48 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{"Category_index"|trans}}{% endblock %}
+{% block title %}
+	{{"Category_index"|trans}}
+{% endblock %}
 
 {% block body %}
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">Catégories</h1>
-            <a class="btn btn-primary" href="{{ path('app_admin_category_new') }}">
-                <i class="fa-solid fa-circle-plus fa-xl me-2"></i>
-                Créer une catégorie
-            </a>
-        </div>
-        <div class="card-body">
-            <div class="row">
-            {% for category in categories %}
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100" style="background-color: {{ category.color | default('#ffffff') }}">
-                     <div class="card-header">
-                        <h2 class="card-title fs-3">{{ category.name }}</h2>
-                        <b class="text-muted">{{ category.teacher }}</b>
-                     </div>
-                     <div class="card-body">
-                        {{ category.description | default('Aucune description disponible') }}
-                     </div>
-                     <div class="card-footer d-flex justify-content-between align-items-center">
-                        <a class="btn btn-secondary" href="{{ path('app_admin_category_edit', {'id': category.id}) }}">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        <div>
-                            <span class="badge bg-light text-dark rounded-pill">
-                            {% if category.number <= 0 %}
-                                {{ category.number }} | Non affiché
-                            {% else %}
-                                {{ category.number }}
-                            {% endif %}
-                            </span>
-                        </div>
-                     </div>
-                    </div>
-                </div>
-            {% else %}
-                <p>{{"No_records_found"|trans}}</p>
-            {% endfor %}
-        </div>
-        </div>
-    </div>
+	<div class="card">
+		<div class="card-header">
+			<h1 class="card-title">Catégories</h1>
+			<a class="btn btn-primary" href="{{ path('app_admin_category_new') }}">
+				<i class="fa-solid fa-circle-plus fa-xl me-2"></i>
+				Créer une catégorie
+			</a>
+		</div>
+		<div class="card-body">
+			<div class="row">
+				{% for category in categories %}
+					<div class="col-md-3 mb-4">
+						<div class="card h-100" style="background-color: {{ category.color | default('#ffffff') }}">
+							<div class="card-header">
+								<h2 class="card-title fs-3">{{ category.name }}</h2>
+								<b class="text-muted">{{ category.teacher }}</b>
+							</div>
+							<div class="card-body">
+								{{ category.description | default('Aucune description disponible') }}
+							</div>
+							<div class="card-footer d-flex justify-content-between align-items-center">
+								<a class="btn btn-secondary" href="{{ path('app_admin_category_edit', {'id': category.id}) }}">
+									<i class="fa-solid fa-pen-to-square"></i>
+								</a>
+								<div>
+									<span class="badge bg-light text-dark rounded-pill">
+										{% if category.number <= 0 %}
+											{{ category.number }}
+											| Non affiché
+										{% else %}
+											{{ category.number }}
+										{% endif %}
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<p>{{"No_records_found"|trans}}</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
 {% endblock %}

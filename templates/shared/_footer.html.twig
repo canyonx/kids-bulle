@@ -1,5 +1,5 @@
-<footer class="text-center py-4 mt-4 bg-light">
-	<span class="text-muted">&copy; 2025 Création 
+<footer class="text-center py-4 mt-4">
+	<span class="text-{{ (config.get('color') | contrast_text) == 'light' ? 'dark' : 'light' }}">&copy; 2025 Création
 		<a href="https://www.linkedin.com/in/matteo-dauchez/">
 			Mattéo Dauchez
 		</a>

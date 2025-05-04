@@ -73,7 +73,7 @@ final class ConfigController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', 'Configuration mise à jour avec succès !');
+            $this->addFlash('success', 'Configuration mise à jour.');
             return $this->redirectToRoute('app_admin_config');
         }
 
