@@ -11,7 +11,7 @@
 			</div>
 			<div class="card-body">
 				{% for year, months in history %}
-					<div class="card" style="background-color: {{ config.get('color') | alt_bg_color }};">
+					<div class="card {{ not loop.last ? 'mb-3' }}" style="background-color: {{ config.get('color') | alt_bg_color }};">
 						<div class="card-body">
 							<h3>{{ year }}</h3>
 							<div class="d-flex flex-wrap gap-2">
