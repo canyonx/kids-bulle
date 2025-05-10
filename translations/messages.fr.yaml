@@ -50,9 +50,9 @@ No_activities_in_your_planning: "Pas encore d'activités dans votre planning"
 Child_index: "Liste des enfants"
 Age: Age
 Parent: Parent
-Ski_level: "Niveau de Ski"
-Slalom_level: "Niveau de Slalom"
-Snowboard_level: "Niveau de Snowboard"
+Ski_level: "Ski"
+Slalom_level: "Slalom"
+Snowboard_level: "Snowboard"
 Search: "Chercher"
 back_to_activity: "Retour aux activités"
 License: Licence

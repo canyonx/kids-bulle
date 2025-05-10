@@ -31,19 +31,19 @@
 						{% for child in childs %}
 							<tr>
 								<td>{{ child.license }}</td>
-								<td data="{{ child.lastname }}">{{ child.lastname|title }}
+								<td>{{ child.lastname|title }}
 									{{ child.firstname|title }}</td>
 								{% set age = child.age %}
 								{% if age|length == 1 %}
 									{% set age = '%02d'|format(age) %}
 								{% endif %}
-								<td data="{{ age }}">{{ child.age }}
+								<td>{{ child.age }}
 									ans</td>
 								<td>{{ child.user|title }}</td>
 								<td>{{ child.user.phone }}</td>
-								<td data="{{ child.levelSki }}">{{ child.levelSki|capitalize }}</td>
-								<td data="{{ child.levelSlalom }}">{{ child.levelSlalom|capitalize }}</td>
-								<td data="{{ child.levelSnowboard }}">{{ child.levelSnowboard|capitalize }}</td>
+								<td>{{ child.levelSki|capitalize }}</td>
+								<td>{{ child.levelSlalom|capitalize }}</td>
+								<td>{{ child.levelSnowboard|capitalize }}</td>
 							</tr>
 						{% else %}
 							<tr>
