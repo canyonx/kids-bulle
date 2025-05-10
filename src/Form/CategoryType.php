@@ -12,7 +12,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -34,7 +33,10 @@ class CategoryType extends AbstractType
                 ]
             ])
             ->add('Color', ColorType::class, [
-                'label' => 'Couleur'
+                'label' => 'Couleur',
+                'attr' => [
+                    'class' => 'w-100'
+                ],
             ])
             ->add('teacher', EntityType::class, [
                 'label' => 'Moniteur',
@@ -44,7 +46,8 @@ class CategoryType extends AbstractType
                         ->andWhere('u.roles LIKE :role')
                         ->setParameter('role', '%ROLE_TEACHER%');
                 },
-                'required' => false
+                'required' => false,
+                'placeholder' => 'Aucun'
             ]);
     }
 

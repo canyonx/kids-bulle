@@ -2,7 +2,11 @@
     ? app.request.get("date")|date("Y-m") 
     : ("now")|date("Y-m") %}
 
+{% set previousMonth = ("first day of this month -2 month")|date("Y-m") %}
+
+
 <div class="d-flex justify-content-center mb-3 py-1">
+
 	<ul
 		class="nav nav-pills">
 
@@ -26,3 +30,9 @@
 
 	</ul>
 </div>
+{% if activeMonth <= previousMonth %}
+	{# Afficher le nom du mois et l'année si le mois est en dehors de la barre de selection #}
+	<div class="text-center mb-3 py-1">
+		<h3>{{ activeMonth|format_datetime(pattern='MMMM YYYY', locale='fr')|capitalize }}</h3>
+	</div>
+{% endif %}

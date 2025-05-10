@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique des activités
+{% endblock %}
+
+{% block body %}
+	<section class="mb-4">
+		<div class="card">
+			<div class="card-header">
+				<h1 class="card-title">Historique des activités</h1>
+			</div>
+			<div class="card-body">
+				{% for year, months in history %}
+					<div class="card" style="background-color: {{ config.get('color') | alt_bg_color }};">
+						<div class="card-body">
+							<h3>{{ year }}</h3>
+							<div class="d-flex flex-wrap gap-2">
+								{% for month, isActivity in months %}
+									{% set date = date(year ~ '-' ~ '%02d'|format(month) ~ '-01') %}
+									<a href="{{ path('app_planning', { date: date|date('Y-m-d') }) }}" class="btn btn-primary">
+										{{ date|format_datetime(pattern='MMMM', locale='fr')|capitalize }}
+									</a>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<p>Aucune activité enregistrée.</p>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+{% endblock %}

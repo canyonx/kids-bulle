@@ -92,6 +92,51 @@ class ActivityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Retourne un tableau années/mois ou il y a des activités
+     *
+     * @return array
+     */
+    public function findAllDateDql(): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.dateAt')
+            ->orderBy('a.dateAt', 'ASC');
+
+        $results = $qb->getQuery()->getArrayResult();
+
+        $uniqueDays = [];
+
+        foreach ($results as $row) {
+            $date = $row['dateAt']->format('Y-m-d');
+            $uniqueDays[$date] = new \DateTimeImmutable($date); // Clef unique
+        }
+
+        return array_values($uniqueDays);
+    }
+
+    /**
+     * Retourne un tableau années/mois ou il y a des activités
+     *
+     * @return array
+     */
+    public function findAllDateSql(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT DISTINCT DATE(a.date_at) as day FROM activity a ORDER BY day ASC';
+
+        $stmt = $conn->executeQuery($sql);
+
+        // On convertit les chaînes de date en objets DateTimeImmutable
+        return array_map(
+            fn($row) => new \DateTimeImmutable($row['day']),
+            $stmt->fetchAllAssociative()
+        );
+    }
+
+
+
     //    /**
     //     * @return Activity[] Returns an array of Activity objects
     //     */
