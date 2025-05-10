@@ -35,6 +35,8 @@ class HistoryController extends AbstractController
             $history[$year][$month] = true;
         }
 
+        // krsort($history);
+
         return $this->render('admin/history/index.html.twig', [
             'history' => $history,
         ]);

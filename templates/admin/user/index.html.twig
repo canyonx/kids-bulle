@@ -1,66 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{"User_index"|trans}}{% endblock %}
+{% block title %}
+	{{"User_index"|trans}}
+{% endblock %}
 
 {% block body %}
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">{{"User_index"|trans}} - <span class="text-muted">{{ users|length }}</span></h1>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped" id="childTable" data-controller="childTableOrder">
-                    <thead>
-                        <tr>
-                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Fullname"|trans}}</th>
-                            <th>{{"Email"|trans}}</th>
-                            <th>{{"Phone"|trans}}</th>
-                            <th>{{"Address"|trans}}</th>
-                            <th>{{"Childs"|trans}}</th>
-                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">Code</th>
-                            <th data-action="click->childTableOrder#sortTable" class="text-primary" style="cursor:pointer">{{"Roles"|trans}}</th>
-                            {# <th></th> #}
-                            {# <th></th> #}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for user in users %}
-                            <tr>
-                                <td data="{{ user.lastname }}">
-                                    <a href="{{ path('app_admin_activity_user', {id: user.id}) }}">
-                                        {{ user.lastname|title }} {{ user.firstname|title }}
-                                    </a>
-                                </td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.phone }}</td>
-                                <td>{{ user.fulladress|title }}</td>
-                                <td>
-                                    {% for child in user.childs %}
-                                        <li>
-                                            {{ child|title }}
-                                        </li>
-                                    {% endfor %}
-                                </td>
-                                <td data="{{ user.code }}">{{ user.code }}</td>
-                                {% set role = user.roles[0]|split('_')[1] %}
-                                <td data="{{ role }}">
-                                    <a href="{{ path('app_admin_user_edit', {id: user.id}) }}">{{ role|title }}</a>
-                                </td>
-                                {# <td>
-                                    <a href="{{ path('app_admin_user_edit', {id: user.id}) }}">Editer</a>
-                                </td> #}
-                                {# <td>
-                                    {{ include('admin/user/_delete_form.html.twig') }}
-                                </td> #}
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="5">{{"No_records_found"|trans}}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div class="card">
+		<div class="card-header">
+			<h1 class="card-title">{{"User_index"|trans}}
+				-
+				<span class="text-muted">{{ users|length }}</span>
+			</h1>
+		</div>
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table table-striped" id="users" data-controller="table" data-table-target="table">
+					<thead>
+						<tr>
+							<th>{{"Fullname"|trans}}</th>
+							<th>{{"Email"|trans}}</th>
+							<th>{{"Phone"|trans}}</th>
+							<th>{{"Address"|trans}}</th>
+							<th>{{"Childs"|trans}}</th>
+							<th>Code</th>
+							<th>{{"Roles"|trans}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in users %}
+							<tr>
+								<td data="{{ user.lastname }}">
+									<a href="{{ path('app_admin_activity_user', {id: user.id}) }}">
+										{{ user.lastname|title }}
+										{{ user.firstname|title }}
+									</a>
+								</td>
+								<td>{{ user.email }}</td>
+								<td>{{ user.phone }}</td>
+								<td>{{ user.fulladress|title }}</td>
+								<td>
+									{% for child in user.childs %}
+										<li>
+											{{ child|title }}
+										</li>
+									{% endfor %}
+								</td>
+								<td data="{{ user.code }}">{{ user.code }}</td>
+								{% set role = user.roles[0]|split('_')[1] %}
+								<td data="{{ role }}">
+									<a href="{{ path('app_admin_user_edit', {id: user.id}) }}">{{ role|title }}</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="5">{{"No_records_found"|trans}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css">
+
 {% endblock %}

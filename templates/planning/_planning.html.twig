@@ -1,4 +1,5 @@
 {% set isActivity = false %}
+{# {% set previousDate = null %} #}
 
 <div class="table-responsive">
 	<table class="table text-center">
@@ -8,10 +9,15 @@
 
 					{% set isActivity = true %}
 
-					<tr
-						class="align-middle">
+					{# Ajout d'une ligne blanche si écart de plus d'un jour #}
+					{# {% if previousDate is not null and date|date_modify('-1 day')|date("Y-m-d") != previousDate %}
+											<tr>
+												<td colspan="2" style="height: 2rem;"></td>
+											</tr>
+										{% endif %} #}
 
-						{# Date #}
+						<tr
+						class="align-middle"> {# Date #}
 						<td class="col-2">
 							{{ date|format_datetime(pattern="E dd MMM", locale='fr') }}
 							{% if is_granted('ROLE_ADMIN') and activities|length > 0 %}
@@ -35,6 +41,7 @@
 						</td>
 
 					</tr>
+					{# {% set previousDate = date|date("Y-m-d") %} #}
 				{% endif %}
 			{% endfor %}
 
