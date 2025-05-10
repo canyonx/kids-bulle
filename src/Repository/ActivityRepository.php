@@ -93,49 +93,24 @@ class ActivityRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retourne un tableau années/mois ou il y a des activités
+     * Retourne un tableau de dates 
+     * Premier jour du mois ou il y a des activités
      *
      * @return array
      */
-    public function findAllDateDql(): array
-    {
-        $qb = $this->createQueryBuilder('a')
-            ->select('a.dateAt')
-            ->orderBy('a.dateAt', 'ASC');
-
-        $results = $qb->getQuery()->getArrayResult();
-
-        $uniqueDays = [];
-
-        foreach ($results as $row) {
-            $date = $row['dateAt']->format('Y-m-d');
-            $uniqueDays[$date] = new \DateTimeImmutable($date); // Clef unique
-        }
-
-        return array_values($uniqueDays);
-    }
-
-    /**
-     * Retourne un tableau années/mois ou il y a des activités
-     *
-     * @return array
-     */
-    public function findAllDateSql(): array
+    public function findAllMonths(): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT DISTINCT DATE(a.date_at) as day FROM activity a ORDER BY day ASC';
+        $sql = 'SELECT DISTINCT DATE_FORMAT(date_at, "%Y-%m-01") AS month FROM activity ORDER BY month ASC';
 
         $stmt = $conn->executeQuery($sql);
 
-        // On convertit les chaînes de date en objets DateTimeImmutable
         return array_map(
-            fn($row) => new \DateTimeImmutable($row['day']),
+            fn($row) => new \DateTimeImmutable($row['month']),
             $stmt->fetchAllAssociative()
         );
     }
-
-
 
     //    /**
     //     * @return Activity[] Returns an array of Activity objects
