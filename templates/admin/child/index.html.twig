@@ -37,8 +37,7 @@
 								{% if age|length == 1 %}
 									{% set age = '%02d'|format(age) %}
 								{% endif %}
-								<td>{{ child.age }}
-									ans</td>
+								<td>{{ child.age }}</td>
 								<td>{{ child.user|title }}</td>
 								<td>{{ child.user.phone }}</td>
 								<td>{{ child.levelSki|capitalize }}</td>
