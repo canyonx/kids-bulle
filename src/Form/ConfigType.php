@@ -122,6 +122,15 @@ class ConfigType extends AbstractType
                 'label' => 'Code de vérification',
                 'data' => $this->getConfigValue($options['data'], 'code'),
             ])
+            ->add('applyCode', CheckboxType::class, [
+                'label' => 'Appliquer à tous les utilisateurs',
+                'required' => false,
+                'data' => false,
+                'label_attr' => [
+                    'class' => 'checkbox-switch',
+                ],
+                'mapped' => false,
+            ])
         ;
     }
 

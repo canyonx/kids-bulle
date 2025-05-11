@@ -6,6 +6,7 @@ use App\Entity\Config;
 use App\Form\ConfigType;
 use Symfony\Component\Yaml\Yaml;
 use App\Repository\ConfigRepository;
+use App\Repository\UserRepository;
 use App\Service\LogoUploaderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ final class ConfigController extends AbstractController
     #[Route('/', name: 'app_admin_config')]
     public function index(
         ConfigRepository $configRepository,
+        UserRepository $userRepository,
         EntityManagerInterface $em,
         Request $request,
         LogoUploaderService $logoUploader,
@@ -69,6 +71,15 @@ final class ConfigController extends AbstractController
                     $filename = $logoUploader->upload($logoFile);
                     $conf->setValue('uploads/' . $filename);
                 }
+            }
+
+            // Modification du code pour tous les utilisateurs
+            if ($form['applyCode']->getData()) {
+                $users = $userRepository->findAll();
+                foreach ($users as $u) {
+                    $u->setCode($form['code']->getData());
+                }
+                $em->flush();
             }
 
             $em->flush();
