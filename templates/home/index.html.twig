@@ -3,52 +3,47 @@
 {% block title %}{{"Accueil"|trans}}{% endblock %}
 
 {% block body %}
-<section class="mb-4" data-controller="serviceWorker">
-
-    <div class="container px-4 py-5">
-        <div class="row d-flex align-items-center py-5">
-            <div class="col">
-                <h1 class="text-light">
-                    {% if config.get('homepageTitle') is defined %}
-                        {{ config.get('homepageTitle') }}
-                    {% else %}
-                        Kid's Bulle
-                    {% endif %}
-                </h1>
-                <p class="text-light">
-                    {% if config.get('homepageDescription') is defined %}
-                        {{ config.get('homepageDescription')|nl2br }}
-                    {% else %}
-                        {{"Website_subtitle"|trans}}
-                    {% endif %}
-                </p>
-            </div>
-        </div>
+<section class="pt-5 my-4" data-controller="serviceWorker">
+    <div class="px-3 py-4 my-4">
+        <h1 class="text-{{ (config.get('color') | contrast_text) == 'light' ? 'dark' : 'light' }} mb-4">
+            {% if config.get('homepageTitle') is defined %}
+                {{ config.get('homepageTitle') }}
+            {% else %}
+                Kid's Bulle
+            {% endif %}
+        </h1>
+        <p class="text-{{ (config.get('color') | contrast_text) == 'light' ? 'dark' : 'light' }}">
+            {% if config.get('homepageDescription') is defined %}
+                {{ config.get('homepageDescription')|nl2br }}
+            {% else %}
+                {{"Website_subtitle"|trans}}
+            {% endif %}
+        </p>
+    </div>
         
-        <div class="row">
-            {% for category in categories %}
-                {% if category.number > 0 %}
-                    <div class="col-md-{{ config.get('columnNumber') }} mb-4">
-                        <div class="card h-100" style="background-color:{{ category.color }}">
-                            <div class="card-header">
-                                <h2 class="card-title fs-3">{{ category.name }}</h2>
-                                {% if category.teacher %}
-                                    <b class="text-muted">{{ category.teacher.firstname }}</b>
-                                {% endif %}
-                            </div>
-                            <div class="card-body">
-                                <p>{{ category.description }}</p>
-                            </div>
+    <div class="row">
+        {% for category in categories %}
+            {% if category.number > 0 %}
+                <div class="col-md-{{ config.get('columnNumber') }} mb-4">
+                    <div class="card h-100" style="background-color:{{ category.color }}">
+                        <div class="card-header">
+                            <h2 class="card-title fs-3">{{ category.name }}</h2>
+                            {% if category.teacher %}
+                                <b class="text-muted">{{ category.teacher.firstname }}</b>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <p>{{ category.description }}</p>
                         </div>
                     </div>
-                {% endif %}
-            {% endfor %}
-        </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 </section>
 
 {% if config.get('homepagePlanning') is same as 'true' %}
-    <section class="mb-4">
+    <section class="py-4 my-4">
         <div class="card">
             <div class="card-header">
                 <h1 class="card-title">{{"Planning"|trans}}</h1>

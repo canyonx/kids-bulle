@@ -22,3 +22,6 @@ RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-ext
 # Install Composer
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
    mv composer.phar /usr/local/bin/composer
+
+
+
