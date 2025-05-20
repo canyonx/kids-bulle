@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ user.firstname|title }}
-	{{ user.lastname|title }}
+	{{ app.user.firstname|title }}
+	{{ app.user.lastname|title }}
 {% endblock %}
 
 {% block body %}
 	<section class="card col-md-6 mx-auto">
 		<div class="card-header">
-			<h1>{{ user.firstname|title }}
-				{{ user.lastname|title }}</h1>
+			<h1>{{ app.user.firstname|title }}
+				{{ app.user.lastname|title }}</h1>
 			{% if is_granted("ROLE_TEACHER") %}
-				<span class="text-muted">{{ user.roles[0]|split('_')[1]|title }}</span>
+				<span class="text-muted">{{ app.user.roles[0]|split('_')[1]|title }}</span>
 			{% endif %}
 		</div>
 		<div class="card-body">
@@ -20,11 +20,11 @@
 					<div>
 						<h6>Mes coordonnées</h6>
 						<p>
-							{{ user.email }}
+							{{ app.user.email }}
 							<br>
-							{{ user.phone }}
+							{{ app.user.phone }}
 							<br>
-							{{ user.fulladress }}
+							{{ app.user.fulladress }}
 						</p>
 					</div>
 					<a class="btn btn-secondary" href="{{ path('app_user_edit') }}">
@@ -33,7 +33,7 @@
 				</div>
 			</div>
 		</div>
-		{% if user.childs|length > 0 %}
+		{% if app.user.childs|length > 0 %}
 			<div class="card-body d-flex justify-content-center">
 				<a class="btn btn-primary" href="{{ path('app_user_activities') }}">
 					Planning de ma famille
@@ -44,7 +44,7 @@
 			<div class="card" style="background-color: {{ config.get('color') | alt_bg_color }};">
 				<div class="card-body">
 					<ul class="list-group list-group-flush">
-						{% for child in user.childs %}
+						{% for child in app.user.childs %}
 							<li class="list-group-item d-flex justify-content-between">
 								<a class="btn btn-primary" href="{{ path('app_children_planning', {'id': child.id}) }}">{{ child.firstname|title }}</a>
 								<a class="btn btn-secondary" href="{{ path('app_children_edit', {'id': child.id}) }}">

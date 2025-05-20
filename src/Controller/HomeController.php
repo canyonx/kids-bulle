@@ -45,7 +45,7 @@ class HomeController extends AbstractController
         $dateStart = $startDateService->getStartDate($request->get('date'));
 
         $activities = $activityRepository->findByDateBetween($dateStart);
-
+        // dd($activities);
         $planning = $planningService->getPlanning($activities, $dateStart);
 
         return $this->render('home/planning.html.twig', [

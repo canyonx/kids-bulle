@@ -19,18 +19,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     #[Route(path: '/', name: 'app_user', methods: ['GET'])]
-    public function show(
-        ActivityRepository $activityRepository,
-        PlanningService $planningService
-    ): Response {
-        $activities = $activityRepository->findByUser($this->getUser());
-
-        $planning = $planningService->getPlanning($activities);
-
-        return $this->render('user/index.html.twig', [
-            'user' => $this->getUser(),
-            'planning' => $planning
-        ]);
+    public function show(): Response
+    {
+        return $this->render('user/index.html.twig', []);
     }
 
     #[Route(path: '/activities', name: 'app_user_activities', methods: ['GET'])]

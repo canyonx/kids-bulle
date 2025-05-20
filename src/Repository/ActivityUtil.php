@@ -31,7 +31,7 @@ class ActivityUtil
         }
 
         if ($dateEnd === null) {
-            $dateEnd = new \DateTimeImmutable($dateStart->format('Y-m-d') . ' + 31 days');
+            $dateEnd = new \DateTimeImmutable($dateStart->format('Y-m-d') . ' + 1 month');
         }
 
         return $qb->andWhere('a.dateAt >= :dateStart')
@@ -50,7 +50,8 @@ class ActivityUtil
      */
     public static function ByChildsOfUser(QueryBuilder $qb, User $user): QueryBuilder
     {
-        return $qb->join('a.childrens', 'ch')
+        return $qb->leftjoin('a.childrens', 'ch')
+            ->addSelect('ch')
             ->andWhere('ch IN (:userChildren)')
             ->setParameter('userChildren', $user->getChilds());
     }
@@ -64,7 +65,8 @@ class ActivityUtil
      */
     public static function ByChild(QueryBuilder $qb, Child $child): QueryBuilder
     {
-        return $qb->join('a.childrens', 'ch')
+        return $qb->leftjoin('a.childrens', 'ch')
+            ->addSelect('ch')
             ->andWhere('ch.id = :childId')
             ->setParameter('childId', $child->getId());
     }
@@ -79,7 +81,8 @@ class ActivityUtil
     {
         return  $qb->andWhere('a.teacher = :user')
             ->setParameter('user', $user)
-            ->join('a.teacher', 'u')
+            ->leftJoin('a.teacher', 'u')
+            ->addSelect('u')
             ->andWhere('u.roles LIKE :role')
             ->setParameter('role', '%ROLE_TEACHER%');
     }
@@ -94,6 +97,9 @@ class ActivityUtil
     {
         return  $qb->orderBy('a.dateAt', 'ASC')
             ->leftJoin('a.category', 'c')
+            ->addSelect('c')
+            ->leftJoin('a.childrens', 'chi')
+            ->addSelect('chi')
             ->addOrderBy('c.number', 'ASC');
     }
 }

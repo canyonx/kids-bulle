@@ -6,31 +6,31 @@ use App\Repository\ConfigRepository;
 
 class ConfigService
 {
+    private ?array $config = null;
 
     public function __construct(
         private ConfigRepository $configRepository,
     ) {}
 
-    public function get(string $name): string|null
+    private function load(): void
     {
-        $config = $this->configRepository->findOneBy(['name' => $name]);
-
-        if ($config) {
-            return $config->getValue();
+        if ($this->config === null) {
+            $this->config = [];
+            foreach ($this->configRepository->findAll() as $setting) {
+                $this->config[$setting->getName()] = $setting->getValue();
+            }
         }
-
-        return null;
     }
 
-    public function getAll(): array
+    public function get(string $name, mixed $default = null): mixed
     {
-        $configs = $this->configRepository->findAll();
-        $configArray = [];
+        $this->load();
+        return $this->config[$name] ?? $default;
+    }
 
-        foreach ($configs as $config) {
-            $configArray[$config->getName()] = $config->getValue();
-        }
-
-        return $configArray;
+    public function all(): array
+    {
+        $this->load();
+        return $this->config;
     }
 }

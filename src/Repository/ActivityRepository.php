@@ -49,6 +49,7 @@ class ActivityRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('a');
         ActivityUtil::ByDateBetween($qb, $dateStart, $dateEnd);
         ActivityUtil::OrderByDateAndCategory($qb);
+        // dd($qb->getQuery());
         return $qb->getQuery()
             ->getResult();
     }
