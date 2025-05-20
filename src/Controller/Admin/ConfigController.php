@@ -28,24 +28,29 @@ final class ConfigController extends AbstractController
     ): Response {
         /** @var Config */
         $config = $configRepository->findAll();
+        $configByName = [];
+        foreach ($config as $conf) {
+            $configByName[$conf->getName()] = $conf;
+        }
 
         // Charger les champs depuis le fichier YAML
         $expectedFields = Yaml::parseFile($this->getParameter('kernel.project_dir') . '/config/database_config_fields.yaml')['fields'];
 
         // Créer les champs manquants dans la base de données
         foreach ($expectedFields as $fieldName => $defaultValue) {
-            if (!$configRepository->findOneBy(['name' => $fieldName])) {
+            if (!isset($configByName[$fieldName])) {
                 $newConfig = new Config();
                 $newConfig->setName($fieldName);
                 $newConfig->setValue($defaultValue);
                 $em->persist($newConfig);
-                $config[] = $newConfig;
+                $configByName[$fieldName] = $newConfig;
             }
         }
 
         $em->flush(); // Sauvegarder les nouvelles configurations si nécessaire
 
         // Créer le formulaire avec $config
+        $config = array_values($configByName);
         $form = $this->createForm(ConfigType::class, $config);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

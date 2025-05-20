@@ -74,7 +74,18 @@ class ChildRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-
+    /**
+     * Load children with their parents (users)
+     */
+    public function findAllWithParent(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.user', 'u')
+            ->addSelect('u')
+            ->orderBy('c.lastname', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
     //    /**
     //     * @return Child[] Returns an array of Child objects

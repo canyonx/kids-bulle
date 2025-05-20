@@ -13,7 +13,7 @@ class ChildController extends AbstractController
     public function index(ChildRepository $childRepository): Response
     {
         return $this->render('admin/child/index.html.twig', [
-            'childs' => $childRepository->findBy([], ['lastname' => 'ASC']),
+            'childs' => $childRepository->findAllWithParent(),
         ]);
     }
 }
